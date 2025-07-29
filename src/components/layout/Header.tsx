@@ -27,7 +27,11 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="fixed md:top-2 md:left-8 md:right-8 md:rounded-lg top-0 left-0 right-0 rounded-none bg-white border border-gray-200 shadow-lg z-50">
+    <header 
+      className="fixed md:top-2 md:left-8 md:right-8 md:rounded-lg top-0 left-0 right-0 rounded-none bg-white border border-gray-200 shadow-lg z-50"
+      role="banner"
+      aria-label="サイトヘッダー"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center h-16">
           {/* ロゴ */}
