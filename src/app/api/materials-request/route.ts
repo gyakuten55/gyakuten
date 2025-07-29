@@ -47,7 +47,10 @@ export async function POST(request: NextRequest) {
     }
 
     // 選択されたサービスに対応するPDFファイルを取得
-    const basePath = '/Users/aoi/Desktop/GYAKUTEN_HP/gyakuten-hp/Business_Information';
+    const basePath = path.join(process.cwd(), 'Business_Information');
+    console.log('Base path:', basePath);
+    console.log('Selected services:', data.selectedServices);
+    
     const attachments: Array<{
       filename: string;
       path: string;
@@ -56,11 +59,15 @@ export async function POST(request: NextRequest) {
 
     for (const serviceId of data.selectedServices) {
       const filename = serviceFileMap[serviceId];
+      console.log(`Service ID: ${serviceId}, Filename: ${filename}`);
+      
       if (filename) {
         const filePath = path.join(basePath, filename);
+        console.log(`Checking file path: ${filePath}`);
         
         // ファイルの存在確認
         if (fs.existsSync(filePath)) {
+          console.log(`File found: ${filePath}`);
           attachments.push({
             filename,
             path: filePath,
@@ -68,6 +75,14 @@ export async function POST(request: NextRequest) {
           });
         } else {
           console.warn(`PDF file not found: ${filePath}`);
+          
+          // ディレクトリの内容を確認
+          try {
+            const files = fs.readdirSync(basePath);
+            console.log('Available files in directory:', files);
+          } catch (err) {
+            console.error('Error reading directory:', err);
+          }
         }
       }
     }

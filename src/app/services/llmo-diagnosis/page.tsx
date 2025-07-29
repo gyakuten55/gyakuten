@@ -3,6 +3,7 @@ import { Metadata } from 'next';
 import Layout from '@/components/layout/Layout';
 import Link from 'next/link';
 import StepForm from '@/components/StepForm';
+import DiagnosisButton from '@/components/DiagnosisButton';
 import DiagnosisForm from '@/components/DiagnosisForm';
 import FAQSection from '@/components/FAQSection';
 
@@ -362,12 +363,9 @@ export default function LLMODiagnosisPage() {
                 </ul>
                 <div className="mt-auto">
                   <div className="text-center">
-                    <Link
-                      href="/diagnosis"
-                      className="w-full bg-gray-100 text-black py-3 px-4 rounded-md font-medium hover:bg-gray-200 transition-colors inline-block"
-                    >
+                    <DiagnosisButton className="w-full bg-gray-100 text-black py-3 px-4 rounded-md font-medium hover:bg-gray-200 transition-colors inline-block">
                       無料診断を行う
-                    </Link>
+                    </DiagnosisButton>
                   </div>
                   <div className="mt-4 text-center text-sm text-gray-600">
                     まず現在地を知りたい方におすすめ
@@ -544,12 +542,9 @@ export default function LLMODiagnosisPage() {
               わずか数分で申し込み完了。専門家が貴社サイトを分析します。
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/diagnosis"
-                className="bg-white text-primary px-8 py-4 rounded-md text-lg font-medium hover:bg-gray-100 transition-colors"
-              >
+              <DiagnosisButton className="bg-white text-primary px-8 py-4 rounded-md text-lg font-medium hover:bg-gray-100 transition-colors">
                 無料診断を行う
-              </Link>
+              </DiagnosisButton>
               <Link
                 href="/materials"
                 className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-md text-lg font-medium hover:bg-white hover:text-primary transition-colors"

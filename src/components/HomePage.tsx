@@ -31,12 +31,12 @@ export default function HomePage() {
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 items-center sm:items-start justify-center sm:justify-start">
-            <Link
-              href="/diagnosis"
+            <button
+              onClick={() => alert('現在、無料LLMO診断サービスは準備中です。\n\nより高品質な分析結果をお届けするため、システムの最適化を進めております。サービス開始まで今しばらくお待ちください。\n\n個別のご相談については、お問い合わせフォームよりお気軽にお声かけください。')}
               className="w-60 bg-primary text-white px-6 py-3 rounded-lg text-base font-semibold text-center shadow-lg hover:shadow-xl hover:bg-primary/90 transition-all duration-200"
             >
               無料診断を行う
-            </Link>
+            </button>
             <Link
               href="/contact"
               className="w-60 bg-transparent border border-primary text-primary px-6 py-3 rounded-lg text-base font-semibold text-center shadow-lg hover:shadow-xl hover:bg-primary hover:text-white transition-all duration-200"
