@@ -56,3 +56,17 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
+// デバッグ用GETメソッド（環境変数チェック）
+export async function GET() {
+  return NextResponse.json({
+    status: 'Contact API is running',
+    environment: {
+      smtpHost: process.env.SMTP_HOST ? 'Set' : 'Not set',
+      smtpUser: process.env.SMTP_USER ? 'Set' : 'Not set',
+      fromEmail: process.env.FROM_EMAIL ? 'Set' : 'Not set',
+      fromName: process.env.FROM_NAME ? 'Set' : 'Not set',
+    },
+    timestamp: new Date().toISOString(),
+  });
+}
