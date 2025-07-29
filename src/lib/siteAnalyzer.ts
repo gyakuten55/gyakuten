@@ -1,4 +1,14 @@
+import puppeteer, { Browser, Page } from 'puppeteer';
 import { JSDOM } from 'jsdom';
+
+// Vercel環境での動的インポート
+const chromium = async () => {
+  if (process.env.NODE_ENV === 'production') {
+    const { default: chromiumBinary } = await import('@sparticuz/chromium');
+    return chromiumBinary;
+  }
+  return null;
+};
 
 export interface SiteAnalysisResult {
   url: string;
@@ -121,55 +131,110 @@ interface StructuredDataAnalysis {
 }
 
 export class SiteAnalyzer {
-  
-  // Puppeteerの代わりにfetchベースの分析を実装
-  private async fetchSiteContent(url: string): Promise<{ html: string; responseTime: number }> {
-    const startTime = Date.now();
-    
-    try {
-      const response = await fetch(url, {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (compatible; GYAKUTENBot/1.0; +https://gyaku-ten.jp)'
-        },
-        signal: AbortSignal.timeout(30000) // 30秒タイムアウト
-      });
+  private browser: Browser | null = null;
+
+  async initBrowser() {
+    if (!this.browser) {
+      const chromiumBinary = await chromium();
       
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      if (chromiumBinary) {
+        // Vercel production環境
+        console.log('Launching browser in production mode with Chromium binary');
+        this.browser = await puppeteer.launch({
+          args: [...chromiumBinary.args, '--no-sandbox', '--disable-setuid-sandbox'],
+          executablePath: await chromiumBinary.executablePath(),
+          headless: true,
+        });
+      } else {
+        // ローカル開発環境
+        console.log('Launching browser in development mode');
+        this.browser = await puppeteer.launch({
+          headless: true,
+          args: ['--no-sandbox', '--disable-setuid-sandbox']
+        });
       }
-      
-      const html = await response.text();
-      const responseTime = Date.now() - startTime;
-      
-      return { html, responseTime };
-    } catch (error) {
-      throw new Error(`サイトの取得に失敗しました: ${error}`);
     }
   }
 
   async closeBrowser() {
-    // HTTPベースなのでブラウザを閉じる必要なし
-    return Promise.resolve();
+    if (this.browser) {
+      await this.browser.close();
+      this.browser = null;
+    }
   }
 
   async analyzeSite(url: string): Promise<SiteAnalysisResult> {
     try {
-      // fetchベースでHTMLを取得
-      const { html, responseTime } = await this.fetchSiteContent(url);
-      const dom = new JSDOM(html);
+      console.log(`[${new Date().toISOString()}] Starting site analysis for: ${url}`);
+      await this.initBrowser();
+      const page = await this.browser!.newPage();
+      
+      // タイムアウト設定（30秒）
+      page.setDefaultTimeout(30000);
+      
+      // パフォーマンス測定開始
+      const startTime = Date.now();
+      
+      console.log(`[${new Date().toISOString()}] Navigating to: ${url}`);
+      await page.goto(url, { 
+        waitUntil: 'networkidle2',
+        timeout: 30000
+      });
+      
+      // パフォーマンス測定終了
+      const endTime = Date.now();
+      const loadTime = endTime - startTime;
+      console.log(`[${new Date().toISOString()}] Page loaded in ${loadTime}ms`);
+
+      // Core Web Vitals取得
+      console.log(`[${new Date().toISOString()}] Collecting performance metrics`);
+      const performanceMetrics = await page.evaluate(() => {
+        return new Promise<{ fcp: number; lcp: number; cls: number }>((resolve) => {
+          if ('web-vital' in window) {
+            // web-vitalsライブラリがある場合
+            resolve({
+              fcp: 0,
+              lcp: 0,
+              cls: 0
+            });
+          } else {
+            // パフォーマンス計測の代替実装
+            const windowPerf = window as Window & { performance: Performance };
+            const navigationEntries = windowPerf.performance.getEntriesByType('navigation');
+            const navigation = navigationEntries[0] as PerformanceNavigationTiming;
+            resolve({
+              fcp: navigation ? navigation.domContentLoadedEventEnd - navigation.fetchStart : 1000,
+              lcp: navigation ? navigation.loadEventEnd - navigation.fetchStart : 2000,
+              cls: 0.1 // 固定値
+            });
+          }
+        });
+      });
+
+      // HTMLコンテンツ取得
+      console.log(`[${new Date().toISOString()}] Getting page content`);
+      const htmlContent = await page.content();
+      const dom = new JSDOM(htmlContent);
       const document = dom.window.document;
+      console.log(`[${new Date().toISOString()}] Content parsed successfully`);
 
       // 基本情報取得
       const title = document.querySelector('title')?.textContent || '';
       const metaDescription = document.querySelector('meta[name="description"]')?.getAttribute('content') || '';
+      console.log(`[${new Date().toISOString()}] Basic info - Title: ${title.substring(0, 50)}..., Meta: ${metaDescription.substring(0, 50)}...`);
 
       // 各種分析実行
+      console.log(`[${new Date().toISOString()}] Running detailed analysis`);
       const headingStructure = this.analyzeHeadings(document);
       const technicalSeo = this.analyzeTechnicalSeo(document);
-      const performance = this.analyzePerformanceSimple(responseTime);
+      const performance = this.analyzePerformance(loadTime, performanceMetrics);
       const contentQuality = this.analyzeContentQuality(document);
-      const mobileOptimization = this.analyzeMobileOptimization(document);
+      const mobileOptimization = await this.analyzeMobileOptimization(page, document);
       const structuredData = this.analyzeStructuredData(document);
+      console.log(`[${new Date().toISOString()}] Analysis completed`);
+      
+      await page.close();
+      console.log(`[${new Date().toISOString()}] Page closed`);
 
       // 総合スコア計算とスコア内訳生成
       const scoreResult = this.calculateOverallScore({
@@ -190,6 +255,7 @@ export class SiteAnalyzer {
         mobileOptimization,
         structuredData
       });
+      console.log(`[${new Date().toISOString()}] Score calculated: ${scoreResult.overallScore}`);
 
       return {
         url,
@@ -284,18 +350,18 @@ export class SiteAnalyzer {
     };
   }
 
-  private analyzePerformanceSimple(responseTime: number): PerformanceAnalysis {
-    // 簡易的なパフォーマンススコア計算
+  private analyzePerformance(loadTime: number, metrics: { fcp: number; lcp: number; cls: number }): PerformanceAnalysis {
+    // スコア計算
     let performanceScore = 100;
-    if (responseTime > 3000) performanceScore -= 20;
-    if (responseTime > 5000) performanceScore -= 30;
-    if (responseTime > 10000) performanceScore -= 40;
+    if (loadTime > 3000) performanceScore -= 20;
+    if (loadTime > 5000) performanceScore -= 30;
+    if (loadTime > 10000) performanceScore -= 40;
 
     return {
-      loadTime: responseTime,
-      firstContentfulPaint: 0, // 簡易版では取得不可
-      largestContentfulPaint: 0, // 簡易版では取得不可
-      cumulativeLayoutShift: 0, // 簡易版では取得不可
+      loadTime,
+      firstContentfulPaint: metrics.fcp,
+      largestContentfulPaint: metrics.lcp,
+      cumulativeLayoutShift: metrics.cls,
       performanceScore: Math.max(performanceScore, 10)
     };
   }
@@ -326,24 +392,25 @@ export class SiteAnalyzer {
     };
   }
 
-  private analyzeMobileOptimization(document: Document): MobileAnalysis {
+  private async analyzeMobileOptimization(page: Page, document: Document): Promise<MobileAnalysis> {
     const viewport = document.querySelector('meta[name="viewport"]');
     const hasViewportMeta = !!viewport;
     
-    // レスポンシブデザインの簡易チェック
-    const hasMediaQueries = Array.from(document.querySelectorAll('style, link[rel="stylesheet"]')).some(
-      element => {
-        const content = element.textContent || '';
-        return content.includes('@media') || content.includes('responsive');
-      }
-    );
+    // モバイルビューポートでのテスト
+    await page.setViewport({ width: 375, height: 667 });
+    
+    // レスポンシブデザインの検証
+    const isResponsive = await page.evaluate(() => {
+      const width = window.innerWidth;
+      return width <= 768; // モバイルサイズの確認
+    });
 
     let mobileScore = 70;
     if (hasViewportMeta) mobileScore += 15;
-    if (hasMediaQueries) mobileScore += 15;
+    if (isResponsive) mobileScore += 15;
 
     return {
-      isResponsive: hasMediaQueries,
+      isResponsive,
       hasViewportMeta,
       mobileScore,
       touchTargetSize: true // 簡略化

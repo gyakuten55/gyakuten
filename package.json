@@ -12,6 +12,7 @@
     "@react-three/drei": "^10.6.0",
     "@react-three/fiber": "^9.2.0",
     "@react-three/postprocessing": "^3.0.4",
+    "@sparticuz/chromium": "^138.0.2",
     "@types/nodemailer": "^6.4.17",
     "cheerio": "^1.1.2",
     "framer-motion": "^12.23.9",
