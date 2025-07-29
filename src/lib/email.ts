@@ -474,18 +474,24 @@ export async function sendAnalysisResult(email: string, analysis: SiteAnalysisRe
   };
 
   try {
+    console.log(`[${new Date().toISOString()}] Preparing to send analysis result emails...`);
+    console.log(`[${new Date().toISOString()}] User email: ${email}`);
+    console.log(`[${new Date().toISOString()}] Admin email: ${process.env.FROM_EMAIL}`);
+    
     // お客様宛と会社宛の両方を送信
+    console.log(`[${new Date().toISOString()}] Sending emails...`);
     await Promise.all([
       transporter.sendMail(userMailOptions),
       transporter.sendMail(adminResultMailOptions)
     ]);
     
-    console.log(`Analysis result sent to: ${email} (Score: ${analysis.overallScore})`);
-    console.log(`Admin result notification sent for: ${email}`);
+    console.log(`[${new Date().toISOString()}] ✅ Analysis result sent to: ${email} (Score: ${analysis.overallScore})`);
+    console.log(`[${new Date().toISOString()}] ✅ Admin result notification sent for: ${email}`);
     return { success: true };
   } catch (error) {
-    console.error('Analysis result email sending failed:', error);
-    throw new Error('診断結果メール送信に失敗しました');
+    console.error(`[${new Date().toISOString()}] ❌ Analysis result email sending failed:`, error);
+    console.error('Email error details:', error instanceof Error ? error.stack : 'No stack trace');
+    throw new Error(`診断結果メール送信に失敗しました: ${error instanceof Error ? error.message : String(error)}`);
   }
 }
 
