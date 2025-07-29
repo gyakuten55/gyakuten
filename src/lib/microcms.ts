@@ -1,5 +1,5 @@
-import { createClient } from 'microcms-js-sdk';
-import { Article, Blog, Category, Tag, MicroCMSListResponse, MicroCMSQueries } from '@/types/cms';
+import { createClient, MicroCMSQueries } from 'microcms-js-sdk';
+import { Article, Blog, Category, Tag, MicroCMSListResponse } from '@/types/cms';
 
 // microCMSクライアントの作成
 const createMicroCMSClient = () => {
@@ -139,7 +139,7 @@ export const getCategories = async (queries?: MicroCMSQueries): Promise<MicroCMS
 };
 
 // タグ一覧を取得（ブログテンプレートにはタグがないため空を返す）
-export const getTags = async (queries?: MicroCMSQueries): Promise<MicroCMSListResponse<Tag>> => {
+export const getTags = async (): Promise<MicroCMSListResponse<Tag>> => {
   return {
     contents: [],
     totalCount: 0,

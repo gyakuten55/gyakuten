@@ -11,7 +11,7 @@ function SimpleSphere({ color = '#8f2c34' }: { color?: string }) {
   const geometry = new THREE.IcosahedronGeometry(1, 2);
   const edges = new THREE.EdgesGeometry(geometry);
   
-  useFrame((state) => {
+  useFrame(() => {
     if (meshRef.current) {
       meshRef.current.rotation.x += 0.01;
       meshRef.current.rotation.y += 0.01;

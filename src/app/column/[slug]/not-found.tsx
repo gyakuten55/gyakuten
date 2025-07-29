@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import Layout from '@/components/layout/Layout';
 
 export default function NotFound() {
@@ -9,12 +10,12 @@ export default function NotFound() {
           <p className="text-gray-600 mb-8">
             お探しの記事は存在しないか、削除された可能性があります。
           </p>
-          <a
-            href="/column"
+          <Link
+            href="/column/"
             className="inline-block bg-primary text-white px-6 py-3 rounded-md hover:bg-primary/90 transition-colors"
           >
             コラム一覧に戻る
-          </a>
+          </Link>
         </div>
       </main>
     </Layout>

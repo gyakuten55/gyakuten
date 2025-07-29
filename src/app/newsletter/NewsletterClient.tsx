@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 
 export default function NewsletterClient() {
   return (
@@ -10,9 +11,9 @@ export default function NewsletterClient() {
         <div className="max-w-6xl mx-auto px-4 py-3">
           <ol className="flex items-center space-x-2 text-sm text-gray-600">
             <li>
-              <a href="/" className="hover:text-primary">
+              <Link href="/" className="hover:text-primary">
                 ホーム
-              </a>
+              </Link>
             </li>
             <li>
               <span className="text-gray-400">/</span>
@@ -130,7 +131,7 @@ export default function NewsletterClient() {
                 <button
                   type="button"
                   name="join"
-                  onClick={() => (window as any).jf_MMWindowOpen101453('join')}
+                  onClick={() => (window as typeof window & { jf_MMWindowOpen101453: (action: string) => void }).jf_MMWindowOpen101453('join')}
                   className="bg-primary text-white px-6 sm:px-8 py-2 sm:py-3 rounded-md font-medium hover:bg-primary/90 transition-colors whitespace-nowrap text-sm sm:text-base"
                 >
                   登録する
@@ -158,7 +159,7 @@ export default function NewsletterClient() {
                 <button
                   type="button"
                   name="resign"
-                  onClick={() => (window as any).jf_MMWindowOpen101453('resign')}
+                  onClick={() => (window as typeof window & { jf_MMWindowOpen101453: (action: string) => void }).jf_MMWindowOpen101453('resign')}
                   className="bg-gray-600 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-md font-medium hover:bg-gray-700 transition-colors whitespace-nowrap text-sm sm:text-base"
                 >
                   退会する

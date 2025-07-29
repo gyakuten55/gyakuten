@@ -2,6 +2,7 @@ import React from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
+import Link from 'next/link';
 import Layout from '@/components/layout/Layout';
 import { TableOfContents } from '@/components/column/TableOfContents';
 import { RelatedArticles } from '@/components/column/RelatedArticles';
@@ -180,7 +181,7 @@ async function getArticleData(slug: string) {
     }
     
     // 関連記事は同じカテゴリの記事を取得
-    let relatedArticles = [];
+    let relatedArticles: Article[] = [];
     if (articleData.category) {
       relatedArticles = await getRelatedArticles(articleData.id, articleData.category.id, 3);
     }
@@ -235,17 +236,17 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           <div className="max-w-6xl mx-auto px-4 py-3">
             <ol className="flex items-center space-x-2 text-sm text-gray-600">
               <li>
-                <a href="/" className="hover:text-primary">
+                <Link href="/" className="hover:text-primary">
                   ホーム
-                </a>
+                </Link>
               </li>
               <li>
                 <span className="text-gray-400">/</span>
               </li>
               <li>
-                <a href="/column" className="hover:text-primary">
+                <Link href="/column/" className="hover:text-primary">
                   コラム
-                </a>
+                </Link>
               </li>
               <li>
                 <span className="text-gray-400">/</span>

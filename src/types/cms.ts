@@ -10,6 +10,7 @@ export interface MicroCMSDate {
 export interface Category extends MicroCMSDate {
   id: string;
   name: string;
+  slug: string;
 }
 
 export interface Blog extends MicroCMSDate {

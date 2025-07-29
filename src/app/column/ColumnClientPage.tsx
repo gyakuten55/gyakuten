@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { ArticleCard } from '@/components/column/ArticleCard';
 import { CategoryFilter } from '@/components/column/CategoryFilter';
 import { SearchBox } from '@/components/column/SearchBox';
@@ -110,7 +111,7 @@ export default function ColumnClientPage({
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading] = useState<boolean>(false);
 
   const articlesPerPage = 6;
   const totalPages = Math.ceil(filteredArticles.length / articlesPerPage);
@@ -164,9 +165,9 @@ export default function ColumnClientPage({
         <div className="max-w-6xl mx-auto px-4 py-3">
           <ol className="flex items-center space-x-2 text-sm text-gray-600">
             <li>
-              <a href="/" className="hover:text-primary">
+              <Link href="/" className="hover:text-primary">
                 ホーム
-              </a>
+              </Link>
             </li>
             <li>
               <span className="text-gray-400">/</span>

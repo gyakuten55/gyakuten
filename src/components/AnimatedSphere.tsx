@@ -10,7 +10,7 @@ function WireframeSphere({ color = '#8f2c34' }: { color?: string }) {
   const meshRef = useRef<THREE.LineSegments>(null);
   const auxRef = useRef<THREE.LineSegments>(null);
   const lightPointsRef = useRef<THREE.Points>(null);
-  const [time, setTime] = useState(0);
+  const [, setTime] = useState(0);
   const [brainState, setBrainState] = useState({ 
     attention: 0.5, 
     activity: 0.3, 
@@ -301,22 +301,23 @@ function WireframeSphere({ color = '#8f2c34' }: { color?: string }) {
     // "意識状態"の更新
     setBrainState(prev => {
       const timeSinceLastThought = newTime - prev.lastThought;
-      const timeSinceLastHeartbeat = newTime - prev.lastHeartbeat;
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      newTime - prev.lastHeartbeat;
       let newThoughtIntensity = prev.thoughtIntensity;
       let newLastThought = prev.lastThought;
-      let newLastHeartbeat = prev.lastHeartbeat;
+      const newLastHeartbeat = prev.lastHeartbeat;
       let newHeartbeatIntensity = prev.heartbeatIntensity;
       
       // より複雑な思考パターン
       let newProcessingMode = prev.processingMode;
       let newDeepThinking = prev.deepThinking;
       let newLearningStrength = prev.learningStrength * 0.98;
-      let newKnowledgeCluster = prev.knowledgeCluster.clone();
+      const newKnowledgeCluster = prev.knowledgeCluster.clone();
       
       // 思考モードの遷移
       if (timeSinceLastThought > 3 && Math.random() < 0.015) {
         const modes = ['analyzing', 'generating', 'deep-think'];
-        newProcessingMode = modes[Math.floor(Math.random() * modes.length)] as any;
+        newProcessingMode = modes[Math.floor(Math.random() * modes.length)] as 'idle' | 'analyzing' | 'generating' | 'deep-think';
         newThoughtIntensity = Math.random() * 0.9 + 0.3;
         newLastThought = newTime;
         
@@ -445,14 +446,14 @@ function WireframeSphere({ color = '#8f2c34' }: { color?: string }) {
           const fatigueReduction = brainState.fatigue * -0.1;
           
           // コア回路は"注意"レベルに応じて活動
-          let attentionBoost = param.isCore ? brainState.attention * 0.3 : 0;
+          const attentionBoost = param.isCore ? brainState.attention * 0.3 : 0;
           
           const pulse = Math.sin(newTime * param.frequency + param.phase) * param.amplitude + 0.7;
           const vitalSigns = heartbeatBoost + breathingBoost + bloodFlowBoost + temperatureBoost + oxygenBoost + fatigueReduction;
           const intensity = pulse + modeBoost + learningBoost + attentionBoost + vitalSigns;
           
           // 体温に応じた色調変化
-          let colorTemperature = baseColor.clone();
+          const colorTemperature = baseColor.clone();
           if (brainState.temperature > 37.5) {
             colorTemperature.lerp(new THREE.Color('#af4c54'), 0.1); // 熱で赤く
           } else if (brainState.temperature < 36.8) {
@@ -525,7 +526,6 @@ function WireframeSphere({ color = '#8f2c34' }: { color?: string }) {
       if (sizeAttribute && colorAttribute) {
         const sizes = sizeAttribute.array as Float32Array;
         const colors = colorAttribute.array as Float32Array;
-        const baseColor = new THREE.Color('#8f2c34');
         
         for (let i = 0; i < neuronParams.length; i++) {
           const neuron = neuronParams[i];
@@ -581,7 +581,7 @@ function WireframeSphere({ color = '#8f2c34' }: { color?: string }) {
           neuron.fireStrength = Math.min(totalIntensity, 1.4);
           
           // 色の変化：処理モードに応じて色調を微調整
-          let colorShift = new THREE.Color('#8f2c34');
+          const colorShift = new THREE.Color('#8f2c34');
           if (brainState.processingMode === 'analyzing') {
             colorShift.lerp(new THREE.Color('#6f4c94'), 0.2); // より青紫がかった色
           } else if (brainState.processingMode === 'generating') {
@@ -602,7 +602,7 @@ function WireframeSphere({ color = '#8f2c34' }: { color?: string }) {
                                  (brainState.oxygenLevel * 0.2);
           
           // 疲労度で色を微調整
-          let fatigueColor = colorShift.clone();
+          const fatigueColor = colorShift.clone();
           if (brainState.fatigue > 0.5) {
             fatigueColor.lerp(new THREE.Color('#6f6c84'), brainState.fatigue * 0.2); // 疲労で暗く
           }

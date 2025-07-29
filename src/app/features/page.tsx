@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import Layout from '@/components/layout/Layout';
 
 export default function Features() {
@@ -10,9 +11,9 @@ export default function Features() {
           <div className="max-w-4xl mx-auto px-4 py-3">
             <ol className="flex items-center space-x-2 text-sm text-gray-600">
               <li>
-                <a href="/" className="hover:text-primary">
+                <Link href="/" className="hover:text-primary">
                   ホーム
-                </a>
+                </Link>
               </li>
               <li>
                 <span className="text-gray-400">/</span>

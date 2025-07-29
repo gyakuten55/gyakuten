@@ -94,7 +94,7 @@ export default function LLMOConsultingPage() {
                 </div>
                 <div className="mt-6">
                   <p className="text-xl font-bold text-primary">
-                    ビジネス全体をAI時代の最適解へ導く"泥臭い成果主義"
+                    ビジネス全体をAI時代の最適解へ導く&ldquo;泥臭い成果主義&rdquo;
                   </p>
                 </div>
               </div>

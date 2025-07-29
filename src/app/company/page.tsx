@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import Layout from '@/components/layout/Layout';
 import Image from 'next/image';
 
@@ -11,9 +12,9 @@ export default function Company() {
           <div className="max-w-4xl mx-auto px-4 py-3">
             <ol className="flex items-center space-x-2 text-sm text-gray-600">
               <li>
-                <a href="/" className="hover:text-primary">
+                <Link href="/" className="hover:text-primary">
                   ホーム
-                </a>
+                </Link>
               </li>
               <li>
                 <span className="text-gray-400">/</span>
@@ -121,7 +122,7 @@ export default function Company() {
               </p>
               
               <p className="leading-loose">
-                GYAKUTENは <strong>LLMO最適化・戦略的Web制作・業務システム開発・DXコンサル</strong> まで幅広く仕掛け、停滞した数字を"バズ"に跳ね上げる。
+                GYAKUTENは <strong>LLMO最適化・戦略的Web制作・業務システム開発・DXコンサル</strong> まで幅広く仕掛け、停滞した数字を&ldquo;バズ&rdquo;に跳ね上げる。
               </p>
               
               <p className="leading-loose">

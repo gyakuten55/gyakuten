@@ -1,4 +1,18 @@
-import { SiteAnalysisResult, ScoreBreakdown } from './siteAnalyzer';
+import { SiteAnalysisResult } from './siteAnalyzer';
+
+interface CategoryDetail {
+  description: string;
+  actualValue?: string;
+  score: number;
+  maxScore: number;
+  suggestion?: string;
+}
+
+interface Category {
+  score: number;
+  maxScore: number;
+  details: Record<string, CategoryDetail>;
+}
 
 export function generateHtmlReport(analysis: SiteAnalysisResult): string {
   const scoreColor = (score: number, maxScore: number): string => {
@@ -315,7 +329,7 @@ export function generateHtmlReport(analysis: SiteAnalysisResult): string {
 </html>
   `;
 
-  function generateCategorySection(title: string, category: any): string {
+  function generateCategorySection(title: string, category: Category): string {
     const percentage = (category.score / category.maxScore) * 100;
     const color = scoreColor(category.score, category.maxScore);
     
@@ -331,7 +345,7 @@ export function generateHtmlReport(analysis: SiteAnalysisResult): string {
                     <span>${percentage.toFixed(1)}%</span>
                 </div>
                 
-                ${Object.entries(category.details).map(([key, detail]: [string, any]) => `
+                ${Object.entries(category.details).map(([, detail]: [string, CategoryDetail]) => `
                     <div class="detail-item">
                         <div class="detail-description">
                             ${detail.description}

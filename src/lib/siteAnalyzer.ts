@@ -1,6 +1,5 @@
-import puppeteer from 'puppeteer';
+import puppeteer, { Browser, Page } from 'puppeteer';
 import { JSDOM } from 'jsdom';
-import lighthouse from 'lighthouse';
 
 export interface SiteAnalysisResult {
   url: string;
@@ -123,7 +122,7 @@ interface StructuredDataAnalysis {
 }
 
 export class SiteAnalyzer {
-  private browser: puppeteer.Browser | null = null;
+  private browser: Browser | null = null;
 
   async initBrowser() {
     if (!this.browser) {
@@ -283,7 +282,7 @@ export class SiteAnalyzer {
     };
   }
 
-  private async analyzePerformance(page: puppeteer.Page, loadTime: number): Promise<PerformanceAnalysis> {
+  private async analyzePerformance(page: Page, loadTime: number): Promise<PerformanceAnalysis> {
     try {
       const metrics = await page.evaluate(() => {
         const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
@@ -309,7 +308,7 @@ export class SiteAnalyzer {
         cumulativeLayoutShift: 0, // 簡略化
         performanceScore: Math.max(0, performanceScore)
       };
-    } catch (error) {
+    } catch {
       return {
         loadTime,
         firstContentfulPaint: 0,
@@ -386,7 +385,7 @@ export class SiteAnalyzer {
         if (type.includes('HowTo')) hasHowToSchema = true;
         if (type.includes('Organization')) hasOrganizationSchema = true;
         if (type.includes('Article')) hasArticleSchema = true;
-      } catch (e) {
+      } catch {
         // Invalid JSON
       }
     });

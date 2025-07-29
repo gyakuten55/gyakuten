@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import Layout from '@/components/layout/Layout';
 
 export default function Materials() {
@@ -111,9 +112,9 @@ export default function Materials() {
             <div className="max-w-4xl mx-auto px-4 py-3">
               <ol className="flex items-center space-x-2 text-sm text-gray-600">
                 <li>
-                  <a href="/" className="hover:text-primary">
+                  <Link href="/" className="hover:text-primary">
                     ホーム
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <span className="text-gray-400">/</span>
@@ -165,12 +166,12 @@ export default function Materials() {
                   </ul>
                 </div>
                 <div className="mt-6">
-                  <a 
+                  <Link 
                     href="/" 
                     className="bg-primary text-white px-6 py-3 rounded-md text-sm font-medium hover:bg-primary/90 transition-colors inline-block mr-4"
                   >
                     ホームに戻る
-                  </a>
+                  </Link>
                   <a 
                     href="/contact" 
                     className="bg-gray-200 text-gray-700 px-6 py-3 rounded-md text-sm font-medium hover:bg-gray-300 transition-colors inline-block"
@@ -194,9 +195,9 @@ export default function Materials() {
           <div className="max-w-4xl mx-auto px-4 py-3">
             <ol className="flex items-center space-x-2 text-sm text-gray-600">
               <li>
-                <a href="/" className="hover:text-primary">
+                <Link href="/" className="hover:text-primary">
                   ホーム
-                </a>
+                </Link>
               </li>
               <li>
                 <span className="text-gray-400">/</span>

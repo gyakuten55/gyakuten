@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Article } from '@/types/cms';
 
 interface KnowledgeSectionProps {
@@ -54,9 +55,11 @@ export default function KnowledgeSection({ articles }: KnowledgeSectionProps) {
               <div className="relative overflow-hidden">
                 {article.featuredImage && (
                   <div className="aspect-[16/9] overflow-hidden mb-4">
-                    <img
+                    <Image
                       src={article.featuredImage.url}
                       alt={article.title}
+                      width={article.featuredImage.width || 800}
+                      height={article.featuredImage.height || 450}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-out"
                     />
                   </div>
@@ -64,7 +67,7 @@ export default function KnowledgeSection({ articles }: KnowledgeSectionProps) {
                 <div className="space-y-3">
                   <div className="flex items-center gap-3 text-xs">
                     <span className="text-gray-500">
-                      {new Date(article.publishedAt).toLocaleDateString('ja-JP')}
+                      {new Date(article.publishedAt || article.createdAt).toLocaleDateString('ja-JP')}
                     </span>
                     {article.category && (
                       <span className="text-primary font-medium">

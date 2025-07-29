@@ -58,7 +58,7 @@ export default function NewsSection({ articles }: NewsSectionProps) {
                   <div className="flex-1">
                     <div className="flex items-center gap-4 mb-2">
                       <span className="text-sm text-gray-500">
-                        {new Date(article.publishedAt).toLocaleDateString('ja-JP')}
+                        {new Date(article.publishedAt || article.createdAt).toLocaleDateString('ja-JP')}
                       </span>
                       {article.category && (
                         <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary">
