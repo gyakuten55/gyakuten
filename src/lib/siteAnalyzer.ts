@@ -1,4 +1,3 @@
-import puppeteer, { Browser, Page } from 'puppeteer';
 import { JSDOM } from 'jsdom';
 
 export interface SiteAnalysisResult {
@@ -122,36 +121,41 @@ interface StructuredDataAnalysis {
 }
 
 export class SiteAnalyzer {
-  private browser: Browser | null = null;
-
-  async initBrowser() {
-    if (!this.browser) {
-      this.browser = await puppeteer.launch({
-        headless: true,
-        args: ['--no-sandbox', '--disable-setuid-sandbox']
+  
+  // Puppeteerの代わりにfetchベースの分析を実装
+  private async fetchSiteContent(url: string): Promise<{ html: string; responseTime: number }> {
+    const startTime = Date.now();
+    
+    try {
+      const response = await fetch(url, {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (compatible; GYAKUTENBot/1.0; +https://gyaku-ten.jp)'
+        },
+        signal: AbortSignal.timeout(30000) // 30秒タイムアウト
       });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const html = await response.text();
+      const responseTime = Date.now() - startTime;
+      
+      return { html, responseTime };
+    } catch (error) {
+      throw new Error(`サイトの取得に失敗しました: ${error}`);
     }
   }
 
   async closeBrowser() {
-    if (this.browser) {
-      await this.browser.close();
-      this.browser = null;
-    }
+    // HTTPベースなのでブラウザを閉じる必要なし
+    return Promise.resolve();
   }
 
   async analyzeSite(url: string): Promise<SiteAnalysisResult> {
     try {
-      await this.initBrowser();
-      
-      const page = await this.browser!.newPage();
-      await page.setUserAgent('Mozilla/5.0 (compatible; GYAKUTEN-Bot/1.0; +https://gyaku-ten.jp/)');
-      
-      const startTime = Date.now();
-      await page.goto(url, { waitUntil: 'networkidle2', timeout: 30000 });
-      const loadTime = Date.now() - startTime;
-
-      const html = await page.content();
+      // fetchベースでHTMLを取得
+      const { html, responseTime } = await this.fetchSiteContent(url);
       const dom = new JSDOM(html);
       const document = dom.window.document;
 
@@ -162,12 +166,10 @@ export class SiteAnalyzer {
       // 各種分析実行
       const headingStructure = this.analyzeHeadings(document);
       const technicalSeo = this.analyzeTechnicalSeo(document);
-      const performance = await this.analyzePerformance(page, loadTime);
+      const performance = this.analyzePerformanceSimple(responseTime);
       const contentQuality = this.analyzeContentQuality(document);
       const mobileOptimization = this.analyzeMobileOptimization(document);
       const structuredData = this.analyzeStructuredData(document);
-
-      await page.close();
 
       // 総合スコア計算とスコア内訳生成
       const scoreResult = this.calculateOverallScore({
@@ -282,41 +284,20 @@ export class SiteAnalyzer {
     };
   }
 
-  private async analyzePerformance(page: Page, loadTime: number): Promise<PerformanceAnalysis> {
-    try {
-      const metrics = await page.evaluate(() => {
-        const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
-        const paint = performance.getEntriesByType('paint');
-        const fcp = paint.find(entry => entry.name === 'first-contentful-paint')?.startTime || 0;
-        
-        return {
-          fcp,
-          domContentLoaded: navigation.domContentLoadedEventEnd - navigation.domContentLoadedEventStart
-        };
-      });
+  private analyzePerformanceSimple(responseTime: number): PerformanceAnalysis {
+    // 簡易的なパフォーマンススコア計算
+    let performanceScore = 100;
+    if (responseTime > 3000) performanceScore -= 20;
+    if (responseTime > 5000) performanceScore -= 30;
+    if (responseTime > 10000) performanceScore -= 40;
 
-      // 簡易的なパフォーマンススコア計算
-      let performanceScore = 100;
-      if (loadTime > 3000) performanceScore -= 20;
-      if (loadTime > 5000) performanceScore -= 30;
-      if (metrics.fcp > 2500) performanceScore -= 15;
-
-      return {
-        loadTime,
-        firstContentfulPaint: metrics.fcp,
-        largestContentfulPaint: 0, // 簡略化
-        cumulativeLayoutShift: 0, // 簡略化
-        performanceScore: Math.max(0, performanceScore)
-      };
-    } catch {
-      return {
-        loadTime,
-        firstContentfulPaint: 0,
-        largestContentfulPaint: 0,
-        cumulativeLayoutShift: 0,
-        performanceScore: 50
-      };
-    }
+    return {
+      loadTime: responseTime,
+      firstContentfulPaint: 0, // 簡易版では取得不可
+      largestContentfulPaint: 0, // 簡易版では取得不可
+      cumulativeLayoutShift: 0, // 簡易版では取得不可
+      performanceScore: Math.max(performanceScore, 10)
+    };
   }
 
   private analyzeContentQuality(document: Document): ContentQualityAnalysis {
