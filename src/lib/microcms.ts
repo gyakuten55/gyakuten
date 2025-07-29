@@ -38,6 +38,10 @@ export const getBlogs = async (queries?: MicroCMSQueries): Promise<MicroCMSListR
     return listData;
   } catch (error) {
     console.error('ブログデータの取得に失敗しました:', error);
+    console.error('Environment check:', {
+      serviceDomain: process.env.MICROCMS_SERVICE_DOMAIN ? 'Set' : 'Not set',
+      apiKey: process.env.MICROCMS_API_KEY ? 'Set' : 'Not set',
+    });
     return {
       contents: [],
       totalCount: 0,
