@@ -13,11 +13,13 @@ export const metadata: Metadata = {
     description: 'AI検索時代に対応したビジネス戦略の最新情報をメールマガジンでお届けします。',
     type: 'website',
     locale: 'ja_JP',
+    images: ['/newsletter-ogp.jpg'],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'メルマガ登録 | GYAKUTEN',
     description: 'AI検索時代に対応したビジネス戦略の最新情報をメールマガジンでお届けします。',
+    images: ['/newsletter-ogp.jpg'],
   },
 };
 
