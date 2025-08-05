@@ -1,0 +1,87 @@
+/* TEAM */
+
+Founder & CEO: 中山 蒼 (Nakayama Aoi)
+Contact: nakayama [at] gyaku-ten.jp
+Twitter: @nakayama_aoi
+From: Tokyo, Japan
+
+Development Team: 6 people (including contractors)
+Location: Tokyo, Japan
+
+/* THANKS */
+
+Technologies: Next.js 15, TypeScript, Tailwind CSS v4
+Hosting: Vercel
+Domain: gyaku-ten.jp
+Analytics: Custom implementation
+AI Optimization: LLMO (Large Language Model Optimization)
+
+/* SITE */
+
+Last update: 2025/01/25
+Language: Japanese / English
+Doctype: HTML5
+IDE: VS Code, Claude Code
+Standards: W3C, Web Accessibility
+Framework: Next.js App Router
+Architecture: JAMstack
+
+/* COMPANY */
+
+Company: 合同会社GYAKUTEN (GYAKUTEN LLC)
+Founded: March 3, 2025
+Location: Shibuya, Tokyo, Japan
+Mission: すべての逆境に、最高の逆転劇を。
+         (Turn every setback into the greatest comeback)
+
+Services:
+- LLMO (Large Language Model Optimization) Consulting
+- AI-Optimized Web Development
+- Custom System Development
+- DX (Digital Transformation) Consulting
+- Strategic Content Writing
+- Business Mentorship Program
+
+/* PHILOSOPHY */
+
+We believe in turning challenges into opportunities.
+Our approach combines cutting-edge AI technology with
+human creativity to deliver maximum impact with
+minimal investment.
+
+We specialize in LLMO - optimizing content and websites
+for the age of AI-powered search and discovery.
+
+/* META */
+
+Human-readable: Yes
+Machine-readable: Also optimized for AI crawlers
+Purpose: Building trust through transparency
+Updated: Regularly (check Git history)
+
+/* CONTACT */
+
+Business Inquiries: contact@gyaku-ten.jp
+Media Relations: media@gyaku-ten.jp  
+Technical Support: support@gyaku-ten.jp
+Main Office: Tokyo, Shibuya, Shinsemcho 10
+
+/* ACKNOWLEDGMENTS */
+
+Special thanks to:
+- Our clients who trust us with their digital transformation
+- The open-source community
+- AI researchers advancing language model technology
+- Everyone working to make the web more accessible
+
+Built with ❤️ in Tokyo
+
+---
+この人間の後ろには、
+すべての逆境を逆転劇に変える情熱があります。
+
+There are passionate humans behind this website,
+turning every setback into the greatest comeback.
+
+For the latest updates: https://gyaku-ten.jp
+GitHub: https://github.com/gyakuten-llc
