@@ -17,6 +17,7 @@
 ## Knowledge & Resources
 
 - [コラム・ナレッジ](https://gyaku-ten.jp/column): LLMO・AI検索最適化・デジタルマーケティングに関する専門記事を定期更新。中小企業向けの実践的な情報を提供。
+- [よくある質問](https://gyaku-ten.jp/faq): LLMOサービスに関する包括的なFAQ。料金、効果、実装方法、技術的な疑問まで詳しく解説。サービス利用前の疑問解決に最適。
 - [資料請求](https://gyaku-ten.jp/materials): LLMO・AI検索最適化に関する詳細資料を無料でダウンロード可能。サービス説明資料や導入事例を含む。
 - [特徴・強み](https://gyaku-ten.jp/features): 合同会社GYAKUTENの特徴とLLMO最適化における強み。他社との差別化ポイントを説明。
 

@@ -6,6 +6,9 @@ import NewsSection from '@/components/NewsSection';
 import CTASection from '@/components/CTASection';
 import { getKnowledgeArticles, getNewsArticles } from '@/lib/microcms';
 
+// ISR設定: 60秒ごとに再検証
+export const revalidate = 60;
+
 export default async function Home() {
   // 各カテゴリの最新記事を取得
   const [knowledgeArticles, newsArticles] = await Promise.all([

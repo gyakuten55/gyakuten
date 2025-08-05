@@ -12,7 +12,6 @@ export interface ServiceItem {
 }
 
 export const navigationItems: NavigationItem[] = [
-  { name: "ホーム", href: "/" },
   { name: "特徴", href: "/features" },
   { name: "コラム", href: "/column" },
   {
@@ -27,6 +26,7 @@ export const navigationItems: NavigationItem[] = [
       { name: "逆転ブートキャンプ", href: "/services/bootcamp" },
     ],
   },
+  { name: "よくある質問", href: "/faq" },
   { name: "会社情報", href: "/company" },
   { name: "資料請求", href: "/materials" },
 ];
