@@ -1,4 +1,4 @@
-import { JSDOM } from 'jsdom';
+import { JSDOM, VirtualConsole } from 'jsdom';
 
 export interface SiteAnalysisResult {
   url: string;
@@ -196,7 +196,17 @@ export class SiteAnalyzer {
       
       // fetchベースでHTMLを取得
       console.log(`[${new Date().toISOString()}] Fetching site content...`);
-      const { html, responseTime } = await this.fetchSiteContent(url);
+      let html: string;
+      let responseTime: number;
+      try {
+        const result = await this.fetchSiteContent(url);
+        html = result.html;
+        responseTime = result.responseTime;
+        console.log(`[${new Date().toISOString()}] Successfully fetched ${html.length} characters`);
+      } catch (fetchError) {
+        console.error(`[${new Date().toISOString()}] Fetch failed for ${url}:`, fetchError);
+        throw fetchError;
+      }
       
       // JSDOM初期化（Vercel環境対応）
       console.log(`[${new Date().toISOString()}] Initializing JSDOM...`);
@@ -211,7 +221,7 @@ export class SiteAnalyzer {
           includeNodeLocations: false,
           storageQuota: 10000000, // 10MB制限
           // メモリ使用量を制限
-          virtualConsole: new (await import('jsdom')).VirtualConsole()
+          virtualConsole: new VirtualConsole()
         });
         document = dom.window.document;
         console.log(`[${new Date().toISOString()}] JSDOM initialized successfully`);
