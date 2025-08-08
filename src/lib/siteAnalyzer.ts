@@ -373,13 +373,133 @@ export class SiteAnalyzer {
         schemaCount: 0
       },
       overallScore: baseScore,
-      scoreBreakdown: this.createScoreBreakdown(baseScore, isOwnSite, true),
+      scoreBreakdown: this.createMinimalScoreBreakdown(baseScore, isOwnSite),
       recommendations: [
         'サイトへのアクセス時にエラーが発生しました。',
         'サーバーの設定やネットワークの問題が考えられます。',
         'サイトの可用性と応答速度の改善をおすすめします。',
         '詳細な診断については、お気軽にお問い合わせください。'
       ]
+    };
+  }
+
+  // 最小限フォールバック用のスコアブレークダウン
+  private createMinimalScoreBreakdown(baseScore: number, isOwnSite: boolean): ScoreBreakdown {
+    const adjustedScore = isOwnSite ? Math.min(baseScore + 10, 95) : baseScore;
+    
+    return {
+      headingStructure: {
+        score: Math.round(adjustedScore * 0.2),
+        maxScore: 20,
+        details: {
+          h1Present: {
+            score: 0,
+            maxScore: 10,
+            description: 'サイトアクセス不可のため分析できませんでした'
+          },
+          headingHierarchy: {
+            score: 0,
+            maxScore: 10,
+            description: 'サイトアクセス不可のため分析できませんでした'
+          }
+        }
+      },
+      technicalSeo: {
+        score: Math.round(adjustedScore * 0.25),
+        maxScore: 25,
+        details: {
+          titleTag: {
+            score: 0,
+            maxScore: 8,
+            description: 'サイトアクセス不可のため分析できませんでした'
+          },
+          metaDescription: {
+            score: 0,
+            maxScore: 7,
+            description: 'サイトアクセス不可のため分析できませんでした'
+          },
+          canonical: {
+            score: 0,
+            maxScore: 5,
+            description: 'サイトアクセス不可のため分析できませんでした'
+          },
+          openGraph: {
+            score: 0,
+            maxScore: 5,
+            description: 'サイトアクセス不可のため分析できませんでした'
+          }
+        }
+      },
+      performance: {
+        score: Math.round(adjustedScore * 0.2),
+        maxScore: 20,
+        details: {
+          loadTime: {
+            score: 0,
+            maxScore: 12,
+            description: 'サイトアクセス不可のため分析できませんでした',
+            actualValue: 'N/A'
+          },
+          performanceScore: {
+            score: 0,
+            maxScore: 8,
+            description: 'サイトアクセス不可のため分析できませんでした',
+            actualValue: 'N/A'
+          }
+        }
+      },
+      contentQuality: {
+        score: Math.round(adjustedScore * 0.2),
+        maxScore: 20,
+        details: {
+          wordCount: {
+            score: 0,
+            maxScore: 8,
+            description: 'サイトアクセス不可のため分析できませんでした',
+            actualValue: 'N/A'
+          },
+          altTextCoverage: {
+            score: 0,
+            maxScore: 6,
+            description: 'サイトアクセス不可のため分析できませんでした',
+            actualValue: 'N/A'
+          },
+          contentDepth: {
+            score: 0,
+            maxScore: 6,
+            description: 'サイトアクセス不可のため分析できませんでした',
+            actualValue: 'N/A'
+          }
+        }
+      },
+      mobileOptimization: {
+        score: Math.round(adjustedScore * 0.1),
+        maxScore: 10,
+        details: {
+          viewportMeta: {
+            score: 0,
+            maxScore: 5,
+            description: 'サイトアクセス不可のため分析できませんでした'
+          },
+          responsive: {
+            score: 0,
+            maxScore: 5,
+            description: 'サイトアクセス不可のため分析できませんでした'
+          }
+        }
+      },
+      structuredData: {
+        score: Math.round(adjustedScore * 0.05),
+        maxScore: 5,
+        details: {
+          schemaPresent: {
+            score: 0,
+            maxScore: 5,
+            description: 'サイトアクセス不可のため分析できませんでした',
+            actualValue: 'N/A'
+          }
+        }
+      }
     };
   }
 
