@@ -3,6 +3,8 @@ import { sendDiagnosisNotification, sendAnalysisResult, DiagnosisFormData } from
 import { SiteAnalyzer, SiteAnalysisResult } from '@/lib/siteAnalyzer';
 import { performAdvancedSecurityCheck, getClientIP, getSecurityMetrics } from '@/lib/advancedSecurityManager';
 
+export const runtime = 'nodejs';
+
 async function startAsyncAnalysis(url: string, email: string, formData: DiagnosisFormData) {
   const startTime = Date.now();
   let analyzer: SiteAnalyzer | null = null;
