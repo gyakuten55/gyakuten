@@ -4,14 +4,25 @@ import { SiteAnalyzer } from '@/lib/siteAnalyzer';
 import { performAdvancedSecurityCheck, getClientIP, getSecurityMetrics } from '@/lib/advancedSecurityManager';
 
 async function startAsyncAnalysis(url: string, email: string, formData: DiagnosisFormData) {
+  const startTime = Date.now();
+  let analyzer: SiteAnalyzer | null = null;
+  
   try {
     console.log(`[${new Date().toISOString()}] Starting async analysis for: ${url}`);
     
-    const analyzer = new SiteAnalyzer();
+    analyzer = new SiteAnalyzer();
     console.log(`[${new Date().toISOString()}] SiteAnalyzer initialized`);
     
-    const analysisResult = await analyzer.analyzeSite(url);
-    console.log(`[${new Date().toISOString()}] Analysis completed for: ${url}, Score: ${analysisResult.overallScore}`);
+    // Vercel環境でのタイムアウト対策（25秒制限）
+    const analysisPromise = analyzer.analyzeSite(url);
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => reject(new Error('Analysis timeout after 25 seconds')), 25000);
+    });
+    
+    const analysisResult = await Promise.race([analysisPromise, timeoutPromise]) as Record<string, unknown>;
+    const analysisTime = Date.now() - startTime;
+    
+    console.log(`[${new Date().toISOString()}] Analysis completed for: ${url}, Score: ${analysisResult.overallScore}, Time: ${analysisTime}ms`);
     
     await analyzer.closeBrowser();
     console.log(`[${new Date().toISOString()}] Browser closed`);
@@ -23,7 +34,7 @@ async function startAsyncAnalysis(url: string, email: string, formData: Diagnosi
       company: formData.company
     });
     
-    console.log(`[${new Date().toISOString()}] ✅ Analysis result successfully sent to: ${email}`);
+    console.log(`[${new Date().toISOString()}] ✅ Analysis result successfully sent to: ${email} (Total time: ${Date.now() - startTime}ms)`);
   } catch (error) {
     const errorId = `ANALYSIS_ERR_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     
