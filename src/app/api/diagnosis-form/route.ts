@@ -13,10 +13,10 @@ async function startAsyncAnalysis(url: string, email: string, formData: Diagnosi
     analyzer = new SiteAnalyzer();
     console.log(`[${new Date().toISOString()}] SiteAnalyzer initialized`);
     
-    // Vercel環境でのタイムアウト対策（25秒制限）
+    // Vercel環境でのタイムアウト対策（15秒制限）
     const analysisPromise = analyzer.analyzeSite(url);
     const timeoutPromise = new Promise((_, reject) => {
-      setTimeout(() => reject(new Error('Analysis timeout after 25 seconds')), 25000);
+      setTimeout(() => reject(new Error('Analysis timeout after 15 seconds')), 15000);
     });
     
     const analysisResult = await Promise.race([analysisPromise, timeoutPromise]) as SiteAnalysisResult;

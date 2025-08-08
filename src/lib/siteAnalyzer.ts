@@ -128,16 +128,13 @@ export class SiteAnalyzer {
     console.log(`[${new Date().toISOString()}] Fetching content from: ${url}`);
     
     try {
-      // Vercel環境でのタイムアウト制限を考慮（8秒に短縮）
+      // Vercel環境での超短タイムアウト（3秒）でハングアップを防止
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => {
-        console.log(`[${new Date().toISOString()}] Fetch timeout triggered for: ${url}`);
-        controller.abort();
-      }, 8000);
       
       console.log(`[${new Date().toISOString()}] Initiating fetch request for: ${url}`);
       
-      const response = await fetch(url, {
+      // Promise.raceを使用して確実にタイムアウトを実装
+      const fetchPromise = fetch(url, {
         headers: {
           'User-Agent': 'Mozilla/5.0 (compatible; GYAKUTENBot/1.0; +https://gyaku-ten.jp)',
           'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -148,14 +145,21 @@ export class SiteAnalyzer {
           'Upgrade-Insecure-Requests': '1',
         },
         signal: controller.signal,
-        // Vercel Edge Runtime互換性のためのオプション
         redirect: 'follow',
         referrerPolicy: 'no-referrer-when-downgrade'
       });
       
-      console.log(`[${new Date().toISOString()}] Fetch response received - Status: ${response.status}, URL: ${url}`);
+      const timeoutPromise = new Promise<never>((_, reject) => {
+        setTimeout(() => {
+          console.log(`[${new Date().toISOString()}] Fetch timeout triggered for: ${url}`);
+          controller.abort();
+          reject(new Error(`Fetch timeout after 3 seconds for ${url}`));
+        }, 3000);
+      });
       
-      clearTimeout(timeoutId);
+      const response = await Promise.race([fetchPromise, timeoutPromise]);
+      
+      console.log(`[${new Date().toISOString()}] Fetch response received - Status: ${response.status}, URL: ${url}`);
       
       if (!response.ok) {
         console.error(`[${new Date().toISOString()}] HTTP error for ${url}: ${response.status} ${response.statusText}`);
@@ -177,10 +181,18 @@ export class SiteAnalyzer {
       return { html, responseTime };
     } catch (error) {
       const responseTime = Date.now() - startTime;
-      console.error(`[${new Date().toISOString()}] Fetch failed for ${url}:`, error);
+      console.error(`[${new Date().toISOString()}] Fetch failed for ${url} after ${responseTime}ms:`, {
+        error: error instanceof Error ? {
+          name: error.name,
+          message: error.message,
+          stack: error.stack
+        } : error,
+        url,
+        responseTime
+      });
       
       if (error instanceof Error) {
-        if (error.name === 'AbortError') {
+        if (error.name === 'AbortError' || error.message.includes('timeout')) {
           throw new Error(`サイトの読み込みがタイムアウトしました (${responseTime}ms)`);
         }
         throw new Error(`サイトの取得に失敗しました: ${error.message}`);
