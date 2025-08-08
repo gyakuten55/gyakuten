@@ -11,6 +11,34 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Development server runs on http://localhost:3000
 
+## Security & Cost Protection
+
+このプロジェクトには高度なセキュリティシステムが実装されており、Vercelの従量課金を保護します：
+
+### 制限値（デフォルト）
+- **全体制限**: 1日500リクエスト、緊急停止1000リクエスト
+- **IP制限**: 1時間2リクエスト、1日5リクエスト
+- **Bot検出**: 高度なアルゴリズムによる自動検出・ブロック
+- **自動管理**: 3回違反で自動IP blacklist
+
+### 必須環境変数
+```bash
+ADMIN_API_KEY="strong-admin-key-32chars-minimum"
+```
+
+### セキュリティ監視API
+```bash
+# メトリクス確認
+GET /api/security-metrics
+Authorization: Bearer ${ADMIN_API_KEY}
+
+# IP管理
+POST /api/security-metrics
+Authorization: Bearer ${ADMIN_API_KEY}
+```
+
+詳細は `SECURITY-CONFIG.md` を参照してください。
+
 ## Architecture Overview
 
 This is a Next.js 15 corporate website for 合同会社GYAKUTEN, built with TypeScript and Tailwind CSS v4.

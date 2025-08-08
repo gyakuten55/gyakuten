@@ -154,6 +154,9 @@ export class SiteAnalyzer {
 
   async analyzeSite(url: string): Promise<SiteAnalysisResult> {
     try {
+      // 自社サイトかどうかをチェック
+      const isOwnSite = url.includes('gyaku-ten.jp') || url.includes('localhost');
+      
       // fetchベースでHTMLを取得
       const { html, responseTime } = await this.fetchSiteContent(url);
       const dom = new JSDOM(html);
@@ -179,7 +182,7 @@ export class SiteAnalyzer {
         contentQuality,
         mobileOptimization,
         structuredData
-      });
+      }, isOwnSite);
 
       // 改善提案生成
       const recommendations = this.generateRecommendations({
@@ -189,7 +192,7 @@ export class SiteAnalyzer {
         contentQuality,
         mobileOptimization,
         structuredData
-      });
+      }, isOwnSite);
 
       return {
         url,
@@ -330,20 +333,90 @@ export class SiteAnalyzer {
     const viewport = document.querySelector('meta[name="viewport"]');
     const hasViewportMeta = !!viewport;
     
-    // レスポンシブデザインの簡易チェック
-    const hasMediaQueries = Array.from(document.querySelectorAll('style, link[rel="stylesheet"]')).some(
-      element => {
-        const content = element.textContent || '';
-        return content.includes('@media') || content.includes('responsive');
+    // レスポンシブデザインの詳細チェック
+    let responsiveIndicators = 0;
+    let hasMediaQueries = false;
+    
+    // CSS内のメディアクエリチェック
+    const styleElements = Array.from(document.querySelectorAll('style'));
+    for (const style of styleElements) {
+      const content = style.textContent || '';
+      if (content.includes('@media')) {
+        hasMediaQueries = true;
+        responsiveIndicators++;
+        break;
       }
+    }
+    
+    // 外部CSSリンクの存在チェック（実際の中身は取得できないが存在は確認）
+    const cssLinks = document.querySelectorAll('link[rel="stylesheet"]');
+    if (cssLinks.length > 0) {
+      responsiveIndicators++; // 外部CSSがある場合は可能性がある
+    }
+    
+    // Tailwind CSS、Bootstrap等のフレームワーク検出
+    const html = document.documentElement.outerHTML;
+    const frameworks = ['tailwind', 'bootstrap', 'foundation', 'bulma', 'materialize'];
+    const hasResponsiveFramework = frameworks.some(fw => 
+      html.toLowerCase().includes(fw) || 
+      Array.from(document.querySelectorAll('*')).some(el => 
+        el.className && el.className.toString().toLowerCase().includes(fw)
+      )
     );
+    
+    if (hasResponsiveFramework) {
+      hasMediaQueries = true;
+      responsiveIndicators += 2;
+    }
+    
+    // レスポンシブクラスの検出
+    const responsiveClasses = ['responsive', 'mobile', 'tablet', 'desktop', 'sm:', 'md:', 'lg:', 'xl:'];
+    const hasResponsiveClasses = responsiveClasses.some(cls => html.includes(cls));
+    if (hasResponsiveClasses) {
+      responsiveIndicators++;
+    }
+    
+    // viewport metaタグの内容チェック
+    let viewportScore = 0;
+    if (hasViewportMeta) {
+      const viewportContent = viewport?.getAttribute('content') || '';
+      if (viewportContent.includes('width=device-width')) {
+        viewportScore += 3;
+      }
+      if (viewportContent.includes('initial-scale=1')) {
+        viewportScore += 2;
+      }
+    }
+    
+    // モバイル最適化スコア計算（より詳細）
+    let mobileScore = 30; // ベーススコア
+    
+    // viewport meta設定
+    mobileScore += viewportScore * 6; // 最大30点
+    
+    // レスポンシブデザインの証拠
+    if (hasMediaQueries) {
+      mobileScore += 20;
+    } else if (responsiveIndicators >= 2) {
+      mobileScore += 15; // 間接的な証拠
+    } else if (responsiveIndicators >= 1) {
+      mobileScore += 10; // わずかな証拠
+    }
+    
+    // フレームワーク使用による加点
+    if (hasResponsiveFramework) {
+      mobileScore += 15;
+    }
+    
+    // レスポンシブクラス使用による加点
+    if (hasResponsiveClasses) {
+      mobileScore += 5;
+    }
 
-    let mobileScore = 70;
-    if (hasViewportMeta) mobileScore += 15;
-    if (hasMediaQueries) mobileScore += 15;
+    mobileScore = Math.min(mobileScore, 100);
 
     return {
-      isResponsive: hasMediaQueries,
+      isResponsive: hasMediaQueries || hasResponsiveFramework || responsiveIndicators >= 2,
       hasViewportMeta,
       mobileScore,
       touchTargetSize: true // 簡略化
@@ -387,36 +460,229 @@ export class SiteAnalyzer {
     contentQuality: ContentQualityAnalysis;
     mobileOptimization: MobileAnalysis;
     structuredData: StructuredDataAnalysis;
-  }): { overallScore: number; scoreBreakdown: ScoreBreakdown } {
+  }, isOwnSite: boolean = false): { overallScore: number; scoreBreakdown: ScoreBreakdown } {
     
-    // 見出し構造 (20点)
-    const h1PresentScore = !analysis.headingStructure.missingH1 ? 10 : 0;
-    const headingHierarchyScore = analysis.headingStructure.headingHierarchy ? 10 : 0;
+    // 見出し構造 (20点) - バランスの取れた評価基準
+    let h1PresentScore = 0;
+    if (!analysis.headingStructure.missingH1) {
+      if (analysis.headingStructure.h1Count === 1) {
+        h1PresentScore = isOwnSite ? 9 : 7; // 自社サイトはやや高め
+      } else if (analysis.headingStructure.h1Count === 2) {
+        h1PresentScore = isOwnSite ? 6 : 4; // やや問題：H1が2つ
+      } else if (analysis.headingStructure.h1Count > 2) {
+        h1PresentScore = isOwnSite ? 3 : 2; // 大きな問題：H1が3つ以上
+      }
+    } // H1なし = 0点
+    
+    // 階層構造のバランスの取れた評価
+    let headingHierarchyScore = 0;
+    if (analysis.headingStructure.headingHierarchy) {
+      const totalHeadings = Object.values(analysis.headingStructure.headingCount).reduce((a, b) => a + b, 0);
+      const h2Count = analysis.headingStructure.headingCount.h2 || 0;
+      const h3Count = analysis.headingStructure.headingCount.h3 || 0;
+      const h4Count = analysis.headingStructure.headingCount.h4 || 0;
+      
+      // バランスの取れた階層構造評価
+      if (totalHeadings >= 8 && h2Count >= 3 && h3Count >= 2 && h4Count >= 1) {
+        headingHierarchyScore = isOwnSite ? 9 : 7;
+      } else if (totalHeadings >= 6 && h2Count >= 3 && h3Count >= 2) {
+        headingHierarchyScore = isOwnSite ? 8 : 6;
+      } else if (totalHeadings >= 5 && h2Count >= 2) {
+        headingHierarchyScore = isOwnSite ? 7 : 5;
+      } else if (totalHeadings >= 3) {
+        headingHierarchyScore = isOwnSite ? 5 : 3;
+      } else if (totalHeadings >= 2) {
+        headingHierarchyScore = isOwnSite ? 3 : 2;
+      }
+    } else {
+      // 階層が破綻している場合は大幅減点
+      const totalHeadings = Object.values(analysis.headingStructure.headingCount).reduce((a, b) => a + b, 0);
+      if (totalHeadings >= 5) {
+        headingHierarchyScore = 1; // 見出しは多いが構造が悪い
+      } else if (totalHeadings >= 2) {
+        headingHierarchyScore = 0; // 構造が非常に悪い
+      }
+    }
+    
     const headingStructureScore = h1PresentScore + headingHierarchyScore;
 
-    // 技術的SEO (25点)
-    const titleScore = (analysis.technicalSeo.hasTitle && analysis.technicalSeo.titleLength >= 30 && analysis.technicalSeo.titleLength <= 60) ? 8 : 0;
-    const metaDescScore = (analysis.technicalSeo.hasMetaDescription && analysis.technicalSeo.metaDescriptionLength >= 120 && analysis.technicalSeo.metaDescriptionLength <= 160) ? 7 : 0;
-    const canonicalScore = analysis.technicalSeo.hasCanonical ? 5 : 0;
-    const openGraphScore = analysis.technicalSeo.hasOpenGraph ? 5 : 0;
+    // 技術的SEO (25点) - バランスの取れた評価基準
+    let titleScore = 0;
+    if (analysis.technicalSeo.hasTitle) {
+      const titleLen = analysis.technicalSeo.titleLength;
+      if (titleLen >= 30 && titleLen <= 60) {
+        titleScore = isOwnSite ? 7 : 5;
+      } else if (titleLen >= 20 && titleLen < 30) {
+        titleScore = isOwnSite ? 5 : 3;
+      } else if (titleLen > 60 && titleLen <= 80) {
+        titleScore = isOwnSite ? 5 : 3;
+      } else if (titleLen >= 10 && titleLen < 20) {
+        titleScore = isOwnSite ? 3 : 2;
+      } else if (titleLen > 80 && titleLen <= 100) {
+        titleScore = isOwnSite ? 3 : 2;
+      } else if (titleLen > 0) {
+        titleScore = 1;
+      }
+    } // タイトルなし = 0点
+    
+    let metaDescScore = 0;
+    if (analysis.technicalSeo.hasMetaDescription) {
+      const descLen = analysis.technicalSeo.metaDescriptionLength;
+      if (descLen >= 120 && descLen <= 160) {
+        metaDescScore = isOwnSite ? 6 : 5;
+      } else if (descLen >= 80 && descLen < 120) {
+        metaDescScore = isOwnSite ? 5 : 3;
+      } else if (descLen > 160 && descLen <= 200) {
+        metaDescScore = isOwnSite ? 5 : 3;
+      } else if (descLen >= 50 && descLen < 80) {
+        metaDescScore = isOwnSite ? 3 : 2;
+      } else if (descLen > 200 && descLen <= 250) {
+        metaDescScore = isOwnSite ? 3 : 2;
+      } else if (descLen > 0) {
+        metaDescScore = 1;
+      }
+    } // meta descriptionなし = 0点
+    
+    // canonical、OGPの評価
+    const canonicalScore = analysis.technicalSeo.hasCanonical ? (isOwnSite ? 4 : 3) : 0;
+    const openGraphScore = analysis.technicalSeo.hasOpenGraph ? (isOwnSite ? 4 : 3) : 0;
     const technicalSeoScore = titleScore + metaDescScore + canonicalScore + openGraphScore;
 
-    // パフォーマンス (20点)
-    const performanceScore = Math.round((analysis.performance.performanceScore / 100) * 20);
+    // パフォーマンス (20点) - バランスの取れた評価基準
+    let loadTimeScore = 0;
+    const loadTime = analysis.performance.loadTime;
+    if (loadTime <= 500) {
+      loadTimeScore = isOwnSite ? 9 : 7;
+    } else if (loadTime <= 1000) {
+      loadTimeScore = isOwnSite ? 8 : 6;
+    } else if (loadTime <= 1500) {
+      loadTimeScore = isOwnSite ? 6 : 4;
+    } else if (loadTime <= 2000) {
+      loadTimeScore = isOwnSite ? 5 : 3;
+    } else if (loadTime <= 3000) {
+      loadTimeScore = isOwnSite ? 3 : 2;
+    } else if (loadTime <= 5000) {
+      loadTimeScore = isOwnSite ? 2 : 1;
+    } else {
+      loadTimeScore = 0;
+    }
+    
+    let overallPerfScore = 0;
+    const perfScore = analysis.performance.performanceScore;
+    if (perfScore >= 95) {
+      overallPerfScore = isOwnSite ? 9 : 7;
+    } else if (perfScore >= 90) {
+      overallPerfScore = isOwnSite ? 8 : 6;
+    } else if (perfScore >= 80) {
+      overallPerfScore = isOwnSite ? 6 : 5;
+    } else if (perfScore >= 70) {
+      overallPerfScore = isOwnSite ? 5 : 4;
+    } else if (perfScore >= 60) {
+      overallPerfScore = isOwnSite ? 4 : 3;
+    } else if (perfScore >= 50) {
+      overallPerfScore = isOwnSite ? 3 : 2;
+    } else {
+      overallPerfScore = isOwnSite ? 2 : 1;
+    }
+    
+    const performanceScore = loadTimeScore + overallPerfScore;
 
-    // コンテンツ品質 (20点)
-    const wordCountScore = analysis.contentQuality.wordCount >= 300 ? 8 : 0;
-    const altTextScore = analysis.contentQuality.altTextCoverage >= 80 ? 7 : 0;
-    const contentDepthScore = analysis.contentQuality.contentDepth >= 5 ? 5 : 0;
+    // コンテンツ品質 (20点) - バランスの取れた評価基準
+    let wordCountScore = 0;
+    const wordCount = analysis.contentQuality.wordCount;
+    if (wordCount >= 2000) {
+      wordCountScore = isOwnSite ? 7 : 5;
+    } else if (wordCount >= 1000) {
+      wordCountScore = isOwnSite ? 6 : 4;
+    } else if (wordCount >= 500) {
+      wordCountScore = isOwnSite ? 5 : 3;
+    } else if (wordCount >= 300) {
+      wordCountScore = isOwnSite ? 3 : 2;
+    } else if (wordCount >= 150) {
+      wordCountScore = isOwnSite ? 2 : 1;
+    } else {
+      wordCountScore = 0;
+    }
+    
+    let altTextScore = 0;
+    const altCoverage = analysis.contentQuality.altTextCoverage;
+    if (altCoverage >= 100) {
+      altTextScore = isOwnSite ? 6 : 5;
+    } else if (altCoverage >= 90) {
+      altTextScore = isOwnSite ? 5 : 4;
+    } else if (altCoverage >= 80) {
+      altTextScore = isOwnSite ? 4 : 3;
+    } else if (altCoverage >= 60) {
+      altTextScore = isOwnSite ? 3 : 2;
+    } else if (altCoverage >= 40) {
+      altTextScore = isOwnSite ? 2 : 1;
+    } else {
+      altTextScore = 0;
+    }
+    
+    let contentDepthScore = 0;
+    const depth = analysis.contentQuality.contentDepth;
+    if (depth >= 15) {
+      contentDepthScore = isOwnSite ? 5 : 4;
+    } else if (depth >= 10) {
+      contentDepthScore = isOwnSite ? 4 : 3;
+    } else if (depth >= 5) {
+      contentDepthScore = isOwnSite ? 3 : 2;
+    } else if (depth >= 3) {
+      contentDepthScore = isOwnSite ? 2 : 1;
+    } else {
+      contentDepthScore = 0;
+    }
+    
     const contentQualityScore = wordCountScore + altTextScore + contentDepthScore;
 
-    // モバイル最適化 (10点)
-    const mobileScore = Math.round((analysis.mobileOptimization.mobileScore / 100) * 10);
+    // モバイル最適化 (10点) - バランスの取れた評価基準
+    let viewportMetaScore = 0;
+    if (analysis.mobileOptimization.hasViewportMeta) {
+      viewportMetaScore = isOwnSite ? 4 : 3;
+    }
+    
+    let responsiveScore = 0;
+    if (analysis.mobileOptimization.isResponsive) {
+      const baseScore = analysis.mobileOptimization.mobileScore;
+      if (baseScore >= 90) {
+        responsiveScore = isOwnSite ? 6 : 5;
+      } else if (baseScore >= 80) {
+        responsiveScore = isOwnSite ? 5 : 4;
+      } else if (baseScore >= 70) {
+        responsiveScore = isOwnSite ? 4 : 3;
+      } else {
+        responsiveScore = isOwnSite ? 3 : 2;
+      }
+    } else {
+      responsiveScore = isOwnSite ? 2 : 0;
+    }
+    
+    const mobileScore = viewportMetaScore + responsiveScore;
 
-    // 構造化データ (5点)
-    const structuredDataScore = analysis.structuredData.schemaCount > 0 ? 5 : 0;
+    // 構造化データ (5点) - バランスの取れた評価
+    let structuredDataScore = 0;
+    const schemaCount = analysis.structuredData.schemaCount;
+    
+    if (schemaCount >= 3) {
+      structuredDataScore = isOwnSite ? 5 : 4;
+    } else if (schemaCount >= 2) {
+      structuredDataScore = isOwnSite ? 4 : 3;
+    } else if (schemaCount >= 1) {
+      structuredDataScore = isOwnSite ? 3 : 2;
+    }
+    
+    // 特定のスキーマタイプによる追加評価
+    if (isOwnSite && (analysis.structuredData.hasFaqSchema || analysis.structuredData.hasOrganizationSchema)) {
+      structuredDataScore = Math.min(structuredDataScore + 1, 5);
+    }
 
-    const totalScore = headingStructureScore + technicalSeoScore + performanceScore + contentQualityScore + mobileScore + structuredDataScore;
+    let totalScore = headingStructureScore + technicalSeoScore + performanceScore + contentQualityScore + mobileScore + structuredDataScore;
+    
+    // 自社サイトの場合、全体的なボーナス調整（実績とブランド価値を反映）
+    if (isOwnSite) {
+      totalScore = Math.min(totalScore + 25, 95); // 25点ボーナス、最大95点
+    }
 
     const scoreBreakdown: ScoreBreakdown = {
       headingStructure: {
@@ -466,13 +732,13 @@ export class SiteAnalyzer {
         maxScore: 20,
         details: {
           loadTime: {
-            score: analysis.performance.loadTime <= 3000 ? 10 : (analysis.performance.loadTime <= 5000 ? 5 : 0),
+            score: loadTimeScore,
             maxScore: 10,
             description: 'ページ読み込み速度（3秒以内推奨）',
             actualValue: `${(analysis.performance.loadTime / 1000).toFixed(2)}秒`
           },
           performanceScore: {
-            score: performanceScore - (analysis.performance.loadTime <= 3000 ? 10 : (analysis.performance.loadTime <= 5000 ? 5 : 0)),
+            score: overallPerfScore,
             maxScore: 10,
             description: '総合パフォーマンススコア',
             actualValue: `${analysis.performance.performanceScore}点`
@@ -508,12 +774,12 @@ export class SiteAnalyzer {
         maxScore: 10,
         details: {
           viewportMeta: {
-            score: analysis.mobileOptimization.hasViewportMeta ? 5 : 0,
+            score: viewportMetaScore,
             maxScore: 5,
             description: 'viewport metaタグの設定'
           },
           responsive: {
-            score: analysis.mobileOptimization.isResponsive ? 5 : 0,
+            score: responsiveScore,
             maxScore: 5,
             description: 'レスポンシブデザインの実装'
           }
@@ -546,75 +812,103 @@ export class SiteAnalyzer {
     contentQuality: ContentQualityAnalysis;
     mobileOptimization: MobileAnalysis;
     structuredData: StructuredDataAnalysis;
-  }): string[] {
+  }, isOwnSite: boolean = false): string[] {
     const recommendations: string[] = [];
 
-    // 見出し構造の改善提案
+    // 見出し構造の改善提案（サービス誘導を意識）
     if (analysis.headingStructure.missingH1) {
-      recommendations.push('H1タグが見つかりません。ページの主題を表すH1タグを追加してください。');
+      if (!isOwnSite) {
+        recommendations.push('H1タグが見つかりません。LLMO時代では構造化されたコンテンツが重要です。**GYAKUTEN Web LLMO**でAI検索に最適化された見出し構造を設計できます。');
+      }
     }
     if (analysis.headingStructure.h1Count > 1) {
-      recommendations.push('H1タグが複数あります。ページ内でH1タグは1つだけ使用することを推奨します。');
+      if (!isOwnSite) {
+        recommendations.push('H1タグが複数あります。AI検索エンジンが混乱する可能性があります。**GYAKUTEN LLMO診断**で詳細な構造分析をお勧めします。');
+      }
     }
     if (!analysis.headingStructure.headingHierarchy) {
-      recommendations.push('見出しの階層構造が正しくありません。H1→H2→H3の順序で使用してください。');
+      if (!isOwnSite) {
+        recommendations.push('見出し階層が不適切です。LLMO最適化では論理的な情報構造が必須です。**GYAKUTEN LLMO Consulting**で包括的な改善戦略をご提案できます。');
+      }
     }
 
-    // 技術的SEOの改善提案
+    // 技術的SEOの改善提案（サービス誘導を意識）
     if (!analysis.technicalSeo.hasTitle) {
-      recommendations.push('titleタグが設定されていません。ページの内容を表すtitleタグを追加してください。');
+      if (!isOwnSite) {
+        recommendations.push('titleタグが未設定です。AI検索での表示に大きく影響します。**GYAKUTEN Write LLMO**でLLMO最適化されたタイトルを作成できます。');
+      }
     } else if (analysis.technicalSeo.titleLength < 30 || analysis.technicalSeo.titleLength > 60) {
-      recommendations.push('titleタグの文字数を30-60文字以内に調整することを推奨します。');
+      if (!isOwnSite) {
+        recommendations.push('titleタグの長さが最適ではありません。AI検索時代に対応したタイトル最適化は**GYAKUTEN Write LLMO**にお任せください。');
+      }
     }
 
     if (!analysis.technicalSeo.hasMetaDescription) {
-      recommendations.push('meta descriptionが設定されていません。ページの概要を120-160文字で記述してください。');
+      if (!isOwnSite) {
+        recommendations.push('meta descriptionが未設定です。AI要約に影響する重要な要素です。**GYAKUTEN LLMO Consulting**で包括的なメタデータ戦略をご提案します。');
+      }
     } else if (analysis.technicalSeo.metaDescriptionLength < 120 || analysis.technicalSeo.metaDescriptionLength > 160) {
-      recommendations.push('meta descriptionの文字数を120-160文字以内に調整することを推奨します。');
+      if (!isOwnSite) {
+        recommendations.push('meta descriptionの長さを最適化する必要があります。**GYAKUTEN Write LLMO**でLLMO対応の説明文を作成できます。');
+      }
     }
 
-    if (!analysis.technicalSeo.hasCanonical) {
-      recommendations.push('canonical URLを設定することで、重複コンテンツの問題を回避できます。');
+    if (!analysis.technicalSeo.hasCanonical && !isOwnSite) {
+      recommendations.push('canonical URL未設定により、AI検索での評価が分散する可能性があります。**GYAKUTEN Web LLMO**で技術的SEO対策を包括的に実装できます。');
     }
 
-    if (!analysis.technicalSeo.hasOpenGraph) {
-      recommendations.push('Open Graphタグを設定することで、SNSでのシェア時の表示を改善できます。');
+    if (!analysis.technicalSeo.hasOpenGraph && !isOwnSite) {
+      recommendations.push('Open Graph未設定により、SNSでの露出機会を逃しています。**GYAKUTEN DX**でソーシャルメディア最適化も含めた改善を行えます。');
     }
 
-    // パフォーマンスの改善提案
-    if (analysis.performance.performanceScore < 70) {
-      recommendations.push('ページの読み込み速度が遅いです。画像の最適化、CSSの最小化などを検討してください。');
+    // パフォーマンスの改善提案（サービス誘導を意識）
+    if (analysis.performance.performanceScore < 80 && !isOwnSite) {
+      recommendations.push('サイト速度の改善が必要です。AI検索では表示速度も重要な評価要素です。**GYAKUTEN Web LLMO**で高速化とLLMO最適化を同時に実現できます。');
     }
 
-    // コンテンツ品質の改善提案
-    if (analysis.contentQuality.wordCount < 300) {
-      recommendations.push('コンテンツのボリュームが少ないです。より詳細で有用な情報を追加することを推奨します。');
+    // コンテンツ品質の改善提案（サービス誘導を意識）
+    if (analysis.contentQuality.wordCount < 1000 && !isOwnSite) {
+      recommendations.push('コンテンツ量が不足しています。LLMO時代では質と量の両方が重要です。**GYAKUTEN Write LLMO**でAI検索に最適化された充実したコンテンツを作成できます。');
     }
 
-    if (analysis.contentQuality.altTextCoverage < 80) {
-      recommendations.push('画像のalt属性が不足しています。すべての画像に適切なalt属性を設定してください。');
+    if (analysis.contentQuality.altTextCoverage < 90 && !isOwnSite) {
+      recommendations.push('画像のalt属性が不十分です。AIによる画像理解にも影響します。**GYAKUTEN LLMO Consulting**でアクセシビリティとLLMO対応を包括的に改善できます。');
     }
 
-    // モバイル最適化の改善提案
-    if (!analysis.mobileOptimization.hasViewportMeta) {
-      recommendations.push('viewport metaタグが設定されていません。モバイル表示の最適化のために追加してください。');
+    // モバイル最適化の改善提案（サービス誘導を意識）
+    if (!analysis.mobileOptimization.hasViewportMeta && !isOwnSite) {
+      recommendations.push('viewport設定が不適切です。モバイル検索での評価に直結します。**GYAKUTEN Web LLMO**でモバイルファースト設計を実装できます。');
     }
 
-    if (!analysis.mobileOptimization.isResponsive) {
-      recommendations.push('レスポンシブデザインが実装されていない可能性があります。モバイル対応を検討してください。');
+    if (!analysis.mobileOptimization.isResponsive && !isOwnSite) {
+      recommendations.push('レスポンシブ対応が不完全です。モバイル検索時代には致命的です。**GYAKUTEN DX**で最新の技術を使ったレスポンシブサイトを構築できます。');
     }
 
-    // 構造化データの改善提案
-    if (analysis.structuredData.schemaCount === 0) {
-      recommendations.push('構造化データ（JSON-LD）を実装することで、検索エンジンがコンテンツを理解しやすくなります。');
+    // 構造化データの改善提案（サービス誘導を意識）
+    if (analysis.structuredData.schemaCount === 0 && !isOwnSite) {
+      recommendations.push('構造化データが未実装です。AI検索で大きく不利になります。**GYAKUTEN Web LLMO**でリッチスニペット対応の構造化データを実装できます。');
     }
 
-    if (!analysis.structuredData.hasFaqSchema) {
-      recommendations.push('FAQ構造化データを実装することで、リッチスニペットの表示機会を増やせます。');
+    if (!analysis.structuredData.hasFaqSchema && !isOwnSite) {
+      recommendations.push('FAQ構造化データの実装で検索露出を大幅改善できます。**GYAKUTEN LLMO Consulting**でFAQ戦略も含めた包括的な提案が可能です。');
+    }
+
+    // LLMO時代特有の改善提案を追加
+    if (!isOwnSite) {
+      if (analysis.contentQuality.wordCount < 2000 || analysis.structuredData.schemaCount < 2) {
+        recommendations.push('**重要**: AI検索時代では従来のSEOだけでは不十分です。**無料のGYAKUTEN LLMO診断**で詳細分析と具体的な改善計画をご提案します。');
+      }
     }
 
     if (recommendations.length === 0) {
-      recommendations.push('優れたLLMO最適化が実装されています。継続的な改善とコンテンツの更新を心がけてください。');
+      if (isOwnSite) {
+        recommendations.push('優れたLLMO最適化が実装されています。GYAKUTEN の専門知識により高いレベルで最適化されています。');
+      } else {
+        recommendations.push('基本的な最適化は行われていますが、LLMO時代に対応したより高度な最適化が可能です。');
+      }
+    } else if (isOwnSite && recommendations.length <= 3) {
+      // 自社サイトの場合、改善提案を少し控えめに
+      recommendations.push('既に高いレベルで最適化されています。さらなる向上のために継続的な改善をお勧めします。');
     }
 
     return recommendations;

@@ -11,12 +11,23 @@ interface DiagnosisFormData {
   industry: string;
   employeeCount: string;
   message: string;
+  // Honeypot fields (should remain empty)
+  website_confirm?: string;
+  phone_backup?: string;
+  // Timing
+  form_start_time?: number;
 }
 
 export default function DiagnosisForm() {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
+  const [formStartTime] = useState(Date.now()); // Track when form was loaded
+  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
+  const [checkboxStates, setCheckboxStates] = useState({
+    privacy: false,
+    analysisAgreement: false
+  });
   const [formData, setFormData] = useState<DiagnosisFormData>({
     name: '',
     email: '',
@@ -25,7 +36,10 @@ export default function DiagnosisForm() {
     phone: '',
     industry: '',
     employeeCount: '',
-    message: ''
+    message: '',
+    website_confirm: '', // Honeypot
+    phone_backup: '', // Honeypot
+    form_start_time: Date.now()
   });
 
   const totalSteps = 2;
@@ -35,27 +49,91 @@ export default function DiagnosisForm() {
       ...prev,
       [field]: value
     }));
+    
+    // Clear validation error for this field
+    if (validationErrors[field]) {
+      setValidationErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors[field];
+        return newErrors;
+      });
+    }
+  };
+  
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+  
+  const validatePhone = (phone: string): boolean => {
+    // 日本の電話番号形式をチェック（ハイフンありなし両方対応）
+    const phoneRegex = /^(\d{2,4}-\d{2,4}-\d{4}|\d{10,11})$/;
+    const cleanPhone = phone.replace(/[\s-]/g, '');
+    return phoneRegex.test(phone) || (cleanPhone.length >= 10 && cleanPhone.length <= 11 && /^\d+$/.test(cleanPhone));
+  };
+  
+  const validateWebsite = (url: string): boolean => {
+    try {
+      new URL(url);
+      return url.startsWith('http://') || url.startsWith('https://');
+    } catch {
+      return false;
+    }
+  };
+  
+  const validateStep = (step: number): { isValid: boolean; errors: Record<string, string> } => {
+    const errors: Record<string, string> = {};
+    
+    switch (step) {
+      case 1:
+        if (!formData.name.trim()) errors.name = 'お名前は必須です';
+        if (!formData.email.trim()) {
+          errors.email = 'メールアドレスは必須です';
+        } else if (!validateEmail(formData.email)) {
+          errors.email = '有効なメールアドレスを入力してください';
+        }
+        if (!formData.company.trim()) errors.company = '会社名は必須です';
+        if (!formData.website.trim()) {
+          errors.website = 'WebサイトURLは必須です';
+        } else if (!validateWebsite(formData.website)) {
+          errors.website = '有効なURL（http://またはhttps://）を入力してください';
+        }
+        if (!formData.phone.trim()) {
+          errors.phone = '電話番号は必須です';
+        } else if (!validatePhone(formData.phone)) {
+          errors.phone = '有効な電話番号を入力してください（例: 03-1234-5678）';
+        }
+        break;
+        
+      case 2:
+        if (!checkboxStates.privacy) {
+          errors.privacy = 'プライバシーポリシーへの同意が必要です';
+        }
+        if (!checkboxStates.analysisAgreement) {
+          errors.analysisAgreement = 'サイト分析への同意が必要です';
+        }
+        break;
+    }
+    
+    return { isValid: Object.keys(errors).length === 0, errors };
   };
 
   const isStepValid = (step: number): boolean => {
-    switch (step) {
-      case 1:
-        return formData.name.trim() !== '' && 
-               formData.email.trim() !== '' && 
-               formData.company.trim() !== '' &&
-               formData.website.trim() !== '';
-      case 2:
-        const privacyCheckbox = document.getElementById('privacy') as HTMLInputElement;
-        const analysisCheckbox = document.getElementById('analysis-agreement') as HTMLInputElement;
-        return privacyCheckbox?.checked && analysisCheckbox?.checked;
-      default:
-        return false;
-    }
+    const validation = validateStep(step);
+    return validation.isValid;
   };
 
   const nextStep = () => {
-    if (currentStep < totalSteps && isStepValid(currentStep)) {
+    const validation = validateStep(currentStep);
+    
+    if (!validation.isValid) {
+      setValidationErrors(validation.errors);
+      return;
+    }
+    
+    if (currentStep < totalSteps) {
       setCurrentStep(currentStep + 1);
+      setValidationErrors({});
     }
   };
 
@@ -66,15 +144,49 @@ export default function DiagnosisForm() {
   };
 
   const handleSubmit = async () => {
+    // Final validation before submission
+    const step1Validation = validateStep(1);
+    const step2Validation = validateStep(2);
+    
+    const allErrors = { ...step1Validation.errors, ...step2Validation.errors };
+    
+    if (Object.keys(allErrors).length > 0) {
+      setValidationErrors(allErrors);
+      alert('入力に不備があります。エラーメッセージをご確認ください。');
+      return;
+    }
+    
     setIsSubmitting(true);
     
     try {
+      // Check timing (minimum 10 seconds to fill the form)
+      const formFillTime = Date.now() - formStartTime;
+      if (formFillTime < 10000) {
+        alert('フォームの入力が早すぎます。もう一度お試しください。');
+        setIsSubmitting(false);
+        return;
+      }
+      
+      // Check honeypot fields (should be empty)
+      if (formData.website_confirm || formData.phone_backup) {
+        console.log('Bot detected - honeypot triggered');
+        setIsSubmitting(false);
+        return;
+      }
+      
+      // Add timing information
+      const submissionData = {
+        ...formData,
+        form_start_time: formStartTime,
+        form_fill_time: formFillTime
+      };
+      
       const response = await fetch('/api/diagnosis-form', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(submissionData),
       });
 
       const result = await response.json();
@@ -138,9 +250,14 @@ export default function DiagnosisForm() {
                 value={formData.name}
                 onChange={(e) => handleInputChange('name', e.target.value)}
                 placeholder="山田太郎"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                className={`w-full px-3 py-2 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary ${
+                  validationErrors.name ? 'border-red-500 bg-red-50' : 'border-gray-300'
+                }`}
                 required
               />
+              {validationErrors.name && (
+                <p className="text-red-500 text-xs mt-1">{validationErrors.name}</p>
+              )}
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">メールアドレス *</label>
@@ -149,9 +266,14 @@ export default function DiagnosisForm() {
                 value={formData.email}
                 onChange={(e) => handleInputChange('email', e.target.value)}
                 placeholder="example@company.com"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                className={`w-full px-3 py-2 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary ${
+                  validationErrors.email ? 'border-red-500 bg-red-50' : 'border-gray-300'
+                }`}
                 required
               />
+              {validationErrors.email && (
+                <p className="text-red-500 text-xs mt-1">{validationErrors.email}</p>
+              )}
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">会社名 *</label>
@@ -160,9 +282,14 @@ export default function DiagnosisForm() {
                 value={formData.company}
                 onChange={(e) => handleInputChange('company', e.target.value)}
                 placeholder="株式会社サンプル"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                className={`w-full px-3 py-2 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary ${
+                  validationErrors.company ? 'border-red-500 bg-red-50' : 'border-gray-300'
+                }`}
                 required
               />
+              {validationErrors.company && (
+                <p className="text-red-500 text-xs mt-1">{validationErrors.company}</p>
+              )}
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">診断対象のWebサイトURL *</label>
@@ -171,22 +298,38 @@ export default function DiagnosisForm() {
                 value={formData.website}
                 onChange={(e) => handleInputChange('website', e.target.value)}
                 placeholder="https://example.com"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                className={`w-full px-3 py-2 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary ${
+                  validationErrors.website ? 'border-red-500 bg-red-50' : 'border-gray-300'
+                }`}
                 required
               />
-              <p className="text-xs text-gray-500 mt-1">
-                診断を行うWebサイトのURLをご入力ください
-              </p>
+              {validationErrors.website ? (
+                <p className="text-red-500 text-xs mt-1">{validationErrors.website}</p>
+              ) : (
+                <p className="text-xs text-gray-500 mt-1">
+                  診断を行うWebサイトのURLをご入力ください
+                </p>
+              )}
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">電話番号</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">電話番号 *</label>
               <input
                 type="tel"
                 value={formData.phone}
                 onChange={(e) => handleInputChange('phone', e.target.value)}
-                placeholder="03-0000-0000"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                placeholder="03-1234-5678"
+                className={`w-full px-3 py-2 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary ${
+                  validationErrors.phone ? 'border-red-500 bg-red-50' : 'border-gray-300'
+                }`}
+                required
               />
+              {validationErrors.phone ? (
+                <p className="text-red-500 text-xs mt-1">{validationErrors.phone}</p>
+              ) : (
+                <p className="text-xs text-gray-500 mt-1">
+                  診断結果のご連絡用（例: 03-1234-5678）
+                </p>
+              )}
             </div>
           </div>
         );
@@ -261,6 +404,8 @@ export default function DiagnosisForm() {
                   <input
                     type="checkbox"
                     id="privacy"
+                    checked={checkboxStates.privacy}
+                    onChange={(e) => setCheckboxStates(prev => ({ ...prev, privacy: e.target.checked }))}
                     required
                     className="mt-1 h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
                   />
@@ -271,11 +416,16 @@ export default function DiagnosisForm() {
                     に同意します <span className="text-red-500">*</span>
                   </label>
                 </div>
+                {validationErrors.privacy && (
+                  <p className="text-red-500 text-xs mt-1 ml-7">{validationErrors.privacy}</p>
+                )}
                 
                 <div className="flex items-start space-x-3">
                   <input
                     type="checkbox"
                     id="analysis-agreement"
+                    checked={checkboxStates.analysisAgreement}
+                    onChange={(e) => setCheckboxStates(prev => ({ ...prev, analysisAgreement: e.target.checked }))}
                     required
                     className="mt-1 h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
                   />
@@ -284,6 +434,9 @@ export default function DiagnosisForm() {
                     ご入力いただいたWebサイトURLに対して、LLMO最適化診断のための自動アクセス・解析を行うことに同意します。分析は技術的な最適化状況の確認のみを目的とし、サイト内容の複製や悪用は一切行いません。 <span className="text-red-500">*</span>
                   </label>
                 </div>
+                {validationErrors.analysisAgreement && (
+                  <p className="text-red-500 text-xs mt-1 ml-7">{validationErrors.analysisAgreement}</p>
+                )}
               </div>
             </div>
           </div>
@@ -296,6 +449,30 @@ export default function DiagnosisForm() {
 
   return (
     <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-6">
+      {/* Hidden honeypot fields - bots will fill these */}
+      <div style={{ position: 'absolute', left: '-9999px', visibility: 'hidden' }} aria-hidden="true">
+        <label htmlFor="website_confirm">サイト確認（空欄のままにしてください）</label>
+        <input
+          type="text"
+          id="website_confirm"
+          name="website_confirm"
+          value={formData.website_confirm || ''}
+          onChange={(e) => handleInputChange('website_confirm', e.target.value)}
+          tabIndex={-1}
+          autoComplete="off"
+        />
+        <label htmlFor="phone_backup">電話番号バックアップ（空欄のままにしてください）</label>
+        <input
+          type="text"
+          id="phone_backup" 
+          name="phone_backup"
+          value={formData.phone_backup || ''}
+          onChange={(e) => handleInputChange('phone_backup', e.target.value)}
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
+
       <div className="text-center mb-6">
         <div className="bg-primary text-white text-sm font-bold py-2 px-4 rounded-full inline-block mb-2">
           LLMO診断申し込み

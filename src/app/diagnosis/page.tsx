@@ -1,18 +1,11 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import Layout from '@/components/layout/Layout';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import DiagnosisForm from '@/components/DiagnosisForm';
 
 export default function DiagnosisPage() {
-  const router = useRouter();
-
-  useEffect(() => {
-    alert('現在、無料LLMO診断サービスは準備中です。\n\nより高品質な分析結果をお届けするため、システムの最適化を進めております。サービス開始まで今しばらくお待ちください。\n\n個別のご相談については、お問い合わせフォームよりお気軽にお声かけください。');
-    router.push('/');
-  }, [router]);
-
   return (
     <Layout>
       <main className="min-h-screen bg-white">
@@ -52,10 +45,7 @@ export default function DiagnosisPage() {
 
             {/* 診断フォーム */}
             <div className="max-w-lg mx-auto">
-              <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-                <p className="text-gray-600 mb-4">診断サービスは準備中です</p>
-                <p className="text-sm text-gray-500">お問い合わせフォームよりご連絡ください</p>
-              </div>
+              <DiagnosisForm />
             </div>
           </div>
         </section>
