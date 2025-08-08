@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sendDiagnosisNotification, sendAnalysisResult, DiagnosisFormData } from '@/lib/email';
-import { SiteAnalyzer } from '@/lib/siteAnalyzer';
+import { SiteAnalyzer, SiteAnalysisResult } from '@/lib/siteAnalyzer';
 import { performAdvancedSecurityCheck, getClientIP, getSecurityMetrics } from '@/lib/advancedSecurityManager';
 
 async function startAsyncAnalysis(url: string, email: string, formData: DiagnosisFormData) {
@@ -19,7 +19,7 @@ async function startAsyncAnalysis(url: string, email: string, formData: Diagnosi
       setTimeout(() => reject(new Error('Analysis timeout after 25 seconds')), 25000);
     });
     
-    const analysisResult = await Promise.race([analysisPromise, timeoutPromise]) as Record<string, unknown>;
+    const analysisResult = await Promise.race([analysisPromise, timeoutPromise]) as SiteAnalysisResult;
     const analysisTime = Date.now() - startTime;
     
     console.log(`[${new Date().toISOString()}] Analysis completed for: ${url}, Score: ${analysisResult.overallScore}, Time: ${analysisTime}ms`);
