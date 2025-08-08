@@ -316,7 +316,7 @@ export class SiteAnalyzer {
   }
 
   // Fetchが失敗した場合の最小限フォールバック分析
-  private createMinimalFallbackAnalysis(url: string, isOwnSite: boolean, error: Error): SiteAnalysisResult {
+  private createMinimalFallbackAnalysis(url: string, isOwnSite: boolean, _error: Error): SiteAnalysisResult {
     console.log(`[${new Date().toISOString()}] Creating minimal fallback analysis for: ${url}`);
     
     const baseScore = isOwnSite ? 75 : 35; // 自社サイトは高めのスコア
@@ -354,23 +354,23 @@ export class SiteAnalyzer {
       },
       contentQuality: {
         wordCount: 0,
-        imageCount: 0,
+        textImageRatio: 100,
         altTextCoverage: 0,
-        internalLinksCount: 0,
-        externalLinksCount: 0,
+        contentDepth: 1,
         readabilityScore: 50
       },
       mobileOptimization: {
         hasViewportMeta: false,
         isResponsive: false,
-        touchFriendly: false,
-        mobilePageSpeed: 50
+        mobileScore: 50,
+        touchTargetSize: false
       },
       structuredData: {
-        hasSchema: false,
-        schemaTypes: [],
-        breadcrumbs: false,
-        localBusiness: false
+        hasFaqSchema: false,
+        hasHowToSchema: false,
+        hasOrganizationSchema: false,
+        hasArticleSchema: false,
+        schemaCount: 0
       },
       overallScore: baseScore,
       scoreBreakdown: this.createScoreBreakdown(baseScore, isOwnSite, true),
