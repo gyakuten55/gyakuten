@@ -259,7 +259,7 @@ export async function sendDiagnosisNotification(data: DiagnosisFormData) {
   }
 }
 
-export async function sendAnalysisResult(email: string, analysis: SiteAnalysisResult, formData?: { name?: string; company?: string }) {
+export async function sendAnalysisResult(email: string, analysis: SiteAnalysisResult, formData?: DiagnosisFormData) {
   const getScoreGrade = (score: number): string => {
     if (score >= 90) return 'A+';
     if (score >= 80) return 'A';
@@ -437,40 +437,134 @@ export async function sendAnalysisResult(email: string, analysis: SiteAnalysisRe
     ]
   };
 
-  // 会社宛の診断完了通知メール
+  // 会社宛の診断完了通知メール（詳細版）
   const adminResultMailOptions = {
     from: `${process.env.FROM_NAME} <${process.env.FROM_EMAIL}>`,
-    to: process.env.FROM_EMAIL,
-    subject: `【GYAKUTEN】LLMO診断が完了しました（スコア: ${analysis.overallScore}点）`,
+    to: process.env.ADMIN_EMAIL || process.env.FROM_EMAIL,
+    subject: `【GYAKUTEN】LLMO診断完了・顧客対応用データ（${formData?.company || 'N/A'}・スコア: ${analysis.overallScore}点）`,
     html: `
-      <div style="font-family: 'Hiragino Sans', 'ヒラギノ角ゴシック', 'Yu Gothic', 'メイリオ', sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #8f2c34;">LLMO診断完了通知</h2>
-        <p>以下のお客様の診断が完了し、結果を送信いたしました：</p>
-        
-        <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
-          <tr><td style="border: 1px solid #ddd; padding: 8px; background: #f5f5f5; font-weight: bold;">診断対象サイト</td><td style="border: 1px solid #ddd; padding: 8px;"><a href="${analysis.url}" target="_blank">${analysis.url}</a></td></tr>
-          <tr><td style="border: 1px solid #ddd; padding: 8px; background: #f5f5f5; font-weight: bold;">送信先メール</td><td style="border: 1px solid #ddd; padding: 8px;">${email}</td></tr>
-          ${formData?.name ? `<tr><td style="border: 1px solid #ddd; padding: 8px; background: #f5f5f5; font-weight: bold;">氏名</td><td style="border: 1px solid #ddd; padding: 8px;">${formData.name}</td></tr>` : ''}
-          ${formData?.company ? `<tr><td style="border: 1px solid #ddd; padding: 8px; background: #f5f5f5; font-weight: bold;">会社名</td><td style="border: 1px solid #ddd; padding: 8px;">${formData.company}</td></tr>` : ''}
-          <tr><td style="border: 1px solid #ddd; padding: 8px; background: #f5f5f5; font-weight: bold;">総合スコア</td><td style="border: 1px solid #ddd; padding: 8px;"><strong>${analysis.overallScore}点 (グレード${getScoreGrade(analysis.overallScore)})</strong></td></tr>
-        </table>
-        
-        <h3 style="color: #8f2c34;">カテゴリ別スコア:</h3>
-        <ul style="background: #f5f5f5; padding: 15px; border-radius: 5px;">
-          <li>見出し構造: ${analysis.scoreBreakdown.headingStructure.score}/${analysis.scoreBreakdown.headingStructure.maxScore}点</li>
-          <li>技術的SEO: ${analysis.scoreBreakdown.technicalSeo.score}/${analysis.scoreBreakdown.technicalSeo.maxScore}点</li>
-          <li>パフォーマンス: ${analysis.scoreBreakdown.performance.score}/${analysis.scoreBreakdown.performance.maxScore}点</li>
-          <li>コンテンツ品質: ${analysis.scoreBreakdown.contentQuality.score}/${analysis.scoreBreakdown.contentQuality.maxScore}点</li>
-          <li>モバイル最適化: ${analysis.scoreBreakdown.mobileOptimization.score}/${analysis.scoreBreakdown.mobileOptimization.maxScore}点</li>
-          <li>構造化データ: ${analysis.scoreBreakdown.structuredData.score}/${analysis.scoreBreakdown.structuredData.maxScore}点</li>
-        </ul>
-        
-        <p style="margin-top: 20px; padding: 10px; background: #e8f5e8; border-radius: 5px;">
-          <strong>診断結果はお客様に送信済みです。</strong><br>
-          詳細レポート（HTML）も添付されています。
-        </p>
+      <div style="font-family: 'Hiragino Sans', 'ヒラギノ角ゴシック', 'Yu Gothic', 'メイリオ', sans-serif; max-width: 800px; margin: 0 auto;">
+        <!-- ヘッダー -->
+        <div style="background: linear-gradient(135deg, #8f2c34 0%, #a53d45 100%); padding: 20px; text-align: center; margin-bottom: 20px;">
+          <h1 style="color: #ffffff; font-size: 24px; margin: 0;">🎯 LLMO診断完了通知</h1>
+          <p style="color: #ffffff; margin: 10px 0 0 0; opacity: 0.9;">顧客対応・フォローアップ用データ</p>
+        </div>
+
+        <!-- 顧客情報セクション -->
+        <div style="background-color: #f8f9fa; border-left: 4px solid #8f2c34; padding: 20px; margin-bottom: 20px;">
+          <h2 style="color: #8f2c34; margin: 0 0 15px 0;">📋 顧客情報</h2>
+          <table style="width: 100%; border-collapse: collapse;">
+            <tr><td style="border: 1px solid #ddd; padding: 10px; background: #e9ecef; font-weight: bold; width: 30%;">氏名</td><td style="border: 1px solid #ddd; padding: 10px;">${formData?.name || 'N/A'}</td></tr>
+            <tr><td style="border: 1px solid #ddd; padding: 10px; background: #e9ecef; font-weight: bold;">会社名</td><td style="border: 1px solid #ddd; padding: 10px;">${formData?.company || 'N/A'}</td></tr>
+            <tr><td style="border: 1px solid #ddd; padding: 10px; background: #e9ecef; font-weight: bold;">メールアドレス</td><td style="border: 1px solid #ddd; padding: 10px;"><a href="mailto:${email}">${email}</a></td></tr>
+            <tr><td style="border: 1px solid #ddd; padding: 10px; background: #e9ecef; font-weight: bold;">電話番号</td><td style="border: 1px solid #ddd; padding: 10px;">${formData?.phone || 'N/A'}</td></tr>
+            <tr><td style="border: 1px solid #ddd; padding: 10px; background: #e9ecef; font-weight: bold;">業界</td><td style="border: 1px solid #ddd; padding: 10px;">${formData?.industry || '未選択'}</td></tr>
+            <tr><td style="border: 1px solid #ddd; padding: 10px; background: #e9ecef; font-weight: bold;">従業員数</td><td style="border: 1px solid #ddd; padding: 10px;">${formData?.employeeCount || '未選択'}</td></tr>
+            <tr><td style="border: 1px solid #ddd; padding: 10px; background: #e9ecef; font-weight: bold;">診断対象サイト</td><td style="border: 1px solid #ddd; padding: 10px;"><a href="${analysis.url}" target="_blank">${analysis.url}</a></td></tr>
+          </table>
+          ${formData?.message ? `
+          <div style="margin-top: 15px; padding: 10px; background: white; border-radius: 5px;">
+            <strong>お客様からの課題・要望:</strong><br>
+            <p style="margin: 5px 0 0 0; font-style: italic;">"${formData.message}"</p>
+          </div>
+          ` : ''}
+        </div>
+
+        <!-- 診断結果サマリー -->
+        <div style="background-color: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <h2 style="color: #8f2c34; margin: 0 0 15px 0;">📊 診断結果サマリー</h2>
+          <div style="text-align: center; margin-bottom: 20px;">
+            <div style="display: inline-block; width: 80px; height: 80px; border: 4px solid #8f2c34; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: white; margin-right: 20px;">
+              <span style="font-size: 24px; font-weight: bold; color: #8f2c34;">${analysis.overallScore}</span>
+            </div>
+            <div style="display: inline-block; vertical-align: top; margin-top: 10px;">
+              <p style="margin: 0; font-size: 18px; font-weight: bold; color: #8f2c34;">グレード: ${getScoreGrade(analysis.overallScore)}</p>
+              <p style="margin: 5px 0 0 0; color: #333;">診断完了時刻: ${new Date().toLocaleString('ja-JP')}</p>
+            </div>
+          </div>
+          
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px;">
+            <div style="background: white; padding: 10px; border-radius: 5px; text-align: center;">
+              <strong>見出し構造</strong><br>${analysis.scoreBreakdown.headingStructure.score}/${analysis.scoreBreakdown.headingStructure.maxScore}点
+            </div>
+            <div style="background: white; padding: 10px; border-radius: 5px; text-align: center;">
+              <strong>技術的SEO</strong><br>${analysis.scoreBreakdown.technicalSeo.score}/${analysis.scoreBreakdown.technicalSeo.maxScore}点
+            </div>
+            <div style="background: white; padding: 10px; border-radius: 5px; text-align: center;">
+              <strong>パフォーマンス</strong><br>${analysis.scoreBreakdown.performance.score}/${analysis.scoreBreakdown.performance.maxScore}点
+            </div>
+            <div style="background: white; padding: 10px; border-radius: 5px; text-align: center;">
+              <strong>コンテンツ品質</strong><br>${analysis.scoreBreakdown.contentQuality.score}/${analysis.scoreBreakdown.contentQuality.maxScore}点
+            </div>
+            <div style="background: white; padding: 10px; border-radius: 5px; text-align: center;">
+              <strong>モバイル最適化</strong><br>${analysis.scoreBreakdown.mobileOptimization.score}/${analysis.scoreBreakdown.mobileOptimization.maxScore}点
+            </div>
+            <div style="background: white; padding: 10px; border-radius: 5px; text-align: center;">
+              <strong>構造化データ</strong><br>${analysis.scoreBreakdown.structuredData.score}/${analysis.scoreBreakdown.structuredData.maxScore}点
+            </div>
+          </div>
+        </div>
+
+        <!-- 主要改善提案（営業用） -->
+        <div style="background-color: #e3f2fd; border: 1px solid #bbdefb; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <h2 style="color: #1976d2; margin: 0 0 15px 0;">💡 主要改善提案（営業・フォローアップ用）</h2>
+          <ol style="margin: 0; padding-left: 20px; line-height: 1.8;">
+            ${analysis.recommendations.slice(0, 5).map((rec, index) => `
+              <li style="margin-bottom: 10px;">
+                <strong>提案${index + 1}:</strong> ${rec}
+              </li>
+            `).join('')}
+          </ol>
+        </div>
+
+        <!-- フォローアップ推奨アクション -->
+        <div style="background-color: #f3e5f5; border: 1px solid #ce93d8; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <h2 style="color: #7b1fa2; margin: 0 0 15px 0;">🎯 推奨フォローアップアクション</h2>
+          <div style="background: white; padding: 15px; border-radius: 5px;">
+            ${analysis.overallScore < 60 ? `
+            <p style="margin-bottom: 10px;"><strong>🔴 緊急度：高</strong></p>
+            <ul style="margin: 0; padding-left: 20px;">
+              <li><strong>GYAKUTEN Web LLMO</strong> - サイト全面改修提案（改善余地が大きい）</li>
+              <li><strong>GYAKUTEN LLMO Consulting</strong> - 包括的戦略コンサルティング</li>
+              <li>無料相談の積極的な提案を推奨</li>
+            </ul>
+            ` : analysis.overallScore < 80 ? `
+            <p style="margin-bottom: 10px;"><strong>🟡 緊急度：中</strong></p>
+            <ul style="margin: 0; padding-left: 20px;">
+              <li><strong>GYAKUTEN Write LLMO</strong> - コンテンツ改善提案</li>
+              <li><strong>GYAKUTEN LLMO診断</strong> - 部分的改修提案</li>
+              <li>具体的な改善点の詳細説明を実施</li>
+            </ul>
+            ` : `
+            <p style="margin-bottom: 10px;"><strong>🟢 緊急度：低</strong></p>
+            <ul style="margin: 0; padding-left: 20px;">
+              <li><strong>保守・運用サービス</strong> - 現状維持サポート</li>
+              <li><strong>GYAKUTEN DX</strong> - さらなる機能拡張提案</li>
+              <li>長期的なパートナーシップ提案</li>
+            </ul>
+            `}
+          </div>
+        </div>
+
+        <!-- 顧客対応メモ -->
+        <div style="background-color: #fff8e1; border: 1px solid #ffcc02; border-radius: 8px; padding: 20px;">
+          <h2 style="color: #f57c00; margin: 0 0 15px 0;">📝 顧客対応時の参考情報</h2>
+          <div style="background: white; padding: 15px; border-radius: 5px;">
+            <p style="margin: 0 0 10px 0;"><strong>✅ 診断結果送信完了:</strong> ${new Date().toLocaleString('ja-JP')}</p>
+            <p style="margin: 0 0 10px 0;"><strong>📧 顧客連絡先:</strong> ${email} / ${formData?.phone || 'N/A'}</p>
+            <p style="margin: 0 0 10px 0;"><strong>🏢 企業規模:</strong> ${formData?.employeeCount || '不明'}・${formData?.industry || '業界不明'}</p>
+            <p style="margin: 0;"><strong>📋 HTMLレポート:</strong> 添付ファイルに同梱（顧客にも同じものを送信済み）</p>
+          </div>
+        </div>
       </div>
-    `
+    `,
+    attachments: [
+      {
+        filename: `【管理者用】LLMO診断レポート_${formData?.company?.replace(/[^\w\s]/g, '') || 'NoCompany'}_${new Date().toISOString().split('T')[0]}.html`,
+        content: htmlReport,
+        contentType: 'text/html'
+      }
+    ]
   };
 
   try {

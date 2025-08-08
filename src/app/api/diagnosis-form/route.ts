@@ -31,10 +31,7 @@ async function startAsyncAnalysis(url: string, email: string, formData: Diagnosi
 
     // 診断結果をメール送信
     console.log(`[${new Date().toISOString()}] Sending analysis result to: ${email}`);
-    await sendAnalysisResult(email, analysisResult, {
-      name: formData.name,
-      company: formData.company
-    });
+    await sendAnalysisResult(email, analysisResult, formData);
     
     console.log(`[${new Date().toISOString()}] ✅ Analysis result successfully sent to: ${email} (Total time: ${Date.now() - startTime}ms)`);
   } catch (error) {
