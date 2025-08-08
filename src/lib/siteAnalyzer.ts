@@ -1,4 +1,5 @@
 import { JSDOM, VirtualConsole } from 'jsdom';
+import axios, { AxiosRequestConfig } from 'axios';
 
 export interface SiteAnalysisResult {
   url: string;
@@ -125,135 +126,79 @@ export class SiteAnalyzer {
   // 1秒以内の超高速fetch
   private async quickFetchWithTimeout(url: string, timeoutMs: number): Promise<{ html: string; responseTime: number }> {
     const startTime = Date.now();
-    console.log(`[${new Date().toISOString()}] Quick fetch starting for: ${url} (timeout: ${timeoutMs}ms)`);
-    
-    return new Promise((resolve, reject) => {
-      const controller = new AbortController();
-      let completed = false;
-      
-      // タイムアウトハンドラ
-      const timeout = setTimeout(() => {
-        if (!completed) {
-          completed = true;
-          controller.abort();
-          reject(new Error(`Quick fetch timeout after ${timeoutMs}ms`));
-        }
-      }, timeoutMs);
-      
-      // fetch実行
-      fetch(url, {
-        signal: controller.signal,
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (compatible; GYAKUTENBot/1.0)',
-          'Accept': 'text/html',
-        },
-        redirect: 'follow'
-      })
-      .then(response => {
-        if (completed) return;
-        
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}`);
-        }
-        return response.text();
-      })
-      .then(html => {
-        if (completed) return;
-        completed = true;
-        clearTimeout(timeout);
-        
-        const responseTime = Date.now() - startTime;
-        console.log(`[${new Date().toISOString()}] Quick fetch completed in ${responseTime}ms, ${html?.length || 0} chars`);
-        resolve({ html: html || '', responseTime });
-      })
-      .catch(error => {
-        if (completed) return;
-        completed = true;
-        clearTimeout(timeout);
-        
-        const responseTime = Date.now() - startTime;
-        console.log(`[${new Date().toISOString()}] Quick fetch failed after ${responseTime}ms:`, error.message);
-        reject(error);
-      });
-    });
-  }
-
-  // Vercel環境に最適化されたfetchベースの分析を実装
-  private async fetchSiteContent(url: string): Promise<{ html: string; responseTime: number }> {
-    const startTime = Date.now();
-    console.log(`[${new Date().toISOString()}] Fetching content from: ${url}`);
+    console.log(`[${new Date().toISOString()}] Axios quick fetch starting for: ${url} (timeout: ${timeoutMs}ms)`);
     
     try {
-      // Vercel環境での超短タイムアウト（3秒）でハングアップを防止
-      const controller = new AbortController();
-      
-      console.log(`[${new Date().toISOString()}] Initiating fetch request for: ${url}`);
-      
-      // Promise.raceを使用して確実にタイムアウトを実装
-      const fetchPromise = fetch(url, {
+      const config: AxiosRequestConfig = {
+        method: 'GET',
+        url: url,
+        timeout: timeoutMs, // axiosの内蔵タイムアウト
+        maxRedirects: 5,
+        responseType: 'text',
         headers: {
-          'User-Agent': 'Mozilla/5.0 (compatible; GYAKUTENBot/1.0; +https://gyaku-ten.jp)',
+          'User-Agent': 'Mozilla/5.0 (compatible; GYAKUTENBot/1.0)',
           'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-          'Accept-Language': 'ja,en;q=0.5',
+          'Accept-Language': 'ja,en;q=0.9',
           'Accept-Encoding': 'gzip, deflate',
-          'DNT': '1',
-          'Connection': 'keep-alive',
-          'Upgrade-Insecure-Requests': '1',
         },
-        signal: controller.signal,
-        redirect: 'follow',
-        referrerPolicy: 'no-referrer-when-downgrade'
-      });
+        validateStatus: (status) => status < 400, // 400未満なら成功
+      };
       
-      const timeoutPromise = new Promise<never>((_, reject) => {
-        setTimeout(() => {
-          console.log(`[${new Date().toISOString()}] Fetch timeout triggered for: ${url}`);
-          controller.abort();
-          reject(new Error(`Fetch timeout after 3 seconds for ${url}`));
-        }, 3000);
-      });
-      
-      const response = await Promise.race([fetchPromise, timeoutPromise]);
-      
-      console.log(`[${new Date().toISOString()}] Fetch response received - Status: ${response.status}, URL: ${url}`);
-      
-      if (!response.ok) {
-        console.error(`[${new Date().toISOString()}] HTTP error for ${url}: ${response.status} ${response.statusText}`);
-        throw new Error(`HTTP error! status: ${response.status} ${response.statusText}`);
-      }
-      
-      console.log(`[${new Date().toISOString()}] Reading response text for: ${url}`);
-      const html = await response.text();
+      const response = await axios(config);
       const responseTime = Date.now() - startTime;
+      const html = response.data || '';
       
-      console.log(`[${new Date().toISOString()}] Content fetched successfully: ${html.length} chars in ${responseTime}ms`);
-      
-      // HTMLサイズ制限（Vercelメモリ制限対策）
-      if (html.length > 2000000) { // 2MB制限
-        console.warn(`[${new Date().toISOString()}] HTML content too large (${html.length} chars), truncating`);
-        return { html: html.substring(0, 2000000), responseTime };
-      }
-      
+      console.log(`[${new Date().toISOString()}] Axios quick fetch completed in ${responseTime}ms, ${html.length} chars`);
       return { html, responseTime };
+      
     } catch (error) {
       const responseTime = Date.now() - startTime;
-      console.error(`[${new Date().toISOString()}] Fetch failed for ${url} after ${responseTime}ms:`, {
-        error: error instanceof Error ? {
-          name: error.name,
-          message: error.message,
-          stack: error.stack
-        } : error,
-        url,
-        responseTime
-      });
+      console.log(`[${new Date().toISOString()}] Axios quick fetch failed after ${responseTime}ms:`, error);
       
-      if (error instanceof Error) {
-        if (error.name === 'AbortError' || error.message.includes('timeout')) {
+      if (axios.isAxiosError(error)) {
+        if (error.code === 'ECONNABORTED') {
           throw new Error(`サイトの読み込みがタイムアウトしました (${responseTime}ms)`);
+        } else if (error.response) {
+          throw new Error(`HTTP ${error.response.status}: ${error.response.statusText}`);
+        } else if (error.request) {
+          throw new Error(`ネットワーク接続エラー`);
         }
-        throw new Error(`サイトの取得に失敗しました: ${error.message}`);
       }
-      throw new Error(`サイトの取得に失敗しました: ${String(error)}`);
+      
+      throw new Error(`サイトの取得に失敗しました: ${error instanceof Error ? error.message : String(error)}`);
+    }
+  }
+
+  // Google PageSpeed Insights APIを使用してパフォーマンスデータを取得
+  private async getPageSpeedInsights(url: string): Promise<Record<string, unknown> | null> {
+    const apiKey = process.env.PAGESPEED_API_KEY;
+    if (!apiKey) {
+      console.log(`[${new Date().toISOString()}] PageSpeed Insights API key not found, skipping`);
+      return null;
+    }
+    
+    try {
+      console.log(`[${new Date().toISOString()}] Fetching PageSpeed Insights for: ${url}`);
+      
+      const config: AxiosRequestConfig = {
+        method: 'GET',
+        url: 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed',
+        timeout: 15000, // 15秒タイムアウト
+        params: {
+          url: url,
+          key: apiKey,
+          category: 'PERFORMANCE',
+          strategy: 'MOBILE'
+        }
+      };
+      
+      const response = await axios(config);
+      console.log(`[${new Date().toISOString()}] PageSpeed Insights data retrieved successfully`);
+      return response.data;
+      
+    } catch (error) {
+      console.warn(`[${new Date().toISOString()}] PageSpeed Insights failed:`, error);
+      return null;
     }
   }
 
@@ -274,20 +219,36 @@ export class SiteAnalyzer {
       console.log(`[${new Date().toISOString()}] Preparing immediate fallback analysis...`);
       const fallbackResult = this.createImmediateFallbackAnalysis(url, isOwnSite);
       
-      // 1秒以内のクイックfetch試行
-      console.log(`[${new Date().toISOString()}] Attempting quick fetch (1 second timeout)...`);
-      try {
-        const quickFetchResult = await this.quickFetchWithTimeout(url, 1000);
+      // 3秒以内のクイックfetch試行とPageSpeed Insights取得を並行実行
+      console.log(`[${new Date().toISOString()}] Attempting quick fetch (3 second timeout) and PageSpeed Insights...`);
+      
+      // 並行処理でfetchとPageSpeed Insightsを同時実行
+      const [quickFetchResult, pageSpeedData] = await Promise.allSettled([
+        this.quickFetchWithTimeout(url, 3000),
+        this.getPageSpeedInsights(url)
+      ]);
+      
+      if (quickFetchResult.status === 'fulfilled') {
         console.log(`[${new Date().toISOString()}] Quick fetch successful, performing detailed analysis`);
         
-        // 詳細分析を実行
-        return await this.performDetailedAnalysis(url, quickFetchResult.html, quickFetchResult.responseTime, isOwnSite);
+        // 詳細分析を実行（PageSpeedデータも渡す）
+        return await this.performDetailedAnalysis(
+          url, 
+          quickFetchResult.value.html, 
+          quickFetchResult.value.responseTime, 
+          isOwnSite,
+          pageSpeedData.status === 'fulfilled' ? pageSpeedData.value as Record<string, unknown> : null
+        );
         
-      } catch (quickFetchError) {
-        console.log(`[${new Date().toISOString()}] Quick fetch failed, returning immediate fallback result`);
-        console.log(`[${new Date().toISOString()}] Quick fetch error:`, quickFetchError instanceof Error ? quickFetchError.message : quickFetchError);
+      } else {
+        console.log(`[${new Date().toISOString()}] Quick fetch failed, returning enhanced fallback result`);
+        console.log(`[${new Date().toISOString()}] Quick fetch error:`, quickFetchResult.reason);
         
-        // クイックfetchが失敗した場合、即座にフォールバック結果を返す
+        // fetchが失敗した場合でも、PageSpeedデータがあればフォールバック結果を補強
+        if (pageSpeedData.status === 'fulfilled' && pageSpeedData.value) {
+          return this.enhanceFallbackWithPageSpeed(fallbackResult, pageSpeedData.value as Record<string, unknown>);
+        }
+        
         return fallbackResult;
       }
 
@@ -367,7 +328,7 @@ export class SiteAnalyzer {
   }
 
   // Fetchが失敗した場合の最小限フォールバック分析
-  private createMinimalFallbackAnalysis(url: string, isOwnSite: boolean, _error: Error): SiteAnalysisResult {
+  private createMinimalFallbackAnalysis(url: string, isOwnSite: boolean): SiteAnalysisResult {
     console.log(`[${new Date().toISOString()}] Creating minimal fallback analysis for: ${url}`);
     
     const baseScore = isOwnSite ? 75 : 35; // 自社サイトは高めのスコア
@@ -465,7 +426,7 @@ export class SiteAnalyzer {
     return Math.max(35, Math.min(75, score));
   }
   
-  private generateSmartRecommendations(isOwnSite: boolean, isSecure: boolean, domain: string, score: number): string[] {
+  private generateSmartRecommendations(isOwnSite: boolean, isSecure: boolean, _domain: string, score: number): string[] {
     if (isOwnSite) {
       return [
         '優秀なLLMO最適化レベルを達成しています。',
@@ -492,7 +453,7 @@ export class SiteAnalyzer {
     return recommendations;
   }
   
-  private createSmartScoreBreakdown(baseScore: number, isOwnSite: boolean, isSecure: boolean, domain: string): ScoreBreakdown {
+  private createSmartScoreBreakdown(baseScore: number, isOwnSite: boolean, isSecure: boolean, _domain: string): ScoreBreakdown {
     const adjustedScore = isOwnSite ? Math.min(baseScore + 15, 95) : baseScore;
     
     return {
@@ -612,7 +573,7 @@ export class SiteAnalyzer {
   }
   
   // 詳細分析を実行（fetch成功時）
-  private async performDetailedAnalysis(url: string, html: string, responseTime: number, isOwnSite: boolean): Promise<SiteAnalysisResult> {
+  private async performDetailedAnalysis(url: string, html: string, responseTime: number, isOwnSite: boolean, pageSpeedData?: Record<string, unknown> | null): Promise<SiteAnalysisResult> {
     console.log(`[${new Date().toISOString()}] Performing detailed analysis for: ${url}`);
     
     try {
@@ -628,7 +589,7 @@ export class SiteAnalyzer {
         });
         document = dom.window.document;
         console.log(`[${new Date().toISOString()}] JSDOM initialized for detailed analysis`);
-      } catch (jsdomError) {
+      } catch {
         console.log(`[${new Date().toISOString()}] JSDOM failed, using regex-based analysis`);
         return this.createFallbackAnalysis(url, html, responseTime, isOwnSite);
       }
@@ -655,17 +616,77 @@ export class SiteAnalyzer {
         structuredData
       }, isOwnSite);
       
+      // PageSpeedデータでパフォーマンス情報を補強
+      let enhancedPerformance = performance;
+      let finalScore = scoreResult.overallScore;
+      
+      if (pageSpeedData && typeof pageSpeedData === 'object' && 'lighthouseResult' in pageSpeedData) {
+        console.log(`[${new Date().toISOString()}] Enhancing detailed analysis with PageSpeed Insights data`);
+        const lighthouseResult = pageSpeedData.lighthouseResult as Record<string, unknown>;
+        const audits = typeof lighthouseResult === 'object' && lighthouseResult !== null && 'audits' in lighthouseResult 
+          ? lighthouseResult.audits as Record<string, unknown>
+          : null;
+        
+        if (audits) {
+          const fcpAudit = audits['first-contentful-paint'] as Record<string, unknown>;
+          const lcpAudit = audits['largest-contentful-paint'] as Record<string, unknown>;
+          const clsAudit = audits['cumulative-layout-shift'] as Record<string, unknown>;
+          
+          enhancedPerformance = {
+            ...performance,
+            firstContentfulPaint: (typeof fcpAudit?.numericValue === 'number' ? fcpAudit.numericValue : performance.firstContentfulPaint) as number,
+            largestContentfulPaint: (typeof lcpAudit?.numericValue === 'number' ? lcpAudit.numericValue : performance.largestContentfulPaint) as number,
+            cumulativeLayoutShift: (typeof clsAudit?.numericValue === 'number' ? clsAudit.numericValue : performance.cumulativeLayoutShift) as number,
+          };
+        }
+        
+        // PageSpeedスコアで全体スコアを微調整
+        const categories = typeof lighthouseResult === 'object' && lighthouseResult !== null && 'categories' in lighthouseResult 
+          ? lighthouseResult.categories as Record<string, unknown>
+          : null;
+        const performanceCategory = categories && typeof categories === 'object' && 'performance' in categories
+          ? categories.performance as Record<string, unknown>
+          : null;
+        const performanceScore = performanceCategory && typeof performanceCategory.score === 'number' ? performanceCategory.score : undefined;
+        if (performanceScore !== undefined) {
+          const pageSpeedScore = Math.round(performanceScore * 100);
+          // 実際の分析結果に PageSpeed スコアを25%の重みで反映
+          finalScore = Math.round((finalScore * 0.75) + (pageSpeedScore * 0.25));
+          console.log(`[${new Date().toISOString()}] Score adjusted with PageSpeed data: ${scoreResult.overallScore} → ${finalScore}`);
+        }
+      }
+
       // 推奨事項生成
       const recommendations = this.generateRecommendations({
         headingStructure,
         technicalSeo,
-        performance,
+        performance: enhancedPerformance,
         contentQuality,
         mobileOptimization,
         structuredData
       }, isOwnSite);
       
-      console.log(`[${new Date().toISOString()}] Detailed analysis completed - Score: ${scoreResult.overallScore}`);
+      // PageSpeedベースの追加推奨事項
+      if (pageSpeedData && typeof pageSpeedData === 'object' && 'lighthouseResult' in pageSpeedData) {
+        const lhResult = pageSpeedData.lighthouseResult as Record<string, unknown>;
+        const cats = typeof lhResult === 'object' && lhResult !== null && 'categories' in lhResult 
+          ? lhResult.categories as Record<string, unknown>
+          : null;
+        const perfCat = cats && typeof cats === 'object' && 'performance' in cats
+          ? cats.performance as Record<string, unknown>
+          : null;
+        const performanceScore = perfCat && typeof perfCat.score === 'number' ? perfCat.score : undefined;
+        if (performanceScore !== undefined) {
+          const pageSpeedScore = Math.round(performanceScore * 100);
+          if (pageSpeedScore < 70) {
+            recommendations.unshift(`🚨 PageSpeed Insights分析: パフォーマンススコア${pageSpeedScore}点。サイト速度の大幅な改善が必要です。**GYAKUTEN Web LLMO**で高速化対応をご提案します。`);
+          } else if (pageSpeedScore < 90) {
+            recommendations.push(`⚡ PageSpeed Insights分析: パフォーマンススコア${pageSpeedScore}点。さらなる最適化でユーザー体験を向上できます。`);
+          }
+        }
+      }
+      
+      console.log(`[${new Date().toISOString()}] Detailed analysis completed - Final Score: ${finalScore}`);
       
       return {
         url,
@@ -673,11 +694,11 @@ export class SiteAnalyzer {
         metaDescription,
         headingStructure,
         technicalSeo,
-        performance,
+        performance: enhancedPerformance,
         contentQuality,
         mobileOptimization,
         structuredData,
-        overallScore: scoreResult.overallScore,
+        overallScore: finalScore,
         scoreBreakdown: scoreResult.scoreBreakdown,
         recommendations
       };
@@ -1655,5 +1676,68 @@ export class SiteAnalyzer {
     }
 
     return recommendations;
+  }
+
+  // PageSpeedデータでフォールバック結果を補強
+  private enhanceFallbackWithPageSpeed(fallbackResult: SiteAnalysisResult, pageSpeedData: Record<string, unknown> | null): SiteAnalysisResult {
+    console.log(`[${new Date().toISOString()}] Enhancing fallback result with PageSpeed Insights data`);
+    
+    try {
+      if (!pageSpeedData || typeof pageSpeedData !== 'object' || !('lighthouseResult' in pageSpeedData)) {
+        return fallbackResult;
+      }
+      
+      const lighthouseResult = pageSpeedData.lighthouseResult as Record<string, unknown>;
+      const categories = typeof lighthouseResult === 'object' && lighthouseResult !== null && 'categories' in lighthouseResult 
+        ? lighthouseResult.categories as Record<string, unknown>
+        : null;
+      const audits = typeof lighthouseResult === 'object' && lighthouseResult !== null && 'audits' in lighthouseResult 
+        ? lighthouseResult.audits as Record<string, unknown>
+        : null;
+      
+      const performanceCategory = categories && typeof categories === 'object' && 'performance' in categories
+        ? categories.performance as Record<string, unknown>
+        : null;
+        
+      if (performanceCategory && typeof performanceCategory.score === 'number') {
+        const performanceScore = Math.round(performanceCategory.score * 100);
+        console.log(`[${new Date().toISOString()}] PageSpeed performance score: ${performanceScore}`);
+        
+        // パフォーマンス情報を更新
+        if (audits) {
+          const speedIndexAudit = audits['speed-index'] as Record<string, unknown>;
+          const fcpAudit = audits['first-contentful-paint'] as Record<string, unknown>;
+          const lcpAudit = audits['largest-contentful-paint'] as Record<string, unknown>;
+          const clsAudit = audits['cumulative-layout-shift'] as Record<string, unknown>;
+          
+          fallbackResult.performance = {
+            ...fallbackResult.performance,
+            loadTime: (typeof speedIndexAudit?.numericValue === 'number' ? Math.round(speedIndexAudit.numericValue) : fallbackResult.performance.loadTime) as number,
+            firstContentfulPaint: (typeof fcpAudit?.numericValue === 'number' ? fcpAudit.numericValue : 0) as number,
+            largestContentfulPaint: (typeof lcpAudit?.numericValue === 'number' ? lcpAudit.numericValue : 0) as number,
+            cumulativeLayoutShift: (typeof clsAudit?.numericValue === 'number' ? clsAudit.numericValue : 0.1) as number,
+          };
+        }
+
+        // 全体スコアを調整（PageSpeedスコアを反映）
+        const originalScore = fallbackResult.overallScore;
+        const adjustedScore = Math.round((originalScore * 0.7) + (performanceScore * 0.3));
+        fallbackResult.overallScore = Math.max(30, Math.min(100, adjustedScore));
+        
+        // パフォーマンス関連の推奨事項を追加
+        if (performanceScore < 70) {
+          fallbackResult.recommendations.unshift(`PageSpeed Insights分析結果: パフォーマンススコア${performanceScore}点。サイト速度の改善が緊急で必要です。**GYAKUTEN Web LLMO**で高速化とLLMO最適化を同時実現できます。`);
+        } else if (performanceScore < 90) {
+          fallbackResult.recommendations.push(`PageSpeed Insights分析結果: パフォーマンススコア${performanceScore}点。さらなる高速化でユーザー体験を向上できます。`);
+        }
+
+        console.log(`[${new Date().toISOString()}] Enhanced fallback with PageSpeed data - Final Score: ${fallbackResult.overallScore}`);
+      }
+      
+    } catch (error) {
+      console.warn(`[${new Date().toISOString()}] Failed to enhance fallback with PageSpeed data:`, error);
+    }
+    
+    return fallbackResult;
   }
 }

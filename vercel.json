@@ -1,0 +1,10 @@
+{
+  "functions": {
+    "src/app/api/diagnosis-form/route.ts": {
+      "runtime": "nodejs18.x",
+      "maxDuration": 10
+    }
+  },
+  "regions": ["hnd1"],
+  "framework": "nextjs"
+}
