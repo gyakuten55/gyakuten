@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
@@ -31,8 +32,8 @@ export default function FixedDiagnosisCTA() {
         isVisible ? 'translate-y-0 opacity-100' : 'translate-y-16 opacity-0'
       }`}
     >
-      <button
-        onClick={() => alert('現在、無料LLMO診断サービスは準備中です。\n\nより高品質な分析結果をお届けするため、システムの最適化を進めております。サービス開始まで今しばらくお待ちください。\n\n個別のご相談については、お問い合わせフォームよりお気軽にお声かけください。')}
+      <Link
+        href="/diagnosis"
         className="bg-primary hover:bg-primary/90 text-white px-6 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center space-x-3 group"
       >
         <div className="bg-white rounded-full p-2 flex items-center justify-center">
@@ -64,7 +65,7 @@ export default function FixedDiagnosisCTA() {
             d="M9 5l7 7-7 7"
           />
         </svg>
-      </button>
+      </Link>
     </div>
   );
 }

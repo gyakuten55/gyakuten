@@ -16,12 +16,12 @@ export default function CTASection() {
             <p className="text-base text-gray-200 mb-6">
               「とりあえず話を聞いてみたい」という気軽な気持ちで構いません。あなたのビジネスにどのような改善点があるか、診断いたします。
             </p>
-            <button
-              onClick={() => alert('現在、無料LLMO診断サービスは準備中です。\n\nより高品質な分析結果をお届けするため、システムの最適化を進めております。サービス開始まで今しばらくお待ちください。\n\n個別のご相談については、お問い合わせフォームよりお気軽にお声かけください。')}
+            <Link
+              href="/diagnosis"
               className="bg-white text-primary px-6 py-3 rounded-md text-base font-medium hover:bg-gray-100 transition-colors inline-block"
             >
               無料診断を行う
-            </button>
+            </Link>
           </div>
 
           {/* 右側：資料請求 */}
