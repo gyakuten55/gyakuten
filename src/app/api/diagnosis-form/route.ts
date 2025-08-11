@@ -15,25 +15,28 @@ async function startAsyncAnalysis(url: string, email: string, formData: Diagnosi
     analyzer = new SiteAnalyzer();
     console.log(`[${new Date().toISOString()}] SiteAnalyzer initialized`);
     
-    // 即座のフォールバック戦略により大幅短縮（5秒制限）
+    // タイムアウトを30秒に延長して安定性向上
     const analysisPromise = analyzer.analyzeSite(url);
     const timeoutPromise = new Promise((_, reject) => {
-      setTimeout(() => reject(new Error('Analysis timeout after 5 seconds')), 5000);
+      setTimeout(() => reject(new Error('Analysis timeout after 30 seconds')), 30000);
     });
     
     const analysisResult = await Promise.race([analysisPromise, timeoutPromise]) as SiteAnalysisResult;
     const analysisTime = Date.now() - startTime;
     
     console.log(`[${new Date().toISOString()}] Analysis completed for: ${url}, Score: ${analysisResult.overallScore}, Time: ${analysisTime}ms`);
-    
-    await analyzer.closeBrowser();
-    console.log(`[${new Date().toISOString()}] Browser closed`);
 
     // 診断結果をメール送信
     console.log(`[${new Date().toISOString()}] Sending analysis result to: ${email}`);
-    await sendAnalysisResult(email, analysisResult, formData);
+    console.log(`[${new Date().toISOString()}] Analysis result summary - Score: ${analysisResult.overallScore}, Details available: ${!!analysisResult}`);
     
-    console.log(`[${new Date().toISOString()}] ✅ Analysis result successfully sent to: ${email} (Total time: ${Date.now() - startTime}ms)`);
+    try {
+      await sendAnalysisResult(email, analysisResult, formData);
+      console.log(`[${new Date().toISOString()}] ✅ Analysis result successfully sent to: ${email} (Total time: ${Date.now() - startTime}ms)`);
+    } catch (emailError) {
+      console.error(`[${new Date().toISOString()}] ❌ Failed to send analysis result email:`, emailError);
+      throw emailError;
+    }
   } catch (error) {
     const errorId = `ANALYSIS_ERR_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     
@@ -84,6 +87,16 @@ async function startAsyncAnalysis(url: string, email: string, formData: Diagnosi
       console.log(`[${new Date().toISOString()}] Error notification sent to admin with ID: ${errorId}`);
     } catch (emailError) {
       console.error(`[${new Date().toISOString()}] Failed to send error notification:`, emailError);
+    }
+  } finally {
+    // ブラウザを必ずクローズ
+    if (analyzer) {
+      try {
+        await analyzer.closeBrowser();
+        console.log(`[${new Date().toISOString()}] Browser closed in finally block`);
+      } catch (closeError) {
+        console.error(`[${new Date().toISOString()}] Failed to close browser:`, closeError);
+      }
     }
   }
 }
