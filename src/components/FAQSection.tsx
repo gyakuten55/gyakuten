@@ -10,7 +10,7 @@ interface FAQ {
 const faqs: FAQ[] = [
   {
     question: "LLMOとSEOの違いは何ですか？",
-    answer: "従来のSEOは主にGoogleなどの検索エンジンを対象としていますが、LLMOはChatGPTやBardなどのAI・大規模言語モデルに最適化することを目的としています。AIが理解しやすい構造や内容にすることで、AI検索時代に対応します。"
+    answer: "従来のSEOは主にGoogleなどの検索エンジンを対象としていますが、LLMOはPerplexity AIやChatGPT Search、Google Geminiなどの最新AI・大規模言語モデルに最適化することを目的としています。AIが理解しやすい構造や内容にすることで、AI検索時代に対応します。"
   },
   {
     question: "診断にはどのくらい時間がかかりますか？",

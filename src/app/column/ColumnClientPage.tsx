@@ -15,7 +15,7 @@ const sampleArticles: Article[] = [
     title: 'AI検索時代におけるSEO戦略の変化',
     slug: 'ai-search-seo-strategy',
     content: '',
-    excerpt: 'ChatGPTやBardなどのAI検索エンジンの普及により、従来のSEO戦略は大きく変わりつつあります。LLMO（大規模言語モデル最適化）の重要性について解説します。',
+    excerpt: 'Perplexity AIやChatGPT Search、Google GeminiなどのAI検索エンジンの普及により、従来のSEO戦略は大きく変わりつつあります。LLMO（大規模言語モデル最適化）の重要性について解説します。',
     featuredImage: {
       url: '/hero-image.jpg',
       width: 800,

@@ -117,7 +117,7 @@ export default function WriteLLMOPage() {
                 },
                 {
                   title: "AI時代のライティングが分からない",
-                  description: "ChatGPTやBardなどのAI検索で引用される文章の書き方が明確でない。"
+                  description: "Perplexity AIやChatGPT Search、Google GeminiなどのAI検索で引用される文章の書き方が明確でない。"
                 },
                 {
                   title: "SEOライティングの効果が落ちている",
@@ -158,7 +158,7 @@ export default function WriteLLMOPage() {
               {[
                 {
                   title: "AI引用で新しい流入確保",
-                  description: "meta・内部リンク・FAQ・構造化データを標準実装。AI検索やChatGPTで引用されやすくなり、従来のSEOに加えて新しい流入経路を獲得。"
+                  description: "meta・内部リンク・FAQ・構造化データを標準実装。最新AI検索やChatGPT Searchで引用されやすくなり、従来のSEOに加えて新しい流入経路を獲得。"
                 },
                 {
                   title: "完全手間ゼロの運用",
@@ -203,7 +203,7 @@ export default function WriteLLMOPage() {
                     AI時代専用ノウハウ
                   </h3>
                   <p className="text-gray-700 mb-6 leading-relaxed">
-                    従来のSEOだけでなく「引用される構造」を徹底。meta・内部リンク・FAQ・構造化データを標準実装し、ChatGPTやBardなどのAI検索で引用されやすい文章構造を構築します。
+                    従来のSEOだけでなく「引用される構造」を徹底。meta・内部リンク・FAQ・構造化データを標準実装し、Perplexity AIやChatGPT Search、Google GeminiなどのAI検索で引用されやすい文章構造を構築します。
                   </p>
                   <div className="space-y-3">
                     <div className="border-l-4 border-primary pl-4">

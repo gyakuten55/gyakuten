@@ -118,7 +118,7 @@ export default function LLMOConsultingPage() {
               {[
                 {
                   title: "AI時代に取り残される不安",
-                  description: "ChatGPTなどのAI検索が普及する中、従来のSEO対策だけで大丈夫なのか心配。"
+                  description: "Perplexity AIやChatGPT SearchなどのAI検索が普及する中、従来のSEO対策だけで大丈夫なのか心配。"
                 },
                 {
                   title: "具体的な改善策が分からない",
@@ -518,7 +518,7 @@ export default function LLMOConsultingPage() {
                       AI時代に取り残される不安を抱える中小企業経営者
                     </h3>
                     <p className="text-gray-700 leading-relaxed">
-                      ChatGPTなどのAI検索普及で従来手法に限界を感じ、新時代に対応した戦略を求める方
+                      Perplexity AIやChatGPT SearchなどのAI検索普及で従来手法に限界を感じ、新時代に対応した戦略を求める方
                     </p>
                   </div>
                 </li>

@@ -117,7 +117,7 @@ export default function WebLLMOPage() {
                 },
                 {
                   title: "AI時代のWeb対策が分からない",
-                  description: "ChatGPTやBardなどのAI検索に対応したサイトの作り方が明確でない。"
+                  description: "Perplexity AIやChatGPT Search、Google GeminiなどのAI検索に対応したサイトの作り方が明確でない。"
                 },
                 {
                   title: "納品後のサポートが期待できない",
@@ -203,7 +203,7 @@ export default function WebLLMOPage() {
                     AI検索で引用される構造化設計
                   </h3>
                   <p className="text-gray-700 mb-6 leading-relaxed">
-                    構造化データ・FAQ・E-E-A-T設計を標準実装。ChatGPTやBardなどのAI検索エンジンがサイトを「発見し・要約し・引用しやすい」情報構造を構築します。
+                    構造化データ・FAQ・E-E-A-T設計を標準実装。Perplexity AIやChatGPT Search、Google GeminiなどのAI検索エンジンがサイトを「発見し・要約し・引用しやすい」情報構造を構築します。
                   </p>
                   <div className="space-y-3">
                     <div className="border-l-4 border-primary pl-4">

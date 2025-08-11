@@ -39,7 +39,7 @@ export default function DiagnosisPage() {
                 AI検索時代に対応した<span className="text-primary font-bold">Webサイト最適化診断</span>を無料で実施
               </p>
               <p className="text-base text-gray-600 max-w-2xl mx-auto">
-                貴社サイトがAIに「選ばれる」状態かを多角的にチェック。ChatGPTやBardなどのAI検索エンジンで上位表示されるための最適化をご提案します。
+                貴社サイトがAIに「選ばれる」状態かを多角的にチェック。Perplexity AIやChatGPT Search、Google Geminiなどの最新AI検索エンジンで上位表示されるための最適化をご提案します。
               </p>
             </div>
 

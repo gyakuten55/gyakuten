@@ -27,17 +27,17 @@ const faqData: FAQ[] = [
   {
     category: 'LLMOについて',
     question: 'LLMOとは何ですか？',
-    answer: 'LLMO（Large Language Model Optimization）とは、ChatGPTやBard、Claude等の大規模言語モデル（AI）に対して最適化することです。従来のSEOがGoogleなどの検索エンジンを対象としていたのに対し、LLMOはAI検索時代に対応した新しい最適化手法です。AIが理解しやすく、引用しやすいコンテンツ構造にすることで、AI検索結果での露出を高めます。'
+    answer: 'LLMO（Large Language Model Optimization）とは、Perplexity AIやChatGPT Search、Google Gemini等の大規模言語モデル（AI）に対して最適化することです。従来のSEOがGoogleなどの検索エンジンを対象としていたのに対し、LLMOはAI検索時代に対応した新しい最適化手法です。AIが理解しやすく、引用しやすいコンテンツ構造にすることで、AI検索結果での露出を高めます。'
   },
   {
     category: 'LLMOについて',
     question: 'LLMOとSEOの違いは何ですか？',
-    answer: '従来のSEOは主にGoogleなどの検索エンジンのアルゴリズムを対象としていますが、LLMOはChatGPTやBardなどのAI・大規模言語モデルに最適化することを目的としています。AIが理解しやすい構造や内容にすることで、AI検索時代における情報発見性を高めます。SEOとLLMOは補完的な関係にあり、両方を実施することで包括的なデジタル戦略が可能になります。'
+    answer: '従来のSEOは主にGoogleなどの検索エンジンのアルゴリズムを対象としていますが、LLMOはPerplexity AIやChatGPT Search、Google GeminiなどのAI・大規模言語モデルに最適化することを目的としています。AIが理解しやすい構造や内容にすることで、AI検索時代における情報発見性を高めます。SEOとLLMOは補完的な関係にあり、両方を実施することで包括的なデジタル戦略が可能になります。'
   },
   {
     category: 'LLMOについて',
     question: 'なぜ今LLMOが重要なのですか？',
-    answer: 'AI検索の利用が急速に拡大しており、特にビジネス領域での情報収集において、ChatGPTやPerplexity等のAIツールが頻繁に使われるようになっています。従来の検索エンジン経由の流入だけでなく、AI経由での情報発見・引用が重要な集客チャネルとなりつつあります。早期にLLMO対応することで、競合他社に先んじてAI検索時代の優位性を確保できます。'
+    answer: 'AI検索の利用が急速に拡大しており、特にビジネス領域での情報収集において、Perplexity AIやChatGPT Search、Google Gemini等のAIツールが頻繁に使われるようになっています。従来の検索エンジン経由の流入だけでなく、AI経由での情報発見・引用が重要な集客チャネルとなりつつあります。早期にLLMO対応することで、競合他社に先んじてAI検索時代の優位性を確保できます。'
   },
 
   // サービス全般
@@ -93,7 +93,7 @@ const faqData: FAQ[] = [
   {
     category: '実装・技術',
     question: '効果測定はどのように行いますか？',
-    answer: 'Google Analytics、Search Console等の標準的なツールに加え、AI検索での言及状況や引用率などのLLMO特有の指標も測定します。月次レポートで具体的な数値と改善提案をお届けし、次のアクションを明確にします。'
+    answer: 'Google Analytics、Search Console等の標準的なツールに加え、最新AI検索での言及状況や引用率などのLLMO特有の指標も測定します。月次レポートで具体的な数値と改善提案をお届けし、次のアクションを明確にします。'
   },
 
   // 診断について

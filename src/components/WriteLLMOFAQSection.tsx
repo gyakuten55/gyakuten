@@ -10,7 +10,7 @@ interface FAQ {
 const faqs: FAQ[] = [
   {
     question: "LLMOライティングと従来のSEOライティングの違いは何ですか？",
-    answer: "従来のSEOライティングは主にGoogle検索を対象としていますが、LLMOライティングはChatGPTやBardなどのAI検索での引用も視野に入れた最適化を行います。構造化データ、FAQ形式、内部リンク設計など、AIが理解・引用しやすい構造を標準実装しています。"
+    answer: "従来のSEOライティングは主にGoogle検索を対象としていますが、LLMOライティングはPerplexity AIやChatGPT Search、Google GeminiなどのAI検索での引用も視野に入れた最適化を行います。構造化データ、FAQ形式、内部リンク設計など、AIが理解・引用しやすい構造を標準実装しています。"
   },
   {
     question: "最低発注文字数や納期はどのくらいですか？",

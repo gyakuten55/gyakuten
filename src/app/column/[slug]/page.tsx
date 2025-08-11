@@ -21,7 +21,7 @@ const sampleArticle: Article = {
   slug: 'ai-search-seo-strategy',
   content: `
     <h2 id="introduction">はじめに</h2>
-    <p>ChatGPTやBardなどのAI検索エンジンの普及により、従来のSEO戦略は大きく変わりつつあります。この記事では、LLMO（大規模言語モデル最適化）の重要性について詳しく解説します。</p>
+    <p>Perplexity AIやChatGPT Search、Google GeminiなどのAI検索エンジンの普及により、従来のSEO戦略は大きく変わりつつあります。この記事では、LLMO（大規模言語モデル最適化）の重要性について詳しく解説します。</p>
 
     <h2 id="what-is-llmo">LLMOとは何か</h2>
     <p>LLMO（Large Language Model Optimization）は、AI検索エンジンに対してコンテンツを最適化する手法です。従来のSEOがGoogleなどの検索エンジンのクローラーを対象としていたのに対し、LLMOは大規模言語モデルによる理解と引用を目的としています。</p>
@@ -37,7 +37,7 @@ const sampleArticle: Article = {
     <p>実際にLLMOを実装する際の戦略について説明します。</p>
 
     <h3 id="content-structure">コンテンツ構造の最適化</h3>
-    <p>AI検索エンジンがコンテンツを正しく理解できるよう、以下の点に注意してコンテンツを構造化します：</p>
+    <p>最新AI検索エンジンがコンテンツを正しく理解できるよう、以下の点に注意してコンテンツを構造化します：</p>
     <ol>
       <li>明確な見出し構造の採用</li>
       <li>論理的な情報の配置</li>
@@ -48,12 +48,12 @@ const sampleArticle: Article = {
     <p>従来のメタタグに加えて、構造化データの実装が重要になります。</p>
 
     <h2 id="future-outlook">今後の展望</h2>
-    <p>AI検索の普及はまだ始まったばかりです。今後はより高度なLLMO技術が必要になると予想されます。</p>
+    <p>最新AI検索の普及はまだ始まったばかりです。今後はより高度なLLMO技術が必要になると予想されます。</p>
 
     <h2 id="conclusion">まとめ</h2>
-    <p>AI検索時代に対応するためには、従来のSEO思考から脱却し、LLMOの観点でコンテンツを見直すことが重要です。早期の対応が競合優位につながるでしょう。</p>
+    <p>最新AI検索時代に対応するためには、従来のSEO思考から脱却し、LLMOの観点でコンテンツを見直すことが重要です。早期の対応が競合優位につながるでしょう。</p>
   `,
-  excerpt: 'ChatGPTやBardなどのAI検索エンジンの普及により、従来のSEO戦略は大きく変わりつつあります。LLMO（大規模言語モデル最適化）の重要性について解説します。',
+  excerpt: 'Perplexity AIやChatGPT Search、Google GeminiなどのAI検索エンジンの普及により、従来のSEO戦略は大きく変わりつつあります。LLMO（大規模言語モデル最適化）の重要性について解説します。',
   featuredImage: {
     url: '/hero-image.jpg',
     width: 1200,
@@ -73,7 +73,7 @@ const sampleArticle: Article = {
   ],
   seo: {
     title: 'AI検索時代におけるSEO戦略の変化 | GYAKUTEN コラム',
-    description: 'ChatGPTやBardなどのAI検索エンジンの普及により変化するSEO戦略について、LLMO（大規模言語モデル最適化）の観点から詳しく解説します。',
+    description: 'Perplexity AIやChatGPT Search、Google GeminiなどのAI検索エンジンの普及により変化するSEO戦略について、LLMO（大規模言語モデル最適化）の観点から詳しく解説します。',
   },
   createdAt: '2024-01-15',
   updatedAt: '2024-01-15',

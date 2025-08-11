@@ -12,7 +12,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "GYAKUTEN | すべての逆境に、最高の逆転劇を。",
   description: "合同会社GYAKUTENは、LLMO（大規模言語モデル最適化）を中心とした、中小企業向けのデジタル支援サービスを提供しています。診断・Web制作・ライティング・コンサルティング・システム開発・ブートキャンプまで、あらゆる逆境を逆転劇に変えるパートナーです。",
-  keywords: "LLMO, AI最適化, Web制作, ライティング, コンサルティング, システム開発, 中小企業, デジタル化, 逆転, GYAKUTEN, ChatGPT最適化, Perplexity最適化, Claude最適化, AI検索対応",
+  keywords: "LLMO, AI最適化, Web制作, ライティング, コンサルティング, システム開発, 中小企業, デジタル化, 逆転, GYAKUTEN, Perplexity最適化, ChatGPT Search最適化, Google Gemini最適化, AI検索対応",
   authors: [{ name: "合同会社GYAKUTEN" }],
   creator: "合同会社GYAKUTEN",
   publisher: "合同会社GYAKUTEN",
@@ -90,6 +90,7 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <head>
+        <meta name="google-site-verification" content="3SZKterGHvszlw0n4wmaXTKaQEEX3E6De6mv0YAYZ5U" />
         <AIOptimizedMeta />
         <StructuredData type="organization" />
         <StructuredData type="website" />
