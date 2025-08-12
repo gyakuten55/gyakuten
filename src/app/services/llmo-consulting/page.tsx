@@ -7,19 +7,19 @@ import ConsultingFAQSection from '@/components/ConsultingFAQSection';
 
 // SEO メタデータ
 export const metadata: Metadata = {
-  title: 'GYAKUTEN LLMOコンサルティング | AI時代の戦略的伴走コンサル',
-  description: 'AI検索・生成AI時代に選ばれるWeb・コンテンツ体制を構築する伴走型コンサルティング。専門用語ゼロ、現場で即使える改善策を実装まで一貫サポート。',
-  keywords: 'LLMOコンサルティング, AI時代コンサル, Webコンサルティング, 中小企業支援, デジタル戦略',
+  title: 'LLMOコンサルティング15万円～ | 中小企業DX支援・AI最適化コンサル | GYAKUTEN',
+  description: '中小企業向けLLMOコンサルティング・DX支援なら15万円から。AI検索最適化・売上拡大・業務効率化を月25万円～で継続サポート。専門用語ゼロで現場で使える改善策を実装まで一貫支援。東京都の実績豊富なコンサル会社です。',
+  keywords: 'LLMOコンサルティング, LLMOコンサル, LLMO対策, 中小企業DX, AI最適化, DX支援費用, 売上拡大DX, 中小企業向けコンサルティング',
   openGraph: {
-    title: 'GYAKUTEN LLMOコンサルティング',
-    description: 'AI時代の戦略的伴走コンサル',
+    title: 'LLMOコンサルティング15万円～ | 中小企業DX支援・AI最適化コンサル',
+    description: '中小企業向けLLMOコンサルティング・DX支援なら15万円から。AI検索最適化・売上拡大・業務効率化を継続サポート。',
     type: 'website',
     locale: 'ja_JP',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'GYAKUTEN LLMOコンサルティング',
-    description: 'AI時代の戦略的伴走コンサル',
+    title: 'LLMOコンサルティング15万円～ | 中小企業DX支援・AI最適化コンサル',
+    description: '中小企業向けLLMOコンサルティング・DX支援なら15万円から。AI検索最適化・売上拡大・業務効率化を継続サポート。',
   },
   alternates: {
     canonical: '/services/llmo-consulting',

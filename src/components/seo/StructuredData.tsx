@@ -61,8 +61,46 @@ export default function StructuredData({ type }: StructuredDataProps) {
         const services: Service[] = [
           {
             '@type': 'Service',
-            name: 'GYAKUTEN LLMO診断',
-            description: 'WebサイトやコラムをLLMO視点で診断。無料から有料まで幅広いプランを提供',
+            name: '格安システム開発・業務効率化',
+            description: '中小企業向け格安システム開発30万円から。Excel・紙運用から脱却し業務効率化を実現。補助金対応可能。',
+            provider: { '@id': `${baseUrl}/#organization` },
+            serviceType: 'Software Development',
+            offers: {
+              '@type': 'Offer',
+              price: '300000',
+              priceCurrency: 'JPY',
+              priceSpecification: {
+                '@type': 'PriceSpecification',
+                minPrice: '300000',
+                priceCurrency: 'JPY',
+              },
+            },
+            keywords: '格安システム開発, 業務効率化, 中小企業システム開発, 補助金対応',
+            areaServed: 'JP',
+          },
+          {
+            '@type': 'Service',
+            name: 'ホームページ制作・Web制作',
+            description: '中小企業向けホームページ制作10万円から。補助金・助成金対応可能。運送会社向けサイト制作実績多数。',
+            provider: { '@id': `${baseUrl}/#organization` },
+            serviceType: 'Web Development',
+            offers: {
+              '@type': 'Offer',
+              price: '100000',
+              priceCurrency: 'JPY',
+              priceSpecification: {
+                '@type': 'PriceSpecification',
+                minPrice: '100000',
+                priceCurrency: 'JPY',
+              },
+            },
+            keywords: 'ホームページ制作, Web制作補助金, 運送会社ホームページ制作, 格安ホームページ制作',
+            areaServed: 'JP',
+          },
+          {
+            '@type': 'Service',
+            name: 'LLMO診断・AI診断',
+            description: 'WebサイトのAI検索最適化診断。GoogleやChatGPT検索での評価を無料診断。改善点を明確化。',
             provider: { '@id': `${baseUrl}/#organization` },
             serviceType: 'Website Analysis',
             offers: [
@@ -79,19 +117,7 @@ export default function StructuredData({ type }: StructuredDataProps) {
                 name: '詳細診断プラン',
               },
             ],
-            areaServed: 'JP',
-          },
-          {
-            '@type': 'Service', 
-            name: 'GYAKUTEN LLMOウェブ制作',
-            description: 'AI検索時代に最適化されたWebサイト制作',
-            provider: { '@id': `${baseUrl}/#organization` },
-            serviceType: 'Web Development',
-            offers: {
-              '@type': 'Offer',
-              price: '100000',
-              priceCurrency: 'JPY',
-            },
+            keywords: 'AI診断, LLMO診断, 無料診断, Google検索最適化',
             areaServed: 'JP',
           },
           {
@@ -109,15 +135,21 @@ export default function StructuredData({ type }: StructuredDataProps) {
           },
           {
             '@type': 'Service',
-            name: 'GYAKUTEN LLMO コンサル',
-            description: 'AI時代の戦略的伴走コンサルティング',
+            name: 'LLMOコンサルティング・DX支援',
+            description: '中小企業向けLLMOコンサルティング・DX支援15万円から。AI検索最適化・売上拡大・業務効率化を継続サポート。',
             provider: { '@id': `${baseUrl}/#organization` },
             serviceType: 'Business Consulting',
             offers: {
               '@type': 'Offer',
               price: '150000',
               priceCurrency: 'JPY',
+              priceSpecification: {
+                '@type': 'PriceSpecification',
+                minPrice: '150000',
+                priceCurrency: 'JPY',
+              },
             },
+            keywords: 'LLMOコンサルティング, DX支援, LLMO対策, 中小企業コンサルティング',
             areaServed: 'JP',
           },
           {

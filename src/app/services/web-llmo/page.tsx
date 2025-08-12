@@ -7,19 +7,19 @@ import FAQSection from '@/components/WebLLMOFAQSection';
 
 // SEO メタデータ
 export const metadata: Metadata = {
-  title: 'GYAKUTEN LLMOウェブ制作 | AI検索時代に最適化されたWebサイト制作',
-  description: 'AI検索時代に対応したWebサイト制作サービス。初期10万円＋月額5,000円で7ヶ月の伴走サポート付き。構造化データ・FAQ・E-E-A-T設計を標準実装。',
-  keywords: 'LLMOウェブ制作, AI対応ホームページ, 低価格Web制作, 中小企業, Webサイト制作',
+  title: 'ホームページ制作10万円～ | 補助金対応・格安Web制作 | GYAKUTEN',
+  description: '中小企業向けホームページ制作なら10万円から。補助金・助成金対応可能。AI検索時代に最適化。月額5,000円で7ヶ月伴走サポート付き。東京都の実績豊富なWeb制作会社GYAKUTENが格安でサイト制作します。',
+  keywords: 'ホームページ制作, Web制作補助金, ホームページ制作補助金, サイト制作助成金, 格安ホームページ制作, 運送会社ホームページ制作, 中小企業ホームページ, 東京ホームページ制作',
   openGraph: {
-    title: 'GYAKUTEN LLMOウェブ制作',
-    description: 'AI検索時代に対応したWebサイト制作サービス',
+    title: 'ホームページ制作10万円～ | 補助金対応・格安Web制作',
+    description: '中小企業向けホームページ制作なら10万円から。補助金・助成金対応可能。AI検索時代に最適化。',
     type: 'website',
     locale: 'ja_JP',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'GYAKUTEN LLMOウェブ制作',
-    description: 'AI検索時代に対応したWebサイト制作サービス',
+    title: 'ホームページ制作10万円～ | 補助金対応・格安Web制作',
+    description: '中小企業向けホームページ制作なら10万円から。補助金・助成金対応可能。AI検索時代に最適化。',
   },
   alternates: {
     canonical: '/services/web-llmo',
@@ -314,6 +314,91 @@ export default function WebLLMOPage() {
           </div>
         </section>
 
+        {/* 補助金・助成金セクション */}
+        <section className="py-16 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="mb-12 text-center">
+              <h2 className="text-3xl font-black text-black mb-6">
+                補助金・助成金で Web制作費を削減
+              </h2>
+              <p className="text-lg text-gray-700">
+                ホームページ制作は各種補助金・助成金の対象です
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {/* IT導入補助金 */}
+              <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+                <h3 className="text-lg font-bold text-black mb-4">IT導入補助金</h3>
+                <div className="mb-4">
+                  <div className="text-2xl font-bold text-primary">最大450万円</div>
+                  <div className="text-sm text-gray-600">ウェブサイト制作費用の一部補助</div>
+                </div>
+                <ul className="space-y-2 text-sm text-gray-700">
+                  <li>• ホームページ制作費</li>
+                  <li>• CMSシステム導入費</li>
+                  <li>• EC機能追加費用</li>
+                </ul>
+              </div>
+
+              {/* 小規模事業者持続化補助金 */}
+              <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+                <h3 className="text-lg font-bold text-black mb-4">小規模事業者持続化補助金</h3>
+                <div className="mb-4">
+                  <div className="text-2xl font-bold text-primary">最大200万円</div>
+                  <div className="text-sm text-gray-600">販路開拓・Web集客支援</div>
+                </div>
+                <ul className="space-y-2 text-sm text-gray-700">
+                  <li>• ウェブサイト制作費</li>
+                  <li>• Web広告運用費</li>
+                  <li>• SEO対策費用</li>
+                </ul>
+              </div>
+
+              {/* 地域雇用開発助成金 */}
+              <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+                <h3 className="text-lg font-bold text-black mb-4">地域雇用開発助成金</h3>
+                <div className="mb-4">
+                  <div className="text-2xl font-bold text-primary">最大48万円</div>
+                  <div className="text-sm text-gray-600">採用・事業拡大支援</div>
+                </div>
+                <ul className="space-y-2 text-sm text-gray-700">
+                  <li>• 採用サイト制作費</li>
+                  <li>• 求人用Webページ</li>
+                  <li>• 会社紹介サイト</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="mt-12 bg-gray-50 rounded-lg p-8">
+              <div className="text-center mb-6">
+                <h3 className="text-xl font-bold text-black mb-2">補助金申請もサポートします</h3>
+                <p className="text-gray-700">複雑な申請手続きもGYAKUTENがお手伝い</p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                  <h4 className="font-semibold text-black mb-3">📋 申請支援サービス</h4>
+                  <ul className="space-y-2 text-sm text-gray-700">
+                    <li>• 事業計画書作成支援</li>
+                    <li>• 申請書類の記入指導</li>
+                    <li>• 必要書類の準備サポート</li>
+                    <li>• 実績報告書作成支援</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-black mb-3">💰 費用負担軽減例</h4>
+                  <div className="bg-white rounded p-4 border">
+                    <div className="text-sm text-gray-600 mb-1">Web制作費用</div>
+                    <div className="text-lg font-bold text-gray-800 mb-2">20万円</div>
+                    <div className="text-sm text-gray-600 mb-1">補助金適用後</div>
+                    <div className="text-2xl font-bold text-primary">実質10万円～</div>
+                    <div className="text-xs text-gray-500 mt-1">※補助率・上限は制度により異なります</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* 料金セクション */}
         <section className="py-16 bg-primary/5">

@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+
+# Block old template/concept pages that are diluting relevance
+Disallow: /concept/
+Disallow: /concept/Bar_v1/
+Disallow: /concept/Beauty_Salon_v1/
+Disallow: /concept/Nightclub_Luxury_v1/
+Disallow: /concept/Event_v1/
+Disallow: /concept/Transport_v1/
+
+# Priority crawling for main business pages
+Crawl-delay: 1
+
+Sitemap: https://gyaku-ten.jp/sitemap.xml

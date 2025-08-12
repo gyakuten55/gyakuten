@@ -10,9 +10,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "GYAKUTEN | すべての逆境に、最高の逆転劇を。",
-  description: "合同会社GYAKUTENは、LLMO（大規模言語モデル最適化）を中心とした、中小企業向けのデジタル支援サービスを提供しています。診断・Web制作・ライティング・コンサルティング・システム開発・ブートキャンプまで、あらゆる逆境を逆転劇に変えるパートナーです。",
-  keywords: "LLMO, AI最適化, Web制作, ライティング, コンサルティング, システム開発, 中小企業, デジタル化, 逆転, GYAKUTEN, Perplexity最適化, ChatGPT Search最適化, Google Gemini最適化, AI検索対応",
+  title: "格安システム開発・DX支援 | 中小企業向けデジタル化なら合同会社GYAKUTEN",
+  description: "中小企業向け格安システム開発・業務効率化・DX支援なら合同会社GYAKUTEN。補助金対応可能。LLMO最適化・Web制作・コンサルティングまで一括対応。初回診断無料。東京都渋谷区の実績豊富な開発会社です。",
+  keywords: "格安システム開発, 中小企業DX, 業務効率化, システム開発安い, 補助金対応, Web制作, LLMO最適化, コンサルティング, 東京, 合同会社GYAKUTEN",
   authors: [{ name: "合同会社GYAKUTEN" }],
   creator: "合同会社GYAKUTEN",
   publisher: "合同会社GYAKUTEN",
@@ -59,8 +59,8 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: "GYAKUTEN | すべての逆境に、最高の逆転劇を。",
-    description: "合同会社GYAKUTENは、LLMO（大規模言語モデル最適化）を中心とした、中小企業向けのデジタル支援サービスを提供しています。",
+    title: "格安システム開発・DX支援 | 中小企業向けデジタル化なら合同会社GYAKUTEN",
+    description: "中小企業向け格安システム開発・業務効率化・DX支援なら合同会社GYAKUTEN。補助金対応可能。初回診断無料。",
     url: 'https://gyaku-ten.jp',
     siteName: 'GYAKUTEN',
     images: [
@@ -76,8 +76,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "GYAKUTEN | すべての逆境に、最高の逆転劇を。",
-    description: "合同会社GYAKUTENは、LLMO（大規模言語モデル最適化）を中心とした、中小企業向けのデジタル支援サービスを提供しています。",
+    title: "格安システム開発・DX支援 | 中小企業向けデジタル化なら合同会社GYAKUTEN",
+    description: "中小企業向け格安システム開発・業務効率化・DX支援なら合同会社GYAKUTEN。補助金対応可能。初回診断無料。",
     images: ['/logo.png'],
   },
 };

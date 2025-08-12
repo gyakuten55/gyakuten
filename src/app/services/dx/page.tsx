@@ -7,19 +7,19 @@ import DXFAQSection from '@/components/DXFAQSection';
 
 // SEO メタデータ
 export const metadata: Metadata = {
-  title: 'GYAKUTENシステム開発 | 中小企業向け完全オーダーメイドシステム開発',
-  description: '中小企業向けの低コスト・高品質なシステム開発サービス。Excel・紙運用から脱却し、現場に最適化された使いやすいシステムを30万円から開発。',
-  keywords: 'システム開発, 中小企業, オーダーメイド, CRM, 業務効率化, DX推進',
+  title: '格安システム開発30万円～ | 中小企業向け業務効率化・DX支援 | GYAKUTEN',
+  description: '中小企業向け格安システム開発・業務効率化なら30万円から。補助金対応可能。Excel・紙運用から脱却し効率化を実現。東京都の実績豊富な開発会社GYAKUTENが低コストでオーダーメイドシステムを開発します。',
+  keywords: '格安システム開発, システム開発安い, 中小企業システム開発, 業務効率化システム開発, 激安システム開発, 小規模システム開発, DX支援費用, システム開発外注, 補助金対応',
   openGraph: {
-    title: 'GYAKUTENシステム開発',
-    description: '中小企業向けの低コスト・高品質なシステム開発サービス',
+    title: '格安システム開発30万円～ | 中小企業向け業務効率化・DX支援',
+    description: '中小企業向け格安システム開発・業務効率化なら30万円から。補助金対応可能。Excel・紙運用から脱却し効率化を実現。',
     type: 'website',
     locale: 'ja_JP',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'GYAKUTENシステム開発',
-    description: '中小企業向けの低コスト・高品質なシステム開発サービス',
+    title: '格安システム開発30万円～ | 中小企業向け業務効率化・DX支援',
+    description: '中小企業向け格安システム開発・業務効率化なら30万円から。補助金対応可能。Excel・紙運用から脱却し効率化を実現。',
   },
   alternates: {
     canonical: '/services/dx',
@@ -64,10 +64,10 @@ export default function DXPage() {
               {/* 左側：説明 */}
               <div>
                 <h1 className="text-3xl md:text-4xl font-black text-black mb-4 leading-tight">
-                  GYAKUTENシステム開発
+                  格安システム開発・DX支援
                 </h1>
                 <p className="text-lg text-gray-700 mb-4 leading-relaxed">
-                  中小企業向け<span className="text-primary font-bold">完全オーダーメイドシステム開発</span>
+                  中小企業向け<span className="text-primary font-bold">格安システム開発30万円～</span>
                 </p>
                 <p className="text-base text-gray-600 mb-6">
                   大手パッケージは高額＆機能過多で現場になじまない。GYAKUTENは必要十分な機能だけを適正価格で開発し、Excel・紙運用からの脱却を支援します。
@@ -90,6 +90,12 @@ export default function DXPage() {
                       <span className="text-white text-xs font-bold">✓</span>
                     </div>
                     <span className="text-sm text-gray-700">段階開発で低リスク投資</span>
+                  </div>
+                  <div className="flex items-center">
+                    <div className="w-5 h-5 bg-primary rounded-full flex items-center justify-center mr-3">
+                      <span className="text-white text-xs font-bold">✓</span>
+                    </div>
+                    <span className="text-sm text-gray-700">補助金・助成金申請サポート対応</span>
                   </div>
                 </div>
               </div>
@@ -409,6 +415,88 @@ export default function DXPage() {
               >
                 無料相談・見積もりを申し込む
               </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* 補助金・助成金セクション */}
+        <section className="py-16 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="mb-12 text-center">
+              <h2 className="text-3xl font-black text-black mb-6">
+                補助金・助成金で さらに負担軽減
+              </h2>
+              <p className="text-lg text-gray-700">
+                システム開発は各種補助金・助成金の対象です
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {/* IT導入補助金 */}
+              <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+                <h3 className="text-lg font-bold text-black mb-4">IT導入補助金</h3>
+                <div className="mb-4">
+                  <div className="text-2xl font-bold text-primary">最大450万円</div>
+                  <div className="text-sm text-gray-600">ITツール導入費用の一部補助</div>
+                </div>
+                <ul className="space-y-2 text-sm text-gray-700">
+                  <li>• ソフトウェア導入費</li>
+                  <li>• クラウド利用料（最大2年分）</li>
+                  <li>• 導入関連費用</li>
+                </ul>
+              </div>
+
+              {/* 小規模事業者持続化補助金 */}
+              <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+                <h3 className="text-lg font-bold text-black mb-4">小規模事業者持続化補助金</h3>
+                <div className="mb-4">
+                  <div className="text-2xl font-bold text-primary">最大200万円</div>
+                  <div className="text-sm text-gray-600">販路開拓・業務効率化支援</div>
+                </div>
+                <ul className="space-y-2 text-sm text-gray-700">
+                  <li>• システム開発費</li>
+                  <li>• ウェブサイト制作費</li>
+                  <li>• 業務効率化ツール導入費</li>
+                </ul>
+              </div>
+
+              {/* 事業再構築補助金 */}
+              <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+                <h3 className="text-lg font-bold text-black mb-4">事業再構築補助金</h3>
+                <div className="mb-4">
+                  <div className="text-2xl font-bold text-primary">最大1.5億円</div>
+                  <div className="text-sm text-gray-600">新分野展開・業態転換支援</div>
+                </div>
+                <ul className="space-y-2 text-sm text-gray-700">
+                  <li>• デジタル化投資</li>
+                  <li>• システム刷新費用</li>
+                  <li>• 新事業システム開発費</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="mt-12 bg-gray-50 rounded-lg p-8">
+              <div className="text-center mb-6">
+                <h3 className="text-xl font-bold text-black mb-2">補助金申請もお任せください</h3>
+                <p className="text-gray-700">複雑な申請手続きもGYAKUTENがサポートします</p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="text-center">
+                  <div className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-bold mx-auto mb-3">1</div>
+                  <h4 className="font-semibold text-black mb-2">申請書類作成</h4>
+                  <p className="text-sm text-gray-600">事業計画書・申請書類の作成支援</p>
+                </div>
+                <div className="text-center">
+                  <div className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-bold mx-auto mb-3">2</div>
+                  <h4 className="font-semibold text-black mb-2">申請手続き</h4>
+                  <p className="text-sm text-gray-600">複雑な申請手続きを代行・支援</p>
+                </div>
+                <div className="text-center">
+                  <div className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-bold mx-auto mb-3">3</div>
+                  <h4 className="font-semibold text-black mb-2">実績報告</h4>
+                  <p className="text-sm text-gray-600">事業完了後の実績報告もサポート</p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
