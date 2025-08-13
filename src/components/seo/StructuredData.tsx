@@ -1,10 +1,35 @@
-import { Organization, LocalBusiness, WebSite, Service } from 'schema-dts';
+import { Organization, LocalBusiness, WebSite, Service, Article, FAQPage, BreadcrumbList, WebPage } from 'schema-dts';
 
 interface StructuredDataProps {
-  type: 'organization' | 'website' | 'service' | 'local-business';
+  type: 'organization' | 'website' | 'service' | 'local-business' | 'article' | 'faq' | 'breadcrumb' | 'webpage';
+  data?: {
+    article?: {
+      title: string;
+      description: string;
+      datePublished: string;
+      dateModified: string;
+      author: string;
+      image?: string;
+      category?: string;
+      tags?: string[];
+    };
+    faq?: Array<{
+      question: string;
+      answer: string;
+    }>;
+    breadcrumb?: Array<{
+      name: string;
+      item: string;
+    }>;
+    webpage?: {
+      title: string;
+      description: string;
+      url: string;
+    };
+  };
 }
 
-export default function StructuredData({ type }: StructuredDataProps) {
+export default function StructuredData({ type, data }: StructuredDataProps) {
   const getStructuredData = () => {
     const baseUrl = 'https://gyaku-ten.jp';
     
@@ -195,6 +220,85 @@ export default function StructuredData({ type }: StructuredDataProps) {
           priceRange: '¥0-¥300,000',
         };
         return localBusiness;
+
+      case 'article':
+        if (!data?.article) return null;
+        const article: Article = {
+          '@type': 'Article',
+          headline: data.article.title,
+          description: data.article.description,
+          datePublished: data.article.datePublished,
+          dateModified: data.article.dateModified,
+          author: {
+            '@type': 'Organization',
+            name: data.article.author || '合同会社GYAKUTEN',
+            url: baseUrl,
+          },
+          publisher: {
+            '@id': `${baseUrl}/#organization`,
+          },
+          mainEntityOfPage: {
+            '@type': 'WebPage',
+            '@id': baseUrl,
+          },
+          ...(data.article.image && {
+            image: {
+              '@type': 'ImageObject',
+              url: data.article.image,
+              width: '1200',
+              height: '630',
+            },
+          }),
+          articleSection: data.article.category,
+          keywords: data.article.tags?.join(', '),
+          inLanguage: 'ja-JP',
+        };
+        return article;
+
+      case 'faq':
+        if (!data?.faq || data.faq.length === 0) return null;
+        const faqPage: FAQPage = {
+          '@type': 'FAQPage',
+          mainEntity: data.faq.map((faq) => ({
+            '@type': 'Question',
+            name: faq.question,
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: faq.answer,
+            },
+          })),
+        };
+        return faqPage;
+
+      case 'breadcrumb':
+        if (!data?.breadcrumb || data.breadcrumb.length === 0) return null;
+        const breadcrumbList: BreadcrumbList = {
+          '@type': 'BreadcrumbList',
+          itemListElement: data.breadcrumb.map((crumb, index) => ({
+            '@type': 'ListItem',
+            position: index + 1,
+            name: crumb.name,
+            item: crumb.item,
+          })),
+        };
+        return breadcrumbList;
+
+      case 'webpage':
+        if (!data?.webpage) return null;
+        const webPage: WebPage = {
+          '@type': 'WebPage',
+          name: data.webpage.title,
+          description: data.webpage.description,
+          url: data.webpage.url,
+          inLanguage: 'ja-JP',
+          isPartOf: {
+            '@id': `${baseUrl}/#website`,
+          },
+          about: {
+            '@id': `${baseUrl}/#organization`,
+          },
+        };
+        return webPage;
 
       default:
         return null;

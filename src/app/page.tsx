@@ -5,6 +5,7 @@ import KnowledgeSection from '@/components/KnowledgeSection';
 import NewsSection from '@/components/NewsSection';
 import CTASection from '@/components/CTASection';
 import { getKnowledgeArticles, getNewsArticles } from '@/lib/microcms';
+import StructuredData from '@/components/seo/StructuredData';
 
 // ISR設定: 60秒ごとに再検証
 export const revalidate = 60;
@@ -18,6 +19,25 @@ export default async function Home() {
   
   return (
     <Layout>
+      {/* Homepage breadcrumb and WebPage structured data */}
+      <StructuredData 
+        type="breadcrumb" 
+        data={{
+          breadcrumb: [
+            { name: 'ホーム', item: 'https://gyaku-ten.jp' },
+          ]
+        }}
+      />
+      <StructuredData 
+        type="webpage" 
+        data={{
+          webpage: {
+            title: '格安システム開発・DX支援 | 中小企業向けデジタル化なら合同会社GYAKUTEN',
+            description: '中小企業向け格安システム開発・業務効率化・DX支援なら合同会社GYAKUTEN。補助金対応可能。LLMO最適化・Web制作・コンサルティングまで一括対応。初回診断無料。',
+            url: 'https://gyaku-ten.jp'
+          }
+        }}
+      />
       <HomePage />
       <ServicesSection />
       <KnowledgeSection articles={knowledgeArticles} />

@@ -36,10 +36,10 @@ const Header: React.FC = () => {
         <div className="flex items-center h-16">
           {/* ロゴ */}
           <div className="flex-shrink-0">
-            <Link href="/">
+            <Link href="/" aria-label="GYAKUTENホームページへ戻る">
               <Image
                 src="/logo.png"
-                alt="GYAKUTEN"
+                alt="GYAKUTEN - 合同会社GYAKUTEN"
                 width={180}
                 height={40}
                 className="h-10 w-auto"

@@ -92,6 +92,19 @@ export default function RootLayout({
     <html lang="ja">
       <head>
         <meta name="google-site-verification" content="3SZKterGHvszlw0n4wmaXTKaQEEX3E6De6mv0YAYZ5U" />
+        
+        {/* Performance optimization hints */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://images.microcms-assets.io" />
+        <link rel="dns-prefetch" href="https://api.microcms.io" />
+        
+        {/* Prefetch key pages */}
+        <link rel="prefetch" href="/services/llmo-diagnosis" />
+        <link rel="prefetch" href="/diagnosis" />
+        <link rel="prefetch" href="/contact" />
+        
         <AIOptimizedMeta />
         <StructuredData type="organization" />
         <StructuredData type="website" />

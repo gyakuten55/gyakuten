@@ -9,6 +9,7 @@ import { RelatedArticles } from '@/components/column/RelatedArticles';
 import { ShareButtons } from '@/components/column/ShareButtons';
 import { getArticleBySlug, getRelatedArticles, getPopularArticles } from '@/lib/microcms';
 import { Article } from '@/types/cms';
+import StructuredData from '@/components/seo/StructuredData';
 
 interface ArticlePageProps {
   params: Promise<{ slug: string }>;
@@ -230,6 +231,33 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   return (
     <Layout>
+      {/* Article structured data */}
+      <StructuredData 
+        type="article" 
+        data={{
+          article: {
+            title: article.title,
+            description: article.excerpt || article.seo?.description || '',
+            datePublished: article.publishedAt || article.createdAt,
+            dateModified: article.updatedAt,
+            author: '合同会社GYAKUTEN',
+            image: article.featuredImage?.url,
+            category: article.category?.name,
+            tags: article.tags?.map(tag => tag.name),
+          }
+        }}
+      />
+      {/* Breadcrumb structured data */}
+      <StructuredData 
+        type="breadcrumb" 
+        data={{
+          breadcrumb: [
+            { name: 'ホーム', item: 'https://gyaku-ten.jp' },
+            { name: 'コラム', item: 'https://gyaku-ten.jp/column' },
+            { name: article.title, item: `https://gyaku-ten.jp/column/${article.slug}` },
+          ]
+        }}
+      />
       <main className="min-h-screen bg-white">
         {/* パンくずリスト */}
         <nav className="bg-white border-b border-gray-200 pt-5">
@@ -304,15 +332,16 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 )}
 
                 {article.featuredImage && (
-                  <div className="aspect-video relative overflow-hidden rounded-lg mb-6">
+                  <figure className="aspect-video relative overflow-hidden rounded-lg mb-6">
                     <Image
                       src={article.featuredImage.url}
                       alt={article.title}
                       fill
                       className="object-cover"
-                      priority
+                      loading="lazy"
                     />
-                  </div>
+                    <figcaption className="sr-only">{article.title}のメイン画像</figcaption>
+                  </figure>
                 )}
 
               </header>

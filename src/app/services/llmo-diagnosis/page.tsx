@@ -6,6 +6,7 @@ import StepForm from '@/components/StepForm';
 import DiagnosisButton from '@/components/DiagnosisButton';
 import DiagnosisForm from '@/components/DiagnosisForm';
 import FAQSection from '@/components/FAQSection';
+import StructuredData from '@/components/seo/StructuredData';
 
 // SEO メタデータ
 export const metadata: Metadata = {
@@ -31,6 +32,45 @@ export const metadata: Metadata = {
 export default function LLMODiagnosisPage() {
   return (
     <Layout>
+      {/* FAQ structured data */}
+      <StructuredData 
+        type="faq" 
+        data={{
+          faq: [
+            {
+              question: 'LLMO診断とは何ですか？',
+              answer: 'LLMO（大規模言語モデル最適化）診断は、AI検索エンジンに対するWebサイトの最適化状況を評価するサービスです。ChatGPTやPerplexity AI、Google Geminiなどの最新AI検索エンジンで上位表示されるための改善点を明確にします。'
+            },
+            {
+              question: '無料診断と有料診断の違いは何ですか？',
+              answer: '無料診断では基本的な問題点と改善の方向性をお伝えします。有料診断（35,000円）では、詳細な改善提案、実装方法、優先順位まで含めた包括的なレポートをご提供します。'
+            },
+            {
+              question: '診断にはどのくらいの時間がかかりますか？',
+              answer: '無料診断は1-2営業日、詳細診断は3-5営業日でご報告いたします。お急ぎの場合はご相談ください。'
+            },
+            {
+              question: 'AI検索最適化は本当に効果がありますか？',
+              answer: 'AI検索エンジンの利用者は急速に増加しており、早期対応することで競合優位を築けます。特にB2Bビジネスでは、AI検索での露出が新規顧客獲得に直結します。'
+            },
+            {
+              question: '診断後のサポートはありますか？',
+              answer: 'はい。診断後の改善実装、効果測定、継続的な最適化まで一貫してサポートいたします。月額15万円からのLLMOコンサルティングプランもご用意しています。'
+            },
+          ]
+        }}
+      />
+      {/* Breadcrumb structured data */}
+      <StructuredData 
+        type="breadcrumb" 
+        data={{
+          breadcrumb: [
+            { name: 'ホーム', item: 'https://gyaku-ten.jp' },
+            { name: 'サービス', item: 'https://gyaku-ten.jp/services' },
+            { name: 'LLMO診断', item: 'https://gyaku-ten.jp/services/llmo-diagnosis' },
+          ]
+        }}
+      />
       <main className="min-h-screen bg-white">
         {/* パンくずリスト */}
         <nav className="bg-white border-b border-gray-200">
