@@ -91,6 +91,18 @@ export default function RootLayout({
     <html lang="ja">
       <head>
         <meta name="google-site-verification" content="3SZKterGHvszlw0n4wmaXTKaQEEX3E6De6mv0YAYZ5U" />
+        {/* Google tag (gtag.js) */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-J1YDEQ7C4P"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-J1YDEQ7C4P');
+            `,
+          }}
+        />
         <AIOptimizedMeta />
         <StructuredData type="organization" />
         <StructuredData type="website" />
