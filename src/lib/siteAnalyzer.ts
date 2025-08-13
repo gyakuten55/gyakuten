@@ -322,7 +322,7 @@ export class SiteAnalyzer {
         schemaCount: isOwnSite ? 3 : 1
       },
       overallScore: baseScore,
-      scoreBreakdown: this.createSmartScoreBreakdown(baseScore, isOwnSite, isSecure, domain),
+      scoreBreakdown: this.createSmartScoreBreakdown(baseScore, isOwnSite, isSecure),
       recommendations: this.generateSmartRecommendations(isOwnSite, isSecure, domain, baseScore)
     };
   }
@@ -453,7 +453,7 @@ export class SiteAnalyzer {
     return recommendations;
   }
   
-  private createSmartScoreBreakdown(baseScore: number, isOwnSite: boolean, isSecure: boolean, _domain: string): ScoreBreakdown {
+  private createSmartScoreBreakdown(baseScore: number, isOwnSite: boolean, isSecure: boolean): ScoreBreakdown {
     const adjustedScore = isOwnSite ? Math.min(baseScore + 15, 95) : baseScore;
     
     return {

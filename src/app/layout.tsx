@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import StructuredData from "@/components/seo/StructuredData";
 import AIOptimizedMeta from "@/components/seo/AIOptimizedMeta";
@@ -91,18 +92,6 @@ export default function RootLayout({
     <html lang="ja">
       <head>
         <meta name="google-site-verification" content="3SZKterGHvszlw0n4wmaXTKaQEEX3E6De6mv0YAYZ5U" />
-        {/* Google tag (gtag.js) */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-J1YDEQ7C4P"></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-J1YDEQ7C4P');
-            `,
-          }}
-        />
         <AIOptimizedMeta />
         <StructuredData type="organization" />
         <StructuredData type="website" />
@@ -112,6 +101,16 @@ export default function RootLayout({
       <body
         className={`${geistMono.variable} antialiased`}
       >
+        {/* Google Analytics */}
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-J1YDEQ7C4P" strategy="afterInteractive" />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-J1YDEQ7C4P');
+          `}
+        </Script>
         {children}
       </body>
     </html>

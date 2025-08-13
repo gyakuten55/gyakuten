@@ -75,7 +75,6 @@ export default function StructuredData({ type }: StructuredDataProps) {
                 priceCurrency: 'JPY',
               },
             },
-            keywords: '格安システム開発, 業務効率化, 中小企業システム開発, 補助金対応',
             areaServed: 'JP',
           },
           {
@@ -94,7 +93,6 @@ export default function StructuredData({ type }: StructuredDataProps) {
                 priceCurrency: 'JPY',
               },
             },
-            keywords: 'ホームページ制作, Web制作補助金, 運送会社ホームページ制作, 格安ホームページ制作',
             areaServed: 'JP',
           },
           {
@@ -117,7 +115,6 @@ export default function StructuredData({ type }: StructuredDataProps) {
                 name: '詳細診断プラン',
               },
             ],
-            keywords: 'AI診断, LLMO診断, 無料診断, Google検索最適化',
             areaServed: 'JP',
           },
           {
@@ -149,7 +146,6 @@ export default function StructuredData({ type }: StructuredDataProps) {
                 priceCurrency: 'JPY',
               },
             },
-            keywords: 'LLMOコンサルティング, DX支援, LLMO対策, 中小企業コンサルティング',
             areaServed: 'JP',
           },
           {
