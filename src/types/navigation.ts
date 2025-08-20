@@ -11,6 +11,13 @@ export interface ServiceItem {
   price?: string;
 }
 
+export interface AppItem {
+  name: string;
+  href: string;
+  description: string;
+  price?: string;
+}
+
 export const navigationItems: NavigationItem[] = [
   { name: "特徴", href: "/features" },
   { name: "コラム", href: "/column" },
@@ -24,6 +31,15 @@ export const navigationItems: NavigationItem[] = [
       { name: "GYAKUTEN LLMO Consulting", href: "/services/llmo-consulting" },
       { name: "GYAKUTENシステム開発", href: "/services/dx" },
       { name: "逆転ブートキャンプ", href: "/services/bootcamp" },
+    ],
+  },
+  {
+    name: "アプリ",
+    href: "/apps",
+    children: [
+      { name: "アプリ1", href: "#" },
+      { name: "アプリ2", href: "#" },
+      { name: "アプリ3", href: "#" },
     ],
   },
   { name: "よくある質問", href: "/faq" },
@@ -67,5 +83,14 @@ export const serviceItems: ServiceItem[] = [
     href: "/services/bootcamp",
     description: "180日間代表直伝マンツーマン事業成長プログラム",
     price: "10万円（モニター特別価格）",
+  },
+];
+
+export const appItems: AppItem[] = [
+  {
+    name: "FortPlan",
+    href: "https://fortplan.vercel.app/",
+    description: "大人気ゲームフォートナイトの戦略ボードアプリ",
+    price: "月額1,000円",
   },
 ];
