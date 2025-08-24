@@ -3,26 +3,41 @@
 import React, { useState, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { navigationItems, serviceItems } from '@/types/navigation';
+import { navigationItems, serviceItems, appItems } from '@/types/navigation';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServiceDropdownOpen, setIsServiceDropdownOpen] = useState(false);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [isAppDropdownOpen, setIsAppDropdownOpen] = useState(false);
+  const serviceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const appTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
 
-  const handleMouseEnter = () => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
+  const handleServiceMouseEnter = () => {
+    if (serviceTimeoutRef.current) {
+      clearTimeout(serviceTimeoutRef.current);
     }
     setIsServiceDropdownOpen(true);
   };
 
-  const handleMouseLeave = () => {
-    timeoutRef.current = setTimeout(() => {
+  const handleServiceMouseLeave = () => {
+    serviceTimeoutRef.current = setTimeout(() => {
       setIsServiceDropdownOpen(false);
+    }, 200); // 200msの遅延
+  };
+
+  const handleAppMouseEnter = () => {
+    if (appTimeoutRef.current) {
+      clearTimeout(appTimeoutRef.current);
+    }
+    setIsAppDropdownOpen(true);
+  };
+
+  const handleAppMouseLeave = () => {
+    appTimeoutRef.current = setTimeout(() => {
+      setIsAppDropdownOpen(false);
     }, 200); // 200msの遅延
   };
 
@@ -56,40 +71,48 @@ const Header: React.FC = () => {
                 {item.children ? (
                   <div
                     className="relative"
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}
+                    onMouseEnter={item.name === 'サービス' ? handleServiceMouseEnter : item.name === 'アプリ' ? handleAppMouseEnter : undefined}
+                    onMouseLeave={item.name === 'サービス' ? handleServiceMouseLeave : item.name === 'アプリ' ? handleAppMouseLeave : undefined}
                   >
                     <button className="text-black hover:text-primary px-2 py-2 text-sm font-medium flex items-center">
                       {item.name}
                     </button>
-                    {isServiceDropdownOpen && (
+                    {(item.name === 'サービス' && isServiceDropdownOpen) || (item.name === 'アプリ' && isAppDropdownOpen) ? (
                       <div 
                         className="absolute top-full left-1/2 transform -translate-x-1/2 pt-1 w-[900px] z-50"
-                        onMouseEnter={handleMouseEnter}
-                        onMouseLeave={handleMouseLeave}
+                        onMouseEnter={item.name === 'サービス' ? handleServiceMouseEnter : item.name === 'アプリ' ? handleAppMouseEnter : undefined}
+                        onMouseLeave={item.name === 'サービス' ? handleServiceMouseLeave : item.name === 'アプリ' ? handleAppMouseLeave : undefined}
                       >
                         <div className="bg-white shadow-lg rounded-md py-4 border border-gray-100">
                           <div className="grid grid-cols-3 gap-4 px-4">
-                            {serviceItems.map((service) => (
+                            {(item.name === 'サービス' ? serviceItems : appItems).map((dropdownItem) => (
                               <Link
-                                key={service.name}
-                                href={service.href}
+                                key={dropdownItem.name}
+                                href={dropdownItem.href}
                                 className="block p-4 rounded-md hover:bg-gray-50 hover:shadow-md transition-all duration-200"
-                                onClick={() => setIsServiceDropdownOpen(false)}
+                                onClick={() => {
+                                  if (item.name === 'サービス') {
+                                    setIsServiceDropdownOpen(false);
+                                  } else {
+                                    setIsAppDropdownOpen(false);
+                                  }
+                                }}
+                                target={item.name === 'アプリ' ? "_blank" : undefined}
+                                rel={item.name === 'アプリ' ? "noopener noreferrer" : undefined}
                               >
-                                <div className="font-semibold text-gray-800 text-sm mb-2">{service.name}</div>
+                                <div className="font-semibold text-gray-800 text-sm mb-2">{dropdownItem.name}</div>
                                 <div className="text-xs text-gray-500 mb-2 line-clamp-2">
-                                  {service.description}
+                                  {dropdownItem.description}
                                 </div>
                                 <div className="text-xs text-primary font-medium">
-                                  {service.price}
+                                  {dropdownItem.price}
                                 </div>
                               </Link>
                             ))}
                           </div>
                         </div>
                       </div>
-                    )}
+                    ) : null}
                   </div>
                 ) : (
                   <Link
@@ -163,14 +186,16 @@ const Header: React.FC = () => {
                         {item.name}
                       </div>
                       <div className="pl-4">
-                        {serviceItems.map((service) => (
+                        {(item.name === 'サービス' ? serviceItems : appItems).map((menuItem) => (
                           <Link
-                            key={service.name}
-                            href={service.href}
+                            key={menuItem.name}
+                            href={menuItem.href}
                             className="block px-3 py-2 text-sm text-black hover:text-primary"
                             onClick={closeMenu}
+                            target={item.name === 'アプリ' ? "_blank" : undefined}
+                            rel={item.name === 'アプリ' ? "noopener noreferrer" : undefined}
                           >
-                            {service.name}
+                            {menuItem.name}
                           </Link>
                         ))}
                       </div>
