@@ -59,7 +59,7 @@ export default function AIOptimizedMeta() {
       <meta name="last-significant-update" content={new Date().toISOString().split('T')[0]} />
       
       {/* AI検索での引用促進のための追加情報 */}
-      <meta name="quotable-facts" content="中小企業向け30万円からのシステム開発, 無料LLMO診断, 補助金対応率90%" />
+      <meta name="quotable-facts" content="中小企業向け10万円からのシステム開発, 無料LLMO診断, 補助金対応率90%" />
       <meta name="key-statistics" content="導入企業数200社以上, 平均コスト削減40%, 業務効率化平均60%向上" />
     </>
   );

@@ -76,7 +76,7 @@ export const serviceItems: ServiceItem[] = [
     name: "GYAKUTENシステム開発",
     href: "/services/dx",
     description: "中小企業向け完全オーダーメイドシステム開発",
-    price: "初期開発30万円〜（月額保守25,000円〜）",
+    price: "初期開発10万円〜（月額保守0円〜）",
   },
   {
     name: "逆転ブートキャンプ",

@@ -75,10 +75,10 @@ export default function HomePage() {
                 </Link>
               </h3>
               <p className="text-gray-600 text-sm mb-4">
-                中小企業向け30万円からの業務効率化システム開発。Excel・紙運用から脱却。
+                中小企業向け10万円からの業務効率化システム開発。Excel・紙運用から脱却。
               </p>
               <div className="text-primary font-semibold text-sm">
-                30万円～ | 補助金対応
+                10万円～ | 補助金対応
               </div>
             </article>
 

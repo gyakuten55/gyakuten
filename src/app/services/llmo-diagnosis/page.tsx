@@ -271,7 +271,7 @@ export default function LLMODiagnosisPage() {
                   <div className="space-y-4">
                     <div className="text-center pb-4 border-b border-gray-200">
                       <div className="text-sm text-gray-600 mb-1">従来の診断サービス</div>
-                      <div className="text-2xl font-bold text-gray-800">30万円〜</div>
+                      <div className="text-2xl font-bold text-gray-800">10万円〜</div>
                     </div>
                     <div className="text-center">
                       <div className="text-sm text-gray-600 mb-1">LLMO診断</div>

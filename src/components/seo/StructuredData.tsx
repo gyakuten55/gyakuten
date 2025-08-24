@@ -87,16 +87,16 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
           {
             '@type': 'Service',
             name: '格安システム開発・業務効率化',
-            description: '中小企業向け格安システム開発30万円から。Excel・紙運用から脱却し業務効率化を実現。補助金対応可能。',
+            description: '中小企業向け格安システム開発10万円から。Excel・紙運用から脱却し業務効率化を実現。補助金対応可能。',
             provider: { '@id': `${baseUrl}/#organization` },
             serviceType: 'Software Development',
             offers: {
               '@type': 'Offer',
-              price: '300000',
+              price: '100000',
               priceCurrency: 'JPY',
               priceSpecification: {
                 '@type': 'PriceSpecification',
-                minPrice: '300000',
+                minPrice: '100000',
                 priceCurrency: 'JPY',
               },
             },
@@ -181,7 +181,7 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
             serviceType: 'Software Development',
             offers: {
               '@type': 'Offer',
-              price: '300000',
+              price: '100000',
               priceCurrency: 'JPY',
             },
             areaServed: 'JP',
@@ -217,7 +217,7 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
           email: 'info@gyaku-ten.jp',
           url: baseUrl,
           openingHours: 'Mo-Fr 09:00-18:00',
-          priceRange: '¥0-¥300,000',
+          priceRange: '¥0-¥100,000',
         };
         return localBusiness;
 

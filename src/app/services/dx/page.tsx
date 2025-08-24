@@ -7,19 +7,19 @@ import DXFAQSection from '@/components/DXFAQSection';
 
 // SEO メタデータ
 export const metadata: Metadata = {
-  title: '格安システム開発30万円～ | 中小企業向け業務効率化・DX支援 | GYAKUTEN',
-  description: '中小企業向け格安システム開発・業務効率化なら30万円から。補助金対応可能。Excel・紙運用から脱却し効率化を実現。東京都の実績豊富な開発会社GYAKUTENが低コストでオーダーメイドシステムを開発します。',
+  title: '格安システム開発10万円～ | 中小企業向け業務効率化・DX支援 | GYAKUTEN',
+  description: '中小企業向け格安システム開発・業務効率化なら10万円から。補助金対応可能。Excel・紙運用から脱却し効率化を実現。東京都の実績豊富な開発会社GYAKUTENが低コストでオーダーメイドシステムを開発します。',
   keywords: '格安システム開発, システム開発安い, 中小企業システム開発, 業務効率化システム開発, 激安システム開発, 小規模システム開発, DX支援費用, システム開発外注, 補助金対応',
   openGraph: {
-    title: '格安システム開発30万円～ | 中小企業向け業務効率化・DX支援',
-    description: '中小企業向け格安システム開発・業務効率化なら30万円から。補助金対応可能。Excel・紙運用から脱却し効率化を実現。',
+    title: '格安システム開発10万円～ | 中小企業向け業務効率化・DX支援',
+    description: '中小企業向け格安システム開発・業務効率化なら10万円から。補助金対応可能。Excel・紙運用から脱却し効率化を実現。',
     type: 'website',
     locale: 'ja_JP',
   },
   twitter: {
     card: 'summary_large_image',
-    title: '格安システム開発30万円～ | 中小企業向け業務効率化・DX支援',
-    description: '中小企業向け格安システム開発・業務効率化なら30万円から。補助金対応可能。Excel・紙運用から脱却し効率化を実現。',
+    title: '格安システム開発10万円～ | 中小企業向け業務効率化・DX支援',
+    description: '中小企業向け格安システム開発・業務効率化なら10万円から。補助金対応可能。Excel・紙運用から脱却し効率化を実現。',
   },
   alternates: {
     canonical: '/services/dx',
@@ -67,7 +67,7 @@ export default function DXPage() {
                   格安システム開発・DX支援
                 </h1>
                 <p className="text-lg text-gray-700 mb-4 leading-relaxed">
-                  中小企業向け<span className="text-primary font-bold">格安システム開発30万円～</span>
+                  中小企業向け<span className="text-primary font-bold">格安システム開発10万円～</span>
                 </p>
                 <p className="text-base text-gray-600 mb-6">
                   大手パッケージは高額＆機能過多で現場になじまない。GYAKUTENは必要十分な機能だけを適正価格で開発し、Excel・紙運用からの脱却を支援します。
@@ -77,7 +77,7 @@ export default function DXPage() {
                     <div className="w-5 h-5 bg-primary rounded-full flex items-center justify-center mr-3">
                       <span className="text-white text-xs font-bold">✓</span>
                     </div>
-                    <span className="text-sm text-gray-700">初期開発30万円からの低コスト</span>
+                    <span className="text-sm text-gray-700">初期開発10万円からの低コスト</span>
                   </div>
                   <div className="flex items-center">
                     <div className="w-5 h-5 bg-primary rounded-full flex items-center justify-center mr-3">
@@ -168,7 +168,7 @@ export default function DXPage() {
                 },
                 {
                   title: "業界最安水準の開発費",
-                  description: "初期開発30万円〜の低コスト。大手パッケージの数分の一の価格で、自社専用システムを構築可能。"
+                  description: "初期開発10万円〜の低コスト。大手パッケージの数分の一の価格で、自社専用システムを構築可能。"
                 },
                 {
                   title: "段階開発で低リスク投資",
@@ -334,7 +334,7 @@ export default function DXPage() {
               <div className="bg-white rounded-lg border border-gray-200 p-6">
                 <h3 className="text-xl font-bold text-black mb-6 text-center">初期開発</h3>
                 <div className="text-center mb-6">
-                  <div className="text-3xl font-black text-primary mb-2">¥300,000〜</div>
+                  <div className="text-3xl font-black text-primary mb-2">¥100,000〜</div>
                   <div className="text-sm text-gray-600">完全オーダーメイドの最小構成</div>
                 </div>
                 <ul className="space-y-3 mb-6">
@@ -361,7 +361,7 @@ export default function DXPage() {
               <div className="bg-white rounded-lg border border-gray-200 p-6">
                 <h3 className="text-xl font-bold text-black mb-6 text-center">月額保守</h3>
                 <div className="text-center mb-6">
-                  <div className="text-3xl font-black text-primary mb-2">¥25,000〜</div>
+                  <div className="text-3xl font-black text-primary mb-2">¥0〜</div>
                   <div className="text-sm text-gray-600">必要に応じて選択可能</div>
                 </div>
                 <ul className="space-y-3 mb-6">

@@ -6,7 +6,7 @@
 - [GYAKUTEN LLMOウェブ制作](https://gyaku-ten.jp/services/web-llmo): AI検索時代に最適化されたWebサイト制作サービス。LLMO（大規模言語モデル最適化）技術により、AI検索エンジンに発見されやすく、正確に引用されるWebサイトを構築。初期費用10万円＋月額5,000円（最低7ヶ月契約）。
 - [GYAKUTEN LLMOライティング](https://gyaku-ten.jp/services/write-llmo): AI引用に最適化されたプロライティングサービス。ChatGPTやPerplexityなどのAI検索エンジンに正確に引用される文章作成。2.5円/文字（1,000字から対応）。専門性・権威性・信頼性（E-A-T）を重視した高品質コンテンツ。
 - [GYAKUTEN LLMO コンサルティング](https://gyaku-ten.jp/services/llmo-consulting): AI時代の戦略的伴走コンサルティングサービス。LLMO・AI検索時代に対応した包括的なデジタル戦略支援。スタンダードプラン15万円/月から。中小企業のデジタル変革とAI時代適応を支援。
-- [GYAKUTENシステム開発](https://gyaku-ten.jp/services/dx): 中小企業向け完全オーダーメイドシステム開発サービス。業務効率化・DX推進・デジタル化を支援。初期開発30万円から（月額保守25,000円から）。
+- [GYAKUTENシステム開発](https://gyaku-ten.jp/services/dx): 中小企業向け完全オーダーメイドシステム開発サービス。業務効率化・DX推進・デジタル化を支援。初期開発10万円から（月額保守0円から）。
 - [逆転ブートキャンプ](https://gyaku-ten.jp/services/bootcamp): 180日間代表直伝マンツーマン事業成長プログラム。現在モニター特別価格10万円で提供。集中的な事業改善・成長支援。
 
 ## Tools & Diagnostics
