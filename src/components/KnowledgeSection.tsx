@@ -16,7 +16,7 @@ export default function KnowledgeSection({ articles }: KnowledgeSectionProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12">
             <p className="text-primary text-sm font-medium tracking-wide uppercase mb-2">
-              ナレッジ・豆知識
+              ナレッジ・豆知識・メディア掲載
             </p>
             <h2 className="text-4xl font-black text-text-main mb-4">
               Knowledge
@@ -35,13 +35,13 @@ export default function KnowledgeSection({ articles }: KnowledgeSectionProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-12">
           <p className="text-primary text-sm font-medium tracking-wide uppercase mb-2">
-            ナレッジ・豆知識
+            ナレッジ・豆知識・メディア掲載
           </p>
           <h2 className="text-4xl font-black text-text-main mb-4">
             Knowledge
           </h2>
           <p className="text-gray-600 text-lg max-w-3xl">
-            最新のビジネス戦略やLLMO関連の知識をお届けします
+            最新のビジネス戦略やLLMO関連の知識、メディア掲載情報をお届けします
           </p>
         </div>
 

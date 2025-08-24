@@ -15,7 +15,7 @@ export default function NewsSection({ articles }: NewsSectionProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12">
             <p className="text-primary text-sm font-medium tracking-wide uppercase mb-2">
-              お知らせ・導入実績・メディア掲載
+              お知らせ・導入実績
             </p>
             <h2 className="text-4xl font-black text-text-main mb-4">
               News
@@ -34,13 +34,13 @@ export default function NewsSection({ articles }: NewsSectionProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-12">
           <p className="text-primary text-sm font-medium tracking-wide uppercase mb-2">
-            お知らせ・導入実績・メディア掲載
+            お知らせ・導入実績
           </p>
           <h2 className="text-4xl font-black text-text-main mb-4">
             News
           </h2>
           <p className="text-gray-600 text-lg max-w-3xl">
-            最新のお知らせや導入実績、メディア掲載情報をお届けします
+            最新のお知らせや導入実績をお届けします
           </p>
         </div>
 

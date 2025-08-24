@@ -161,11 +161,11 @@ export const getPopularArticles = async (limit: number = 5): Promise<Article[]> 
   return listData.contents;
 };
 
-// ナレッジカテゴリの最新記事を取得
+// ナレッジカテゴリ（ナレッジ・豆知識、メディア掲載）の最新記事を取得
 export const getKnowledgeArticles = async (limit: number = 5): Promise<Article[]> => {
   try {
     const listData = await getArticles({
-      filters: 'category[equals]lxxvy2zcjao',
+      filters: 'category[equals]lxxvy2zcjao[or]category[equals]2qu9s-e28',
       limit,
       orders: '-publishedAt',
     });
@@ -177,11 +177,11 @@ export const getKnowledgeArticles = async (limit: number = 5): Promise<Article[]
   }
 };
 
-// Newsカテゴリ（お知らせ、導入実績、メディア掲載）の最新記事を取得
+// Newsカテゴリ（お知らせ、導入実績）の最新記事を取得
 export const getNewsArticles = async (limit: number = 10): Promise<Article[]> => {
   try {
     const listData = await getArticles({
-      filters: 'category[equals]b2_6yjp8q7i[or]category[equals]plw89y7oixfz[or]category[equals]2qu9s-e28',
+      filters: 'category[equals]b2_6yjp8q7i[or]category[equals]plw89y7oixfz',
       limit,
       orders: '-publishedAt',
     });
