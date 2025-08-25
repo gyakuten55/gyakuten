@@ -36,6 +36,16 @@ export interface ContactFormData {
   website: string;
 }
 
+export interface ReservationFormData {
+  name: string;
+  company: string;
+  email: string;
+  timeSlots: Array<{
+    date: string;
+    time: string;
+  }>;
+}
+
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   port: parseInt(process.env.SMTP_PORT || '465'),
@@ -599,7 +609,8 @@ export async function sendMaterialsRequest(
     'write-llmo': 'GYAKUTEN LLMO ライティング',
     'llmo-consulting': 'GYAKUTEN LLMO コンサル',
     'dx': 'GYAKUTEN システム開発',
-    'bootcamp': '逆転ブートキャンプ'
+    'bootcamp': '逆転ブートキャンプ',
+    'quick-support': 'GYAKUTENクイックサポート'
   };
 
   const selectedServiceNames = data.selectedServices.map(id => serviceNames[id] || id);
@@ -786,6 +797,7 @@ export async function sendContactInquiry(data: ContactFormData) {
     'llmo-consulting': 'GYAKUTEN LLMO コンサル',
     'dx': 'GYAKUTEN システム開発',
     'bootcamp': '逆転ブートキャンプ',
+    'quick-support': 'GYAKUTENクイックサポート',
     'other': 'その他'
   };
 
@@ -953,5 +965,172 @@ export async function sendContactInquiry(data: ContactFormData) {
   } catch (error) {
     console.error('Contact inquiry email sending failed:', error);
     throw new Error('お問い合わせメール送信に失敗しました');
+  }
+}
+
+export async function sendReservationRequest(data: ReservationFormData) {
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat('ja-JP', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      weekday: 'long'
+    }).format(date);
+  };
+
+  // お客様宛の確認メール
+  const userMailOptions = {
+    from: `${process.env.FROM_NAME} <${process.env.FROM_EMAIL}>`,
+    to: data.email,
+    subject: '【GYAKUTEN】無料相談予約を受け付けました',
+    html: `
+      <div style="font-family: 'Hiragino Sans', 'ヒラギノ角ゴシック', 'Yu Gothic', 'メイリオ', sans-serif; max-width: 600px; margin: 0 auto; background-color: #ffffff;">
+        <!-- ヘッダー -->
+        <div style="background: linear-gradient(135deg, #8f2c34 0%, #a53d45 100%); padding: 30px 20px; text-align: center;">
+          <h1 style="color: #ffffff; font-size: 24px; margin: 0; font-weight: bold;">
+            GYAKUTEN 無料相談予約
+          </h1>
+          <p style="color: #ffffff; margin: 10px 0 0 0; opacity: 0.9;">
+            ご予約を受け付けました
+          </p>
+        </div>
+
+        <!-- メインコンテンツ -->
+        <div style="padding: 30px 20px;">
+          <div style="background-color: #f8f9fa; border-left: 4px solid #8f2c34; padding: 20px; margin-bottom: 30px;">
+            <h2 style="color: #8f2c34; font-size: 20px; margin: 0 0 10px 0;">
+              ${data.name}様、ご予約ありがとうございます
+            </h2>
+            <p style="margin: 0; color: #333333; line-height: 1.6;">
+              この度は、GYAKUTENの無料相談をご予約いただき、誠にありがとうございます。<br>
+              <strong>すべての逆境に、最高の逆転劇を。</strong>
+            </p>
+          </div>
+
+          <!-- 予約内容確認 -->}
+          <div style="margin-bottom: 30px;">
+            <h3 style="color: #333333; font-size: 18px; margin-bottom: 15px; border-bottom: 2px solid #8f2c34; padding-bottom: 5px;">
+              ご予約内容確認
+            </h3>
+            <table style="width: 100%; border-collapse: collapse; background-color: #f8f9fa;">
+              <tr>
+                <td style="padding: 12px; border: 1px solid #dee2e6; background-color: #e9ecef; font-weight: bold; width: 30%;">会社名</td>
+                <td style="padding: 12px; border: 1px solid #dee2e6;">${data.company}</td>
+              </tr>
+              <tr>
+                <td style="padding: 12px; border: 1px solid #dee2e6; background-color: #e9ecef; font-weight: bold;">ご希望日時</td>
+                <td style="padding: 12px; border: 1px solid #dee2e6;">
+                  ${data.timeSlots.map((slot, index) => 
+                    `第${index + 1}希望：${formatDate(slot.date)} ${slot.time}`
+                  ).join('<br>')}
+                </td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- 今後の流れ -->
+          <div style="margin-bottom: 30px; background-color: #e3f2fd; border: 1px solid #bbdefb; border-radius: 8px; padding: 20px;">
+            <h3 style="color: #1976d2; font-size: 18px; margin-bottom: 15px;">
+              今後の流れ
+            </h3>
+            <ul style="margin: 0; padding-left: 20px; color: #333333; line-height: 1.8;">
+              <li><strong>日程調整</strong>：1営業日以内に担当者よりご希望日時の調整についてご連絡いたします</li>
+              <li><strong>相談方法</strong>：オンライン（Zoom）または対面での相談が可能です</li>
+              <li><strong>相談時間</strong>：約30分〜1時間を予定しております</li>
+              <li><strong>事前準備</strong>：現在の課題やご質問がございましたら事前にお知らせください</li>
+            </ul>
+          </div>
+
+          <!-- 緊急時の連絡先 -->
+          <div style="margin-bottom: 30px; background-color: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 20px;">
+            <h3 style="color: #333333; font-size: 18px; margin-bottom: 15px;">
+              お急ぎの場合
+            </h3>
+            <p style="margin: 0; color: #333333; line-height: 1.6;">
+              お急ぎの場合は、以下まで直接お電話ください：<br>
+              <strong style="color: #8f2c34; font-size: 18px;">070-6664-4597</strong><br>
+              <span style="font-size: 14px; color: #666;">営業時間：平日 9:00-18:00</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- フッター -->
+        <div style="background-color: #333333; color: #ffffff; padding: 30px 20px; text-align: center;">
+          <div style="margin-bottom: 20px;">
+            <h3 style="color: #ffffff; font-size: 18px; margin: 0 0 10px 0;">合同会社GYAKUTEN</h3>
+            <p style="margin: 0; opacity: 0.9;">すべての逆境に、最高の逆転劇を。</p>
+          </div>
+          
+          <div style="display: flex; justify-content: center; gap: 30px; margin-bottom: 20px; flex-wrap: wrap;">
+            <div style="text-align: center;">
+              <strong style="color: #8f2c34;">メール</strong><br>
+              <a href="mailto:info@gyaku-ten.jp" style="color: #ffffff; text-decoration: none;">info@gyaku-ten.jp</a>
+            </div>
+            <div style="text-align: center;">
+              <strong style="color: #8f2c34;">電話</strong><br>
+              <a href="tel:070-6664-4597" style="color: #ffffff; text-decoration: none;">070-6664-4597</a>
+            </div>
+            <div style="text-align: center;">
+              <strong style="color: #8f2c34;">サイト</strong><br>
+              <a href="https://gyaku-ten.jp" target="_blank" style="color: #ffffff; text-decoration: none;">gyaku-ten.jp</a>
+            </div>
+          </div>
+          
+          <p style="margin: 0; font-size: 12px; opacity: 0.7;">
+            このメールは自動送信されています。ご不明な点がございましたらお気軽にお問い合わせください。
+          </p>
+        </div>
+      </div>
+    `
+  };
+
+  // 会社宛の通知メール
+  const adminMailOptions = {
+    from: `${process.env.FROM_NAME} <${process.env.FROM_EMAIL}>`,
+    to: 'info@gyaku-ten.jp',
+    subject: '【GYAKUTEN】新規無料相談予約がありました',
+    html: `
+      <div style="font-family: 'Hiragino Sans', 'ヒラギノ角ゴシック', 'Yu Gothic', 'メイリオ', sans-serif; max-width: 600px; margin: 0 auto;">
+        <h2 style="color: #8f2c34;">新規無料相談予約</h2>
+        <p>以下のお客様から無料相談の予約がありました：</p>
+        
+        <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+          <tr><td style="border: 1px solid #ddd; padding: 8px; background: #f5f5f5; font-weight: bold;">氏名</td><td style="border: 1px solid #ddd; padding: 8px;">${data.name}</td></tr>
+          <tr><td style="border: 1px solid #ddd; padding: 8px; background: #f5f5f5; font-weight: bold;">メール</td><td style="border: 1px solid #ddd; padding: 8px;">${data.email}</td></tr>
+          <tr><td style="border: 1px solid #ddd; padding: 8px; background: #f5f5f5; font-weight: bold;">会社名</td><td style="border: 1px solid #ddd; padding: 8px;">${data.company}</td></tr>
+        </table>
+        
+        <h3 style="color: #8f2c34;">ご希望日時:</h3>
+        <ul>
+          ${data.timeSlots.map((slot, index) => 
+            `<li>第${index + 1}希望：${formatDate(slot.date)} ${slot.time}</li>`
+          ).join('')}
+        </ul>
+        
+        <p style="margin-top: 20px; padding: 10px; background: #e3f2fd; border-radius: 5px;">
+          <strong>要対応：</strong>1営業日以内に日程調整のご連絡をお願いします。
+        </p>
+        
+        <div style="margin-top: 20px; padding: 10px; background: #f8f9fa; border-radius: 5px;">
+          <p><strong>予約受付時刻：</strong>${new Date().toLocaleString('ja-JP')}</p>
+        </div>
+      </div>
+    `
+  };
+
+  try {
+    // お客様宛と会社宛の両方を送信
+    await Promise.all([
+      transporter.sendMail(userMailOptions),
+      transporter.sendMail(adminMailOptions)
+    ]);
+    
+    console.log(`Reservation request sent to: ${data.email}`);
+    console.log(`Admin notification sent for reservation request from: ${data.email}`);
+    return { success: true };
+  } catch (error) {
+    console.error('Reservation email sending failed:', error);
+    throw new Error('予約確認メール送信に失敗しました');
   }
 }

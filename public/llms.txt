@@ -7,6 +7,7 @@
 - [GYAKUTEN LLMOライティング](https://gyaku-ten.jp/services/write-llmo): AI引用に最適化されたプロライティングサービス。ChatGPTやPerplexityなどのAI検索エンジンに正確に引用される文章作成。2.5円/文字（1,000字から対応）。専門性・権威性・信頼性（E-A-T）を重視した高品質コンテンツ。
 - [GYAKUTEN LLMO コンサルティング](https://gyaku-ten.jp/services/llmo-consulting): AI時代の戦略的伴走コンサルティングサービス。LLMO・AI検索時代に対応した包括的なデジタル戦略支援。スタンダードプラン15万円/月から。中小企業のデジタル変革とAI時代適応を支援。
 - [GYAKUTENシステム開発](https://gyaku-ten.jp/services/dx): 中小企業向け完全オーダーメイドシステム開発サービス。業務効率化・DX推進・デジタル化を支援。初期開発10万円から（月額保守0円から）。
+- [GYAKUTENクイックサポート](https://gyaku-ten.jp/services/quick-support): 時間単位業務代行サービス。最短1時間から利用可能な柔軟な業務委託。事務作業、デザイン制作、Web更新など幅広い業務に対応。特別価格2,000円/時間（通常2,500円）。中小企業の業務効率化を即座に支援。
 - [逆転ブートキャンプ](https://gyaku-ten.jp/services/bootcamp): 180日間代表直伝マンツーマン事業成長プログラム。現在モニター特別価格10万円で提供。集中的な事業改善・成長支援。
 
 ## Tools & Diagnostics

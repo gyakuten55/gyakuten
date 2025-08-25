@@ -22,7 +22,8 @@ const serviceFileMap: Record<string, string> = {
   'write-llmo': 'LLMOライティングサービス_説明資料.pdf',
   'llmo-consulting': 'LLMOコンサルティングサービス_説明資料.pdf',
   'dx': 'GYAKUTEN_システム開発サービス_説明資料.pdf',
-  'bootcamp': 'GYAKUTEN_BOOTCAM_説明資料.pdf'
+  'bootcamp': 'GYAKUTEN_BOOTCAM_説明資料.pdf',
+  'quick-support': 'GYAKUTENクイックサポートサービス説明資料.pdf'
 };
 
 export async function POST(request: NextRequest) {

@@ -31,6 +31,7 @@ export const navigationItems: NavigationItem[] = [
       { name: "GYAKUTEN LLMO Consulting", href: "/services/llmo-consulting" },
       { name: "GYAKUTENシステム開発", href: "/services/dx" },
       { name: "逆転ブートキャンプ", href: "/services/bootcamp" },
+      { name: "GYAKUTENクイックサポート", href: "/services/quick-support" },
     ],
   },
   {
@@ -83,6 +84,12 @@ export const serviceItems: ServiceItem[] = [
     href: "/services/bootcamp",
     description: "180日間代表直伝マンツーマン事業成長プログラム",
     price: "10万円（モニター特別価格）",
+  },
+  {
+    name: "GYAKUTENクイックサポート",
+    href: "/services/quick-support",
+    description: "時間単位業務代行サービス",
+    price: "特別価格2,000円/時間（通常2,500円/時間）",
   },
 ];
 

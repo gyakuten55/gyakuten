@@ -96,6 +96,12 @@ export default function Materials() {
       price: '要相談'
     },
     {
+      id: 'quick-support',
+      name: 'GYAKUTENクイックサポート',
+      description: '時間単位業務代行サービス',
+      price: '2,500円/時間'
+    },
+    {
       id: 'bootcamp',
       name: '逆転ブートキャンプ',
       description: '180日間完全マンツーマンプログラム',
