@@ -219,12 +219,12 @@ export class SiteAnalyzer {
       console.log(`[${new Date().toISOString()}] Preparing immediate fallback analysis...`);
       const fallbackResult = this.createImmediateFallbackAnalysis(url, isOwnSite);
       
-      // 10秒以内のクイックfetch試行とPageSpeed Insights取得を並行実行
-      console.log(`[${new Date().toISOString()}] Attempting quick fetch (10 second timeout) and PageSpeed Insights...`);
+      // 60秒以内のクイックfetch試行とPageSpeed Insights取得を並行実行
+      console.log(`[${new Date().toISOString()}] Attempting quick fetch (60 second timeout) and PageSpeed Insights...`);
       
       // 並行処理でfetchとPageSpeed Insightsを同時実行
       const [quickFetchResult, pageSpeedData] = await Promise.allSettled([
-        this.quickFetchWithTimeout(url, 10000),
+        this.quickFetchWithTimeout(url, 60000),
         this.getPageSpeedInsights(url)
       ]);
       
