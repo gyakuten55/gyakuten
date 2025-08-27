@@ -253,7 +253,8 @@ export function performAdvancedSecurityCheck(
       reason: 'Whitelisted IP',
       remainingRequests: 9999,
       costAlert: false,
-      emergencyStop: false
+      emergencyStop: false,
+      metrics: securityMetrics
     };
   }
   
