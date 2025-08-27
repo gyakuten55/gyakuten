@@ -157,8 +157,8 @@ export class SiteAnalyzer {
         url,
         error: error instanceof Error ? {
           message: error.message,
-          code: (error as any).code,
-          response: (error as any).response?.status,
+          code: axios.isAxiosError(error) ? error.code : undefined,
+          response: axios.isAxiosError(error) ? error.response?.status : undefined,
           stack: error.stack
         } : error
       });
