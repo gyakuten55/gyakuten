@@ -43,6 +43,22 @@ export default function DiagnosisPage() {
               </p>
             </div>
 
+            {/* 注意事項 */}
+            <div className="max-w-lg mx-auto mb-6">
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                <h3 className="text-sm font-semibold text-yellow-800 mb-2">
+                  ⚠️ ご利用にあたっての注意事項
+                </h3>
+                <ul className="text-sm text-yellow-700 space-y-1">
+                  <li>• 一部のサイトは診断できない場合があります</li>
+                  <li>• 以下のようなサイトは診断が困難な場合があります：</li>
+                  <li className="ml-4">- 会員制サイトやログインが必要なページ</li>
+                  <li className="ml-4">- 海外のサーバーで応答が遅いサイト</li>
+                  <li className="ml-4">- メンテナンス中のサイト</li>
+                </ul>
+              </div>
+            </div>
+
             {/* 診断フォーム */}
             <div className="max-w-lg mx-auto">
               <DiagnosisForm />
