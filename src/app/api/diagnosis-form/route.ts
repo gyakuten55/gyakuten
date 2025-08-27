@@ -4,6 +4,7 @@ import { SiteAnalyzer, SiteAnalysisResult } from '@/lib/siteAnalyzer';
 import { performAdvancedSecurityCheck, getClientIP, getSecurityMetrics } from '@/lib/advancedSecurityManager';
 
 export const runtime = 'nodejs';
+export const maxDuration = 60; // Vercel Pro用の最大実行時間（60秒）
 
 async function startAsyncAnalysis(url: string, email: string, formData: DiagnosisFormData) {
   const startTime = Date.now();
@@ -15,10 +16,10 @@ async function startAsyncAnalysis(url: string, email: string, formData: Diagnosi
     analyzer = new SiteAnalyzer();
     console.log(`[${new Date().toISOString()}] SiteAnalyzer initialized`);
     
-    // タイムアウトを30秒に延長して安定性向上
+    // タイムアウトを55秒に延長して安定性向上（Vercel Pro対応）
     const analysisPromise = analyzer.analyzeSite(url);
     const timeoutPromise = new Promise((_, reject) => {
-      setTimeout(() => reject(new Error('Analysis timeout after 30 seconds')), 30000);
+      setTimeout(() => reject(new Error('Analysis timeout after 55 seconds')), 55000);
     });
     
     const analysisResult = await Promise.race([analysisPromise, timeoutPromise]) as SiteAnalysisResult;

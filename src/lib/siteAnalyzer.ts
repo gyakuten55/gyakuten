@@ -132,7 +132,7 @@ export class SiteAnalyzer {
       const config: AxiosRequestConfig = {
         method: 'GET',
         url: url,
-        timeout: timeoutMs, // axiosの内蔵タイムアウト
+        timeout: Math.max(timeoutMs, 10000), // 最低10秒、指定値との大きい方を使用
         maxRedirects: 5,
         responseType: 'text',
         headers: {
@@ -183,7 +183,7 @@ export class SiteAnalyzer {
       const config: AxiosRequestConfig = {
         method: 'GET',
         url: 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed',
-        timeout: 15000, // 15秒タイムアウト
+        timeout: 25000, // 25秒タイムアウト（余裕を持たせる）
         params: {
           url: url,
           key: apiKey,
