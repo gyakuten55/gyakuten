@@ -153,7 +153,15 @@ export class SiteAnalyzer {
       
     } catch (error) {
       const responseTime = Date.now() - startTime;
-      console.log(`[${new Date().toISOString()}] Axios quick fetch failed after ${responseTime}ms:`, error);
+      console.error(`[${new Date().toISOString()}] Axios quick fetch failed after ${responseTime}ms:`, {
+        url,
+        error: error instanceof Error ? {
+          message: error.message,
+          code: (error as any).code,
+          response: (error as any).response?.status,
+          stack: error.stack
+        } : error
+      });
       
       if (axios.isAxiosError(error)) {
         if (error.code === 'ECONNABORTED') {
@@ -228,6 +236,15 @@ export class SiteAnalyzer {
         this.getPageSpeedInsights(url)
       ]);
       
+      // デバッグ用詳細ログ
+      console.log(`[${new Date().toISOString()}] Promise.allSettled completed`);
+      console.log(`[${new Date().toISOString()}] quickFetchResult status: ${quickFetchResult.status}`);
+      console.log(`[${new Date().toISOString()}] pageSpeedData status: ${pageSpeedData.status}`);
+      
+      if (quickFetchResult.status === 'rejected') {
+        console.error(`[${new Date().toISOString()}] Quick fetch failed:`, quickFetchResult.reason);
+      }
+      
       if (quickFetchResult.status === 'fulfilled') {
         console.log(`[${new Date().toISOString()}] Quick fetch successful, performing detailed analysis`);
         
@@ -246,9 +263,11 @@ export class SiteAnalyzer {
         
         // fetchが失敗した場合でも、PageSpeedデータがあればフォールバック結果を補強
         if (pageSpeedData.status === 'fulfilled' && pageSpeedData.value) {
+          console.log(`[${new Date().toISOString()}] Using PageSpeed data to enhance fallback result`);
           return this.enhanceFallbackWithPageSpeed(fallbackResult, pageSpeedData.value as Record<string, unknown>);
         }
         
+        console.log(`[${new Date().toISOString()}] Returning basic fallback result`);
         return fallbackResult;
       }
 
