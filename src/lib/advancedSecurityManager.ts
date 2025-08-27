@@ -47,6 +47,12 @@ const ipTracker = new Map<string, IPTracker>();
 // Blacklisted IPs (persistent across requests)
 const blacklistedIPs = new Set<string>();
 
+// 開発者・管理者のIPホワイトリスト（制限から除外）
+const WHITELISTED_IPS = new Set([
+  '221.71.221.165',  // 開発者IP（nakayama）
+  // 必要に応じて他のIPも追加可能
+]);
+
 // Cost limits configuration
 const COST_LIMITS: CostLimits = {
   maxDailyRequests: 500, // 1日最大500リクエスト
@@ -237,6 +243,19 @@ export function performAdvancedSecurityCheck(
   
   const now = Date.now();
   const clientIP = getClientIP(request);
+  
+  // ホワイトリストのIPは全ての制限をスキップ
+  if (WHITELISTED_IPS.has(clientIP)) {
+    console.log(`[${new Date().toISOString()}] ✅ Whitelisted IP: ${clientIP} - All security checks bypassed`);
+    return {
+      allowed: true,
+      riskScore: 0,
+      reason: 'Whitelisted IP',
+      remainingRequests: 9999,
+      costAlert: false,
+      emergencyStop: false
+    };
+  }
   
   // Check for emergency stop
   if (securityMetrics.totalRequests > COST_LIMITS.emergencyStopThreshold) {
