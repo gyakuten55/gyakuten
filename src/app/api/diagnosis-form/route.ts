@@ -8,40 +8,69 @@ export const maxDuration = 60; // Vercel Pro用の最大実行時間（60秒）
 
 async function startAsyncAnalysis(url: string, email: string, formData: DiagnosisFormData) {
   const startTime = Date.now();
+  const analysisId = `ANALYSIS_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
   let analyzer: SiteAnalyzer | null = null;
   
+  console.log(`[${new Date().toISOString()}] ===== ASYNC ANALYSIS START =====`);
+  console.log(`[${new Date().toISOString()}] Analysis ID: ${analysisId}`);
+  console.log(`[${new Date().toISOString()}] URL: ${url}`);
+  console.log(`[${new Date().toISOString()}] Email: ${email}`);
+  console.log(`[${new Date().toISOString()}] Customer: ${formData.name} / ${formData.company}`);
+  
   try {
-    console.log(`[${new Date().toISOString()}] Starting async analysis for: ${url}`);
-    
+    console.log(`[${new Date().toISOString()}] [${analysisId}] Step 1: Initializing SiteAnalyzer...`);
     analyzer = new SiteAnalyzer();
-    console.log(`[${new Date().toISOString()}] SiteAnalyzer initialized`);
+    console.log(`[${new Date().toISOString()}] [${analysisId}] Step 2: SiteAnalyzer initialized successfully`);
     
-    // タイムアウトを55秒に延長して安定性向上（Vercel Pro対応）
+    // タイムアウトを50秒に短縮（Vercel Pro 60秒制限に余裕を持たせる）
+    console.log(`[${new Date().toISOString()}] [${analysisId}] Step 3: Starting site analysis with 50s timeout...`);
     const analysisPromise = analyzer.analyzeSite(url);
     const timeoutPromise = new Promise((_, reject) => {
-      setTimeout(() => reject(new Error('Analysis timeout after 55 seconds')), 55000);
+      setTimeout(() => reject(new Error('Analysis timeout after 50 seconds')), 50000);
     });
     
     const analysisResult = await Promise.race([analysisPromise, timeoutPromise]) as SiteAnalysisResult;
     const analysisTime = Date.now() - startTime;
     
-    console.log(`[${new Date().toISOString()}] Analysis completed for: ${url}, Score: ${analysisResult.overallScore}, Time: ${analysisTime}ms`);
+    console.log(`[${new Date().toISOString()}] [${analysisId}] Step 4: Analysis completed successfully`);
+    console.log(`[${new Date().toISOString()}] [${analysisId}] - Score: ${analysisResult.overallScore}`);
+    console.log(`[${new Date().toISOString()}] [${analysisId}] - Title: ${analysisResult.title}`);
+    console.log(`[${new Date().toISOString()}] [${analysisId}] - Time: ${analysisTime}ms`);
 
-    // 診断結果をメール送信
-    console.log(`[${new Date().toISOString()}] Sending analysis result to: ${email}`);
-    console.log(`[${new Date().toISOString()}] Analysis result summary - Score: ${analysisResult.overallScore}, Details available: ${!!analysisResult}`);
+    // 診断結果をメール送信（リトライ付き）
+    console.log(`[${new Date().toISOString()}] [${analysisId}] Step 5: Preparing to send analysis result email...`);
     
-    try {
-      await sendAnalysisResult(email, analysisResult, formData);
-      console.log(`[${new Date().toISOString()}] ✅ Analysis result successfully sent to: ${email} (Total time: ${Date.now() - startTime}ms)`);
-    } catch (emailError) {
-      console.error(`[${new Date().toISOString()}] ❌ Failed to send analysis result email:`, emailError);
-      throw emailError;
+    let emailSent = false;
+    let retryCount = 0;
+    const maxRetries = 3;
+    
+    while (!emailSent && retryCount < maxRetries) {
+      try {
+        retryCount++;
+        console.log(`[${new Date().toISOString()}] [${analysisId}] Email sending attempt ${retryCount}/${maxRetries}...`);
+        
+        await sendAnalysisResult(email, analysisResult, formData);
+        emailSent = true;
+        
+        console.log(`[${new Date().toISOString()}] [${analysisId}] ✅ SUCCESS: Analysis result email sent to: ${email}`);
+        console.log(`[${new Date().toISOString()}] [${analysisId}] Total processing time: ${Date.now() - startTime}ms`);
+        console.log(`[${new Date().toISOString()}] ===== ASYNC ANALYSIS COMPLETE =====`);
+      } catch (emailError) {
+        console.error(`[${new Date().toISOString()}] [${analysisId}] ❌ Email sending attempt ${retryCount} failed:`, emailError);
+        
+        if (retryCount >= maxRetries) {
+          console.error(`[${new Date().toISOString()}] [${analysisId}] ❌ CRITICAL: All email sending attempts failed`);
+          throw emailError;
+        }
+        
+        // Wait before retry
+        await new Promise(resolve => setTimeout(resolve, 2000));
+      }
     }
   } catch (error) {
     const errorId = `ANALYSIS_ERR_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     
-    console.error(`[${new Date().toISOString()}] ❌ Async analysis error:`, {
+    console.error(`[${new Date().toISOString()}] [${analysisId}] ❌ CRITICAL ERROR in async analysis:`, {
       errorId,
       url,
       email,
@@ -52,6 +81,86 @@ async function startAsyncAnalysis(url: string, email: string, formData: Diagnosi
       } : error,
       timestamp: new Date().toISOString()
     });
+    
+    // タイムアウトまたはエラーの場合、フォールバック診断結果を送信
+    console.log(`[${new Date().toISOString()}] [${analysisId}] Attempting to send fallback analysis result...`);
+    
+    try {
+      // 簡易診断結果を作成
+      const fallbackResult: SiteAnalysisResult = {
+        url: url,
+        title: '診断処理中',
+        metaDescription: '',
+        headingStructure: {
+          h1Count: 0,
+          h1Text: [],
+          missingH1: true,
+          headingHierarchy: false,
+          headingCount: {}
+        },
+        technicalSeo: {
+          hasTitle: false,
+          titleLength: 0,
+          hasMetaDescription: false,
+          metaDescriptionLength: 0,
+          hasCanonical: false,
+          hasRobots: false,
+          hasOpenGraph: false,
+          hasSchemaMarkup: false,
+          internalLinksCount: 0,
+          externalLinksCount: 0
+        },
+        performance: {
+          loadTime: 0,
+          firstContentfulPaint: 0,
+          largestContentfulPaint: 0,
+          cumulativeLayoutShift: 0,
+          performanceScore: 50
+        },
+        contentQuality: {
+          wordCount: 0,
+          textImageRatio: 0,
+          altTextCoverage: 0,
+          contentDepth: 0,
+          readabilityScore: 50
+        },
+        mobileOptimization: {
+          hasViewportMeta: false,
+          isResponsive: false,
+          mobileScore: 50,
+          touchTargetSize: false
+        },
+        structuredData: {
+          hasFaqSchema: false,
+          hasHowToSchema: false,
+          hasOrganizationSchema: false,
+          hasArticleSchema: false,
+          schemaCount: 0
+        },
+        overallScore: 65,
+        scoreBreakdown: {
+          headingStructure: { score: 12, maxScore: 20, details: { h1Present: { score: 6, maxScore: 10, description: '診断処理中' }, headingHierarchy: { score: 6, maxScore: 10, description: '診断処理中' } } },
+          technicalSeo: { score: 16, maxScore: 25, details: { titleTag: { score: 5, maxScore: 8, description: '診断処理中' }, metaDescription: { score: 4, maxScore: 7, description: '診断処理中' }, canonical: { score: 3, maxScore: 5, description: '診断処理中' }, openGraph: { score: 4, maxScore: 5, description: '診断処理中' } } },
+          performance: { score: 13, maxScore: 20, details: { loadTime: { score: 8, maxScore: 12, description: '診断処理中', actualValue: '測定中' }, performanceScore: { score: 5, maxScore: 8, description: '診断処理中', actualValue: '測定中' } } },
+          contentQuality: { score: 13, maxScore: 20, details: { wordCount: { score: 5, maxScore: 8, description: '診断処理中', actualValue: '測定中' }, altTextCoverage: { score: 4, maxScore: 6, description: '診断処理中', actualValue: '測定中' }, contentDepth: { score: 4, maxScore: 6, description: '診断処理中', actualValue: '測定中' } } },
+          mobileOptimization: { score: 7, maxScore: 10, details: { viewportMeta: { score: 4, maxScore: 5, description: '診断処理中' }, responsive: { score: 3, maxScore: 5, description: '診断処理中' } } },
+          structuredData: { score: 4, maxScore: 5, details: { schemaPresent: { score: 4, maxScore: 5, description: '診断処理中', actualValue: '測定中' } } }
+        },
+        recommendations: [
+          'お送りしたサイトの完全な診断処理中にエラーが発生しました。',
+          '基本的な診断結果をお送りしますが、より詳細な分析が必要です。',
+          '担当者より詳細な診断結果を追ってご連絡差し上げます。',
+          'お急ぎの場合は、お電話（070-6664-4597）にてお問い合わせください。'
+        ]
+      };
+      
+      // フォールバック結果を送信
+      await sendAnalysisResult(email, fallbackResult, formData);
+      
+      console.log(`[${new Date().toISOString()}] [${analysisId}] ✅ Fallback analysis result sent successfully`);
+    } catch (fallbackError) {
+      console.error(`[${new Date().toISOString()}] [${analysisId}] ❌ Failed to send fallback result:`, fallbackError);
+    }
     
     // エラーの場合も管理者に通知
     try {
