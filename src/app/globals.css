@@ -8,6 +8,14 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'SoukouMincho';
+  src: url('/font/SoukouMincho-Font/SoukouMincho.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --background: #eaf5f8;
   --foreground: #000000;
@@ -138,8 +146,12 @@ body {
 }
 
 /* タグライン専用フォント */
-.tagline-font {
+.tagline-font-genkai {
   font-family: 'Genkai-Mincho', "Aoto Gothic Light", "あおとゴシック L", system-ui, -apple-system, sans-serif;
+}
+
+.tagline-font-soukou {
+  font-family: 'SoukouMincho', "Aoto Gothic Light", "あおとゴシック L", system-ui, -apple-system, sans-serif;
 }
 
 /* 無限カルーセル */
