@@ -66,10 +66,10 @@ export const metadata: Metadata = {
     siteName: 'GYAKUTEN',
     images: [
       {
-        url: '/logo.png',
+        url: '/ogp.jpg',
         width: 1200,
         height: 630,
-        alt: 'GYAKUTEN Logo',
+        alt: 'GYAKUTEN - 格安システム開発・DX支援',
       },
     ],
     locale: 'ja_JP',
@@ -79,7 +79,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: "格安システム開発・DX支援 | 中小企業向けデジタル化なら合同会社GYAKUTEN",
     description: "中小企業向け格安システム開発・業務効率化・DX支援なら合同会社GYAKUTEN。補助金対応可能。初回診断無料。",
-    images: ['/logo.png'],
+    images: ['/ogp.jpg'],
   },
 };
 
