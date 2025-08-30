@@ -9,11 +9,13 @@ export const metadata: Metadata = {
     description: 'AI検索時代に対応したWebサイト最適化診断を無料で実施',
     type: 'website',
     locale: 'ja_JP',
+    images: ['/freellmo-ogp.jpg'],
   },
   twitter: {
     card: 'summary_large_image',
     title: '無料LLMO診断',
     description: 'AI検索時代に対応したWebサイト最適化診断を無料で実施',
+    images: ['/freellmo-ogp.jpg'],
   },
   alternates: {
     canonical: '/diagnosis',
