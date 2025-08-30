@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Genkai-Mincho';
+  src: url('/font/Genkai-Mincho-font/genkai-mincho.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --background: #eaf5f8;
   --foreground: #000000;
@@ -127,4 +135,77 @@ body {
 
 .skip-link:focus {
   top: 6px;
+}
+
+/* タグライン専用フォント */
+.tagline-font {
+  font-family: 'Genkai-Mincho', "Aoto Gothic Light", "あおとゴシック L", system-ui, -apple-system, sans-serif;
+}
+
+/* 無限カルーセル */
+@keyframes infinite-scroll {
+  0% { 
+    transform: translateX(0); 
+  }
+  100% { 
+    transform: translateX(-50%); 
+  }
+}
+
+.infinite-carousel-container {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.infinite-carousel-track {
+  display: flex;
+  width: max-content;
+  animation: infinite-scroll 60s linear infinite;
+  will-change: transform;
+}
+
+.infinite-carousel-track:hover {
+  animation-play-state: paused;
+}
+
+.carousel-set {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.carousel-item {
+  flex-shrink: 0;
+  width: 350px;
+  height: 200px;
+  display: block;
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.carousel-item:hover {
+  transform: scale(1.05);
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .carousel-item {
+    width: 280px;
+    height: 160px;
+  }
+  
+  .infinite-carousel-track {
+    animation-duration: 45s;
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-item {
+    width: 220px;
+    height: 125px;
+  }
+  
+  .infinite-carousel-track {
+    animation-duration: 35s;
+  }
 }

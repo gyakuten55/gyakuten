@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
+import InfiniteCarousel from './InfiniteCarousel';
 
 const AnimatedSphere = dynamic(() => import('./AnimatedSphere'), { ssr: false });
 
@@ -22,7 +23,7 @@ export default function HomePage() {
           <div className="md:w-1/2 w-full md:order-1 order-2">
           <h2 className="text-4xl md:text-6xl font-bold text-black/20 mb-4">Mission</h2>
           <div className="mb-6">
-            <h1 id="hero-heading" className="text-3xl md:text-6xl font-black text-primary mb-2 leading-tight">
+            <h1 id="hero-heading" className="text-3xl md:text-6xl font-black text-primary mb-2 leading-tight tagline-font">
               すべての逆境に、<br />
               最高の逆転劇を。
             </h1>
@@ -53,6 +54,9 @@ export default function HomePage() {
         </div>
         </div>
       </section>
+
+      {/* 無限カルーセルセクション */}
+      <InfiniteCarousel />
 
       {/* キーワード最適化セクション */}
       <section className="py-12 bg-gray-50" aria-labelledby="services-heading">
