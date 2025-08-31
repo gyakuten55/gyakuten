@@ -26,6 +26,17 @@ interface StructuredDataProps {
       description: string;
       url: string;
     };
+    organization?: {
+      name: string;
+      url: string;
+      logo: string;
+      contactPoint: {
+        '@type': string;
+        telephone: string;
+        contactType: string;
+        availableLanguage: string;
+      };
+    };
   };
 }
 

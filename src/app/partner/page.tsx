@@ -68,20 +68,7 @@ export default function PartnerPage() {
         }}
       />
       <StructuredData 
-        type="organization" 
-        data={{
-          organization: {
-            name: '合同会社GYAKUTEN',
-            url: 'https://gyaku-ten.jp',
-            logo: 'https://gyaku-ten.jp/logo.png',
-            contactPoint: {
-              '@type': 'ContactPoint',
-              telephone: '070-6664-4597',
-              contactType: 'customer service',
-              availableLanguage: 'Japanese'
-            }
-          }
-        }}
+        type="organization"
       />
       <StructuredData 
         type="service" 
