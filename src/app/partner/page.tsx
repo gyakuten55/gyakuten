@@ -71,24 +71,7 @@ export default function PartnerPage() {
         type="organization"
       />
       <StructuredData 
-        type="service" 
-        data={{
-          service: {
-            '@type': 'ProfessionalService',
-            name: '案件パートナー募集',
-            description: '10万円から対応可能な案件募集。システム開発・DX支援の外注パートナーサービス',
-            provider: {
-              '@type': 'Organization',
-              name: '合同会社GYAKUTEN'
-            },
-            offers: {
-              '@type': 'Offer',
-              price: '100000',
-              priceCurrency: 'JPY',
-              description: '10万円からの小規模案件対応可能'
-            }
-          }
-        }}
+        type="service"
       />
       <main className="min-h-screen bg-white" role="main">
         {/* パンくずリスト */}
