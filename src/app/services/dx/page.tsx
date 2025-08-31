@@ -4,6 +4,7 @@ import Layout from '@/components/layout/Layout';
 import Link from 'next/link';
 import StepForm from '@/components/StepForm';
 import DXFAQSection from '@/components/DXFAQSection';
+import InfiniteCarousel from '@/components/InfiniteCarousel';
 
 // SEO メタデータ
 export const metadata: Metadata = {
@@ -106,7 +107,10 @@ export default function DXPage() {
           </div>
         </section>
 
-        {/* こんな問題ないか？セクション */}
+        {/* スライドセクション */}
+        <InfiniteCarousel />
+
+        {/* こんな問題ないか？セクション */
         <section className="py-16 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-12">

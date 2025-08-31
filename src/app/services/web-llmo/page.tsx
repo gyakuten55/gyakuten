@@ -4,6 +4,7 @@ import Layout from '@/components/layout/Layout';
 import Link from 'next/link';
 import StepForm from '@/components/StepForm';
 import FAQSection from '@/components/WebLLMOFAQSection';
+import InfiniteCarousel from '@/components/InfiniteCarousel';
 
 // SEO メタデータ
 export const metadata: Metadata = {
@@ -99,6 +100,9 @@ export default function WebLLMOPage() {
             </div>
           </div>
         </section>
+
+        {/* スライドセクション */}
+        <InfiniteCarousel />
 
         {/* こんな問題ないか？セクション */}
         <section className="py-16 bg-gray-50">

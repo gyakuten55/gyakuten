@@ -7,6 +7,7 @@ import DiagnosisButton from '@/components/DiagnosisButton';
 import DiagnosisForm from '@/components/DiagnosisForm';
 import FAQSection from '@/components/FAQSection';
 import StructuredData from '@/components/seo/StructuredData';
+import InfiniteCarousel from '@/components/InfiniteCarousel';
 
 // SEO メタデータ
 export const metadata: Metadata = {
@@ -71,6 +72,7 @@ export default function LLMODiagnosisPage() {
           ]
         }}
       />
+      
       <main className="min-h-screen bg-white">
         {/* パンくずリスト */}
         <nav className="bg-white border-b border-gray-200">
@@ -142,7 +144,10 @@ export default function LLMODiagnosisPage() {
           </div>
         </section>
 
-        {/* こんな問題ないか？セクション */}
+        {/* スライドセクション */}
+        <InfiniteCarousel />
+
+        {/* こんな問題ないか？セクション */
         <section className="py-16 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-12">
@@ -187,7 +192,7 @@ export default function LLMODiagnosisPage() {
           </div>
         </section>
 
-        {/* このサービスを使うとセクション */}
+        {/* LLMO診断の効果セクション */}
         <section className="py-16 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-12">
