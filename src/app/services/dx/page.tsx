@@ -31,7 +31,6 @@ export default function DXPage() {
   return (
     <Layout>
       <main className="min-h-screen bg-white">
-        {/* パンくずリスト */}
         <nav className="bg-white border-b border-gray-200">
           <div className="max-w-7xl mx-auto px-4 py-3">
             <ol className="flex items-center space-x-2 text-sm text-gray-600">
@@ -58,11 +57,9 @@ export default function DXPage() {
           </div>
         </nav>
 
-        {/* ヒーローセクション */}
         <section className="py-8 bg-gradient-to-br from-primary/5 to-primary/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-              {/* 左側：説明 */}
               <div>
                 <h1 className="text-3xl md:text-4xl font-black text-black mb-4 leading-tight">
                   格安システム開発・DX支援
@@ -101,16 +98,13 @@ export default function DXPage() {
                 </div>
               </div>
 
-              {/* 右側：相談フォーム */}
               <StepForm serviceId="dx" serviceName="GYAKUTEN システム開発" />
             </div>
           </div>
         </section>
 
-        {/* スライドセクション */}
         <InfiniteCarousel />
 
-        {/* こんな問題ないか？セクション */
         <section className="py-16 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-12">
@@ -146,7 +140,6 @@ export default function DXPage() {
                     <p className="text-gray-700 flex-grow">
                       {item.description}
                     </p>
-                    {/* 吹き出しの尻尾 */}
                     <div className="absolute -bottom-2 left-8 w-4 h-4 bg-white transform rotate-45 shadow-md"></div>
                   </div>
                 </div>
@@ -155,7 +148,6 @@ export default function DXPage() {
           </div>
         </section>
 
-        {/* このサービスを使うとセクション */}
         <section className="py-16 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-12">
@@ -196,7 +188,6 @@ export default function DXPage() {
           </div>
         </section>
 
-        {/* システム開発の特徴セクション */}
         <section className="py-16 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-12">
@@ -206,7 +197,6 @@ export default function DXPage() {
             </div>
 
             <div className="space-y-16">
-              {/* 特徴1 */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div>
                   <h3 className="text-2xl font-bold text-black mb-6">
@@ -241,7 +231,6 @@ export default function DXPage() {
                 </div>
               </div>
 
-              {/* 特徴2 */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div className="lg:order-2">
                   <h3 className="text-2xl font-bold text-black mb-6">
@@ -282,7 +271,6 @@ export default function DXPage() {
                 </div>
               </div>
 
-              {/* 特徴3 */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div>
                   <h3 className="text-2xl font-bold text-black mb-6">
@@ -321,7 +309,6 @@ export default function DXPage() {
         </section>
 
 
-        {/* 料金セクション */}
         <section className="py-16 bg-primary/5">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-12 text-center">
@@ -334,7 +321,6 @@ export default function DXPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* 初期開発 */}
               <div className="bg-white rounded-lg border border-gray-200 p-6">
                 <h3 className="text-xl font-bold text-black mb-6 text-center">初期開発</h3>
                 <div className="text-center mb-6">
@@ -361,7 +347,6 @@ export default function DXPage() {
                 </ul>
               </div>
 
-              {/* 月額保守 */}
               <div className="bg-white rounded-lg border border-gray-200 p-6">
                 <h3 className="text-xl font-bold text-black mb-6 text-center">月額保守</h3>
                 <div className="text-center mb-6">
@@ -423,7 +408,6 @@ export default function DXPage() {
           </div>
         </section>
 
-        {/* 補助金・助成金セクション */}
         <section className="py-16 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-12 text-center">
@@ -436,7 +420,6 @@ export default function DXPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* IT導入補助金 */}
               <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
                 <h3 className="text-lg font-bold text-black mb-4">IT導入補助金</h3>
                 <div className="mb-4">
@@ -450,7 +433,6 @@ export default function DXPage() {
                 </ul>
               </div>
 
-              {/* 小規模事業者持続化補助金 */}
               <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
                 <h3 className="text-lg font-bold text-black mb-4">小規模事業者持続化補助金</h3>
                 <div className="mb-4">
@@ -464,7 +446,6 @@ export default function DXPage() {
                 </ul>
               </div>
 
-              {/* 事業再構築補助金 */}
               <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
                 <h3 className="text-lg font-bold text-black mb-4">事業再構築補助金</h3>
                 <div className="mb-4">
@@ -505,7 +486,6 @@ export default function DXPage() {
           </div>
         </section>
 
-        {/* 進行フローセクション */}
         <section className="py-16 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-12 text-center">
@@ -556,10 +536,8 @@ export default function DXPage() {
           </div>
         </section>
 
-        {/* FAQ セクション */}
         <DXFAQSection />
 
-        {/* CTA セクション */}
         <section className="py-16 bg-primary">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl font-bold text-white mb-4">

@@ -31,7 +31,6 @@ export default function WebLLMOPage() {
   return (
     <Layout>
       <main className="min-h-screen bg-white">
-        {/* パンくずリスト */}
         <nav className="bg-white border-b border-gray-200">
           <div className="max-w-7xl mx-auto px-4 py-3">
             <ol className="flex items-center space-x-2 text-sm text-gray-600">
@@ -58,11 +57,9 @@ export default function WebLLMOPage() {
           </div>
         </nav>
 
-        {/* ヒーローセクション */}
         <section className="py-8 bg-gradient-to-br from-primary/5 to-primary/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-              {/* 左側：説明 */}
               <div>
                 <h1 className="text-3xl md:text-4xl font-black text-black mb-4 leading-tight">
                   GYAKUTEN LLMOウェブ制作
@@ -95,16 +92,13 @@ export default function WebLLMOPage() {
                 </div>
               </div>
 
-              {/* 右側：相談フォーム */}
               <StepForm serviceId="web-llmo" serviceName="GYAKUTEN LLMO ウェブ制作" />
             </div>
           </div>
         </section>
 
-        {/* スライドセクション */}
         <InfiniteCarousel />
 
-        {/* こんな問題ないか？セクション */}
         <section className="py-16 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-12">
@@ -140,7 +134,6 @@ export default function WebLLMOPage() {
                     <p className="text-gray-700 flex-grow">
                       {item.description}
                     </p>
-                    {/* 吹き出しの尻尾 */}
                     <div className="absolute -bottom-2 left-8 w-4 h-4 bg-white transform rotate-45 shadow-md"></div>
                   </div>
                 </div>
@@ -149,7 +142,6 @@ export default function WebLLMOPage() {
           </div>
         </section>
 
-        {/* このサービスを使うとセクション */}
         <section className="py-16 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-12">
@@ -190,7 +182,6 @@ export default function WebLLMOPage() {
           </div>
         </section>
 
-        {/* LLMOウェブ制作の特徴セクション */}
         <section className="py-16 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-12">
@@ -200,7 +191,6 @@ export default function WebLLMOPage() {
             </div>
 
             <div className="space-y-16">
-              {/* 特徴1 */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div>
                   <h3 className="text-2xl font-bold text-black mb-6">
@@ -235,7 +225,6 @@ export default function WebLLMOPage() {
                 </div>
               </div>
 
-              {/* 特徴2 */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div className="lg:order-2">
                   <h3 className="text-2xl font-bold text-black mb-6">
@@ -271,7 +260,6 @@ export default function WebLLMOPage() {
                 </div>
               </div>
 
-              {/* 特徴3 */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div>
                   <h3 className="text-2xl font-bold text-black mb-6">
@@ -318,7 +306,6 @@ export default function WebLLMOPage() {
           </div>
         </section>
 
-        {/* 補助金・助成金セクション */}
         <section className="py-16 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-12 text-center">
@@ -331,7 +318,6 @@ export default function WebLLMOPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {/* IT導入補助金 */}
               <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
                 <h3 className="text-lg font-bold text-black mb-4">IT導入補助金</h3>
                 <div className="mb-4">
@@ -345,7 +331,6 @@ export default function WebLLMOPage() {
                 </ul>
               </div>
 
-              {/* 小規模事業者持続化補助金 */}
               <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
                 <h3 className="text-lg font-bold text-black mb-4">小規模事業者持続化補助金</h3>
                 <div className="mb-4">
@@ -359,7 +344,6 @@ export default function WebLLMOPage() {
                 </ul>
               </div>
 
-              {/* 地域雇用開発助成金 */}
               <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
                 <h3 className="text-lg font-bold text-black mb-4">地域雇用開発助成金</h3>
                 <div className="mb-4">
@@ -404,7 +388,6 @@ export default function WebLLMOPage() {
           </div>
         </section>
 
-        {/* 料金セクション */}
         <section className="py-16 bg-primary/5">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-12 text-center">
@@ -489,7 +472,6 @@ export default function WebLLMOPage() {
           </div>
         </section>
 
-        {/* 利用プロセスセクション */}
         <section className="py-16 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-12 text-center">
@@ -540,10 +522,8 @@ export default function WebLLMOPage() {
           </div>
         </section>
 
-        {/* FAQ セクション */}
         <FAQSection />
 
-        {/* CTA セクション */}
         <section className="py-16 bg-primary">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl font-bold text-white mb-4">

@@ -31,7 +31,6 @@ export default function LLMOConsultingPage() {
   return (
     <Layout>
       <main className="min-h-screen bg-white">
-        {/* パンくずリスト */}
         <nav className="bg-white border-b border-gray-200">
           <div className="max-w-7xl mx-auto px-4 py-3">
             <ol className="flex items-center space-x-2 text-sm text-gray-600">
@@ -58,11 +57,9 @@ export default function LLMOConsultingPage() {
           </div>
         </nav>
 
-        {/* ヒーローセクション */}
         <section className="py-8 bg-gradient-to-br from-primary/5 to-primary/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-              {/* 左側：説明 */}
               <div>
                 <h1 className="text-3xl md:text-4xl font-black text-black mb-4 leading-tight">
                   GYAKUTEN LLMOコンサルティング
@@ -100,16 +97,13 @@ export default function LLMOConsultingPage() {
                 </div>
               </div>
 
-              {/* 右側：相談フォーム */}
               <StepForm serviceId="llmo-consulting" serviceName="GYAKUTEN LLMO コンサル" />
             </div>
           </div>
         </section>
 
-        {/* スライドセクション */}
         <InfiniteCarousel />
 
-        {/* こんな課題ありませんか？セクション */
         <section className="py-16 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-12">
@@ -145,7 +139,6 @@ export default function LLMOConsultingPage() {
                     <p className="text-gray-700 flex-grow">
                       {item.description}
                     </p>
-                    {/* 吹き出しの尻尾 */}
                     <div className="absolute -bottom-2 left-8 w-4 h-4 bg-white transform rotate-45 shadow-md"></div>
                   </div>
                 </div>
@@ -154,7 +147,6 @@ export default function LLMOConsultingPage() {
           </div>
         </section>
 
-        {/* LLMOコンサルティングを使うとセクション */}
         <section className="py-16 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-12">
@@ -195,7 +187,6 @@ export default function LLMOConsultingPage() {
           </div>
         </section>
 
-        {/* プラン・料金セクション */}
         <section className="py-16 bg-gray-50">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-12 text-center">
@@ -208,7 +199,6 @@ export default function LLMOConsultingPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              {/* スタンダードプラン */}
               <div className="bg-white rounded-lg border-2 border-gray-200 p-8 relative">
                 <div className="text-center mb-8">
                   <h3 className="text-2xl font-bold text-black mb-4">スタンダード</h3>
@@ -250,7 +240,6 @@ export default function LLMOConsultingPage() {
                 </div>
               </div>
 
-              {/* プレミアムプラン */}
               <div className="bg-white rounded-lg border-2 border-primary p-8 relative">
                 <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                   <span className="bg-primary text-white px-6 py-2 rounded-full text-sm font-medium">
@@ -306,7 +295,6 @@ export default function LLMOConsultingPage() {
           </div>
         </section>
 
-        {/* 差別化ポイントセクション */}
         <section className="py-16 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-12">
@@ -316,7 +304,6 @@ export default function LLMOConsultingPage() {
             </div>
 
             <div className="space-y-16">
-              {/* ポイント1 */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div>
                   <h3 className="text-2xl font-bold text-black mb-6">
@@ -351,7 +338,6 @@ export default function LLMOConsultingPage() {
                 </div>
               </div>
 
-              {/* ポイント2 */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div className="lg:order-2">
                   <h3 className="text-2xl font-bold text-black mb-6">
@@ -386,7 +372,6 @@ export default function LLMOConsultingPage() {
                 </div>
               </div>
 
-              {/* ポイント3 */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div>
                   <h3 className="text-2xl font-bold text-black mb-6">
@@ -421,7 +406,6 @@ export default function LLMOConsultingPage() {
                 </div>
               </div>
 
-              {/* ポイント4 */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div className="lg:order-2">
                   <h3 className="text-2xl font-bold text-black mb-6">
@@ -454,7 +438,6 @@ export default function LLMOConsultingPage() {
           </div>
         </section>
 
-        {/* 進行フローセクション */}
         <section className="py-16 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-12 text-center">
@@ -502,7 +485,6 @@ export default function LLMOConsultingPage() {
           </div>
         </section>
 
-        {/* 推奨対象者セクション */}
         <section className="py-16 bg-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-12 text-center">
@@ -570,10 +552,8 @@ export default function LLMOConsultingPage() {
           </div>
         </section>
 
-        {/* FAQ セクション */}
         <ConsultingFAQSection />
 
-        {/* CTA セクション */}
         <section className="py-16 bg-primary">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl font-bold text-white mb-4">
