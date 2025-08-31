@@ -2,7 +2,6 @@
 
 import { useRef, useMemo, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import * as THREE from 'three';
 
 function WireframeSphere({ color = '#8f2c34' }: { color?: string }) {
@@ -691,16 +690,6 @@ export default function AnimatedSphere({ color }: { color?: string }) {
       <pointLight position={[-10, -5, 5]} intensity={0.2} color="#8f2c34" />
       
       <WireframeSphere color={color} />
-      
-      {/* ポストプロセシング */}
-      <EffectComposer>
-        <Bloom 
-          intensity={0.6} 
-          threshold={0.2} 
-          luminanceSmoothing={0.9}
-          height={300}
-        />
-      </EffectComposer>
     </Canvas>
   );
 }
