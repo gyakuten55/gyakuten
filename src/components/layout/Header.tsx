@@ -12,8 +12,24 @@ const Header: React.FC = () => {
   const serviceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const appTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  const closeMenu = () => setIsMenuOpen(false);
+  const toggleMenu = () => {
+    const newIsMenuOpen = !isMenuOpen;
+    setIsMenuOpen(newIsMenuOpen);
+    
+    // カスタムイベントを発火してメニュー状態を他のコンポーネントに通知
+    window.dispatchEvent(new CustomEvent('menuToggle', { 
+      detail: { isOpen: newIsMenuOpen } 
+    }));
+  };
+  
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+    
+    // メニューを閉じる時もイベントを発火
+    window.dispatchEvent(new CustomEvent('menuToggle', { 
+      detail: { isOpen: false } 
+    }));
+  };
 
   const handleServiceMouseEnter = () => {
     if (serviceTimeoutRef.current) {
@@ -176,7 +192,7 @@ const Header: React.FC = () => {
 
         {/* モバイルメニュー */}
         {isMenuOpen && (
-          <div className="md:hidden absolute top-16 left-0 right-0 bg-white/95 backdrop-blur-md border border-white/30 shadow-lg z-40">
+          <div className="md:hidden absolute top-16 left-0 right-0 bg-white/95 backdrop-blur-md border border-white/30 shadow-lg z-40 max-h-[calc(100vh-4rem)] overflow-y-auto">
             <div className="px-2 pt-2 pb-3 space-y-1">
               {navigationItems.map((item) => (
                 <div key={item.name}>

@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation';
 
 export default function FixedDiagnosisCTA() {
   const [isVisible, setIsVisible] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
 
   // diagnosisページでは表示しない
@@ -18,11 +19,21 @@ export default function FixedDiagnosisCTA() {
       setIsVisible(window.scrollY > 100);
     };
 
+    // メニュー状態を監視
+    const handleMenuToggle = (e: CustomEvent) => {
+      setIsMenuOpen(e.detail.isOpen);
+    };
+
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('menuToggle', handleMenuToggle as EventListener);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('menuToggle', handleMenuToggle as EventListener);
+    };
   }, []);
 
-  if (!shouldShow) {
+  if (!shouldShow || isMenuOpen) {
     return null;
   }
 

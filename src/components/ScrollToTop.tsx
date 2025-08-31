@@ -1,14 +1,33 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const ScrollToTop = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
     });
   };
+
+  useEffect(() => {
+    // メニュー状態を監視
+    const handleMenuToggle = (e: CustomEvent) => {
+      setIsMenuOpen(e.detail.isOpen);
+    };
+
+    window.addEventListener('menuToggle', handleMenuToggle as EventListener);
+    
+    return () => {
+      window.removeEventListener('menuToggle', handleMenuToggle as EventListener);
+    };
+  }, []);
+
+  if (isMenuOpen) {
+    return null;
+  }
 
   return (
     <div className="fixed bottom-8 left-8 z-50 flex flex-col space-y-3">
