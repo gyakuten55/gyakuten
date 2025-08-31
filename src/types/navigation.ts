@@ -45,6 +45,7 @@ export const navigationItems: NavigationItem[] = [
   },
   { name: "よくある質問", href: "/faq" },
   { name: "会社情報", href: "/company" },
+  { name: "パートナー募集", href: "/partner" },
   { name: "資料請求", href: "/materials" },
 ];
 

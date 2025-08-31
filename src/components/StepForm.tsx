@@ -10,6 +10,9 @@ interface FormData {
   phone: string;
   industry: string;
   employeeCount: string;
+  // パートナー募集専用フィールド
+  contactPerson?: string;
+  projectDetails?: string;
 }
 
 interface StepFormProps {
@@ -25,7 +28,9 @@ export default function StepForm({ serviceId, serviceName }: StepFormProps) {
     department: '',
     phone: '',
     industry: '',
-    employeeCount: ''
+    employeeCount: '',
+    contactPerson: '',
+    projectDetails: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
@@ -38,6 +43,13 @@ export default function StepForm({ serviceId, serviceName }: StepFormProps) {
   };
 
   const isFormValid = (): boolean => {
+    if (serviceId === 'partner') {
+      return formData.company.trim() !== '' && 
+             formData.email.trim() !== '' && 
+             formData.contactPerson?.trim() !== '' && 
+             formData.phone.trim() !== '';
+    }
+    
     return formData.name.trim() !== '' && formData.email.trim() !== '' && formData.company.trim() !== '';
   };
 
@@ -47,33 +59,61 @@ export default function StepForm({ serviceId, serviceName }: StepFormProps) {
     setIsSubmitting(true);
     
     try {
-      const materialsData = {
-        selectedServices: [serviceId], // サービスIDを配列で送信
-        name: formData.name,
-        company: formData.company,
-        position: formData.department,
-        phone: formData.phone,
-        email: formData.email,
-        website: '',
-        consideration: '',
-        challenges: '',
-        // 追加情報
-        industry: formData.industry,
-        employeeCount: formData.employeeCount
-      };
+      if (serviceId === 'partner') {
+        // パートナー募集はお問い合わせAPIを使用
+        const contactData = {
+          name: formData.contactPerson || '',
+          company: formData.company,
+          email: formData.email,
+          phone: formData.phone,
+          position: formData.department || '',
+          consultationType: 'パートナー募集',
+          inquiry: `パートナー募集について\n\n部署: ${formData.department}\n備考: ${formData.projectDetails || 'なし'}`,
+          website: ''
+        };
 
-      const response = await fetch('/api/materials-request', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(materialsData),
-      });
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(contactData),
+        });
 
-      const result = await response.json();
+        const result = await response.json();
 
-      if (!response.ok) {
-        throw new Error(result.error || '送信に失敗しました');
+        if (!response.ok) {
+          throw new Error(result.error || '送信に失敗しました');
+        }
+      } else {
+        // 通常の資料請求
+        const materialsData = {
+          selectedServices: [serviceId],
+          name: formData.name,
+          company: formData.company,
+          position: formData.department,
+          phone: formData.phone,
+          email: formData.email,
+          website: '',
+          consideration: formData.projectDetails || '',
+          challenges: '',
+          industry: formData.industry,
+          employeeCount: formData.employeeCount
+        };
+
+        const response = await fetch('/api/materials-request', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(materialsData),
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          throw new Error(result.error || '送信に失敗しました');
+        }
       }
 
       setIsCompleted(true);
@@ -86,100 +126,142 @@ export default function StepForm({ serviceId, serviceName }: StepFormProps) {
   };
 
   const renderStep = () => {
+    const isPartner = serviceId === 'partner';
+    
     return (
       <div className="space-y-1">
         <div className="text-center mb-1.5">
-          <h3 className="font-bold text-sm text-black">基本情報の入力</h3>
-          <p className="text-xs text-gray-600">お名前、会社名、連絡先をご入力ください</p>
+          <h3 className="font-bold text-sm text-black">
+            {isPartner ? 'パートナー申込み情報' : '基本情報の入力'}
+          </h3>
+          <p className="text-xs text-gray-600">
+            {isPartner ? '案件詳細・ご担当者様情報をご入力ください' : 'お名前、会社名、連絡先をご入力ください'}
+          </p>
         </div>
+        
         <div>
-          <label className="block text-xs font-medium text-gray-700 mb-1">お名前 *</label>
-          <input
-            type="text"
-            value={formData.name}
-            onChange={(e) => handleInputChange('name', e.target.value)}
-            placeholder="山田太郎"
-            className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
-            required
-          />
-        </div>
-        <div>
-          <label className="block text-xs font-medium text-gray-700 mb-1">メールアドレス *</label>
-          <input
-            type="email"
-            value={formData.email}
-            onChange={(e) => handleInputChange('email', e.target.value)}
-            placeholder="example@company.com"
-            className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
-            required
-          />
-        </div>
-        <div>
-          <label className="block text-xs font-medium text-gray-700 mb-1">会社名 *</label>
+          <label className="block text-xs font-medium text-gray-700 mb-1">
+            会社名 <span className="text-red-500">*</span>
+          </label>
           <input
             type="text"
             value={formData.company}
             onChange={(e) => handleInputChange('company', e.target.value)}
-            placeholder="株式会社サンプル"
+            placeholder="貴社名を入力してください"
             className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
             required
           />
         </div>
+
         <div>
-          <label className="block text-xs font-medium text-gray-700 mb-1">部署名・役職</label>
+          <label className="block text-xs font-medium text-gray-700 mb-1">
+            部署名 {!isPartner && <span className="text-gray-400 text-xs">(任意)</span>}
+          </label>
           <input
             type="text"
             value={formData.department}
             onChange={(e) => handleInputChange('department', e.target.value)}
-            placeholder="営業部 課長"
+            placeholder="部署名を入力してください"
             className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
           />
         </div>
+
         <div>
-          <label className="block text-xs font-medium text-gray-700 mb-1">電話番号</label>
+          <label className="block text-xs font-medium text-gray-700 mb-1">
+            ご担当者名 <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            value={isPartner ? formData.contactPerson : formData.name}
+            onChange={(e) => handleInputChange(isPartner ? 'contactPerson' : 'name', e.target.value)}
+            placeholder="ご担当者名を入力してください"
+            className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+            required
+          />
+        </div>
+
+        <div>
+          <label className="block text-xs font-medium text-gray-700 mb-1">
+            メールアドレス <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="email"
+            value={formData.email}
+            onChange={(e) => handleInputChange('email', e.target.value)}
+            placeholder="メールアドレスを入力してください"
+            className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+            required
+          />
+        </div>
+
+        <div>
+          <label className="block text-xs font-medium text-gray-700 mb-1">
+            お電話番号 <span className="text-red-500">*</span>
+          </label>
           <input
             type="tel"
             value={formData.phone}
             onChange={(e) => handleInputChange('phone', e.target.value)}
-            placeholder="03-0000-0000"
+            placeholder="お電話番号を入力してください"
             className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+            required
           />
         </div>
-        <div>
-          <label className="block text-xs font-medium text-gray-700 mb-1">業界</label>
-          <select
-            value={formData.industry}
-            onChange={(e) => handleInputChange('industry', e.target.value)}
-            className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
-          >
-            <option value="">選択してください</option>
-            <option value="製造業">製造業</option>
-            <option value="小売業">小売業</option>
-            <option value="サービス業">サービス業</option>
-            <option value="IT・Web">IT・Web</option>
-            <option value="建設・不動産">建設・不動産</option>
-            <option value="医療・介護">医療・介護</option>
-            <option value="教育">教育</option>
-            <option value="金融・保険">金融・保険</option>
-            <option value="飲食業">飲食業</option>
-            <option value="その他">その他</option>
-          </select>
-        </div>
-        <div>
-          <label className="block text-xs font-medium text-gray-700 mb-1">従業員数</label>
-          <select
-            value={formData.employeeCount}
-            onChange={(e) => handleInputChange('employeeCount', e.target.value)}
-            className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
-          >
-            <option value="">選択してください</option>
-            <option value="1-10名">1-10名</option>
-            <option value="11-50名">11-50名</option>
-            <option value="51-100名">51-100名</option>
-            <option value="101-300名">101-300名</option>
-            <option value="301名以上">301名以上</option>
-          </select>
-        </div>
+
+        {isPartner && (
+          <div>
+            <label className="block text-xs font-medium text-gray-700 mb-1">
+              備考 <span className="text-gray-400 text-xs">(任意)</span>
+            </label>
+            <textarea
+              value={formData.projectDetails}
+              onChange={(e) => handleInputChange('projectDetails', e.target.value)}
+              placeholder="案件の詳細、予算感、協業形態のご希望などがあればご記入ください"
+              rows={3}
+              className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary resize-none"
+            />
+          </div>
+        )}
+
+        {!isPartner && (
+          <>
+            <div>
+              <label className="block text-xs font-medium text-gray-700 mb-1">業界</label>
+              <select
+                value={formData.industry}
+                onChange={(e) => handleInputChange('industry', e.target.value)}
+                className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+              >
+                <option value="">選択してください</option>
+                <option value="製造業">製造業</option>
+                <option value="小売業">小売業</option>
+                <option value="サービス業">サービス業</option>
+                <option value="IT・Web">IT・Web</option>
+                <option value="建設・不動産">建設・不動産</option>
+                <option value="医療・介護">医療・介護</option>
+                <option value="教育">教育</option>
+                <option value="金融・保険">金融・保険</option>
+                <option value="飲食業">飲食業</option>
+                <option value="その他">その他</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-gray-700 mb-1">従業員数</label>
+              <select
+                value={formData.employeeCount}
+                onChange={(e) => handleInputChange('employeeCount', e.target.value)}
+                className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+              >
+                <option value="">選択してください</option>
+                <option value="1-10名">1-10名</option>
+                <option value="11-50名">11-50名</option>
+                <option value="51-100名">51-100名</option>
+                <option value="101-300名">101-300名</option>
+                <option value="301名以上">301名以上</option>
+              </select>
+            </div>
+          </>
+        )}
       </div>
     );
   };
@@ -194,17 +276,29 @@ export default function StepForm({ serviceId, serviceName }: StepFormProps) {
             </svg>
           </div>
           <h3 className="text-lg font-bold text-black mb-2">
-            資料請求ありがとうございます！
+            {serviceId === 'partner' ? 'パートナー申込みありがとうございます！' : '資料請求ありがとうございます！'}
           </h3>
           <p className="text-sm text-gray-600 mb-3">
-            {serviceName || 'サービス'}の詳細資料をメールでお送りいたします。
+            {serviceId === 'partner' 
+              ? 'パートナー募集の詳細と協業についてメールでご連絡いたします。'
+              : `${serviceName || 'サービス'}の詳細資料をメールでお送りいたします。`}
           </p>
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 text-left mb-3">
             <p className="text-xs text-blue-700">
               <strong>次のステップ：</strong><br />
-              • 資料をご確認ください<br />
-              • ご不明な点がございましたらお気軽にお問い合わせください<br />
-              • 無料相談も承っております
+              {serviceId === 'partner' ? (
+                <>
+                  • 24時間以内に担当者からご連絡いたします<br />
+                  • 案件の詳細や協業形態についてお話しします<br />
+                  • 無料相談・お見積もりも承っております
+                </>
+              ) : (
+                <>
+                  • 資料をご確認ください<br />
+                  • ご不明な点がございましたらお気軽にお問い合わせください<br />
+                  • 無料相談も承っております
+                </>
+              )}
             </p>
           </div>
           <div className="text-xs text-gray-500">
@@ -215,17 +309,19 @@ export default function StepForm({ serviceId, serviceName }: StepFormProps) {
     );
   }
 
+  const isPartnerPage = serviceId === 'partner';
+  
   return (
     <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-3">
       <div className="text-center mb-2">
         <div className="bg-primary text-white text-sm font-bold py-1 px-3 rounded-full inline-block mb-1">
-          詳細資料ダウンロード
+          {isPartnerPage ? 'パートナー募集申込み' : '詳細資料ダウンロード'}
         </div>
         <h2 className="text-lg font-bold text-black mb-1">
           簡単入力で完了
         </h2>
         <p className="text-xs text-gray-600">
-          詳しいサービス内容や事例をご紹介
+          {isPartnerPage ? '案件のご相談・協業のお申込み' : '詳しいサービス内容や事例をご紹介'}
         </p>
       </div>
 
@@ -256,14 +352,14 @@ export default function StepForm({ serviceId, serviceName }: StepFormProps) {
               送信中...
             </span>
           ) : (
-            '資料をダウンロードする'
+            isPartnerPage ? 'パートナー申込みをする' : '資料をダウンロードする'
           )}
         </button>
       </div>
 
       <div className="text-center mt-1.5">
         <p className="text-xs text-gray-500">
-          資料はメールにて即座にお送りします
+          {isPartnerPage ? '24時間以内にご返信いたします' : '資料はメールにて即座にお送りします'}
         </p>
       </div>
     </div>
