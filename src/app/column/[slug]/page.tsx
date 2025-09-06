@@ -4,7 +4,6 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import Layout from '@/components/layout/Layout';
-import { TableOfContents } from '@/components/column/TableOfContents';
 import { RelatedArticles } from '@/components/column/RelatedArticles';
 import { ShareButtons } from '@/components/column/ShareButtons';
 import { getArticleBySlug, getRelatedArticles, getPopularArticles } from '@/lib/microcms';
@@ -292,14 +291,10 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         </nav>
 
         <div className="max-w-6xl mx-auto px-4 pt-2 pb-12">
-          {/* モバイル用目次 */}
-          <div className="lg:hidden mb-8">
-            <TableOfContents content={article.content} />
-          </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          <div className="max-w-4xl mx-auto">
             {/* メインコンテンツ */}
-            <article className="lg:col-span-3">
+            <article>
               {/* 記事ヘッダー */}
               <header className="mb-8">
                 {article.category && (
@@ -382,10 +377,6 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               <RelatedArticles articles={relatedArticles} />
             </article>
 
-            {/* デスクトップ用サイドバー */}
-            <aside className="hidden lg:block lg:col-span-1">
-              <TableOfContents content={article.content} />
-            </aside>
           </div>
         </div>
       </main>
