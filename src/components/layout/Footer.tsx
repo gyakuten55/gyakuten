@@ -99,6 +99,22 @@ const Footer: React.FC = () => {
                   </Link>
                 </li>
               ))}
+              <li>
+                <Link
+                  href="/about-llmo"
+                  className="text-sm text-gray-300 hover:text-white transition-colors"
+                >
+                  LLMOについて
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/glossary"
+                  className="text-sm text-gray-300 hover:text-white transition-colors"
+                >
+                  デジタルマーケティング用語集
+                </Link>
+              </li>
             </ul>
             
             {/* CTA ボタン */}
