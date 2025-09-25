@@ -9,6 +9,7 @@ import CompetitiveAdvantageSection from '@/components/transport/CompetitiveAdvan
 import CaseStudySection from '@/components/transport/CaseStudySection';
 import PricingSection from '@/components/transport/PricingSection';
 import ImplementationSection from '@/components/transport/ImplementationSection';
+import InfiniteCarousel from '@/components/InfiniteCarousel';
 
 export const metadata: Metadata = {
   title: '【東翔運輸監修】GYAKUTEN運送統合管理システム | 43台実証・管理業務50%削減',
@@ -216,6 +217,9 @@ export default function TransportSystemPage() {
 
         {/* ファーストビュー */}
         <HeroSection />
+
+        {/* おすすめサービス・コンテンツ */}
+        <InfiniteCarousel />
 
         {/* 課題提示セクション */}
         <PainPointsSection />

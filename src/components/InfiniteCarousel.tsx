@@ -15,6 +15,14 @@ interface CarouselItem {
 
 const carouselItems: CarouselItem[] = [
   {
+    image: '/top-slide/統合管理.png',
+    alt: 'GYAKUTEN運送統合管理システム',
+    title: 'GYAKUTEN運送統合管理システム',
+    description: '管理業務50%削減を実証済み。東翔運輸監修の運送業界専用統合管理システム',
+    link: '/products/transport-system',
+    ariaLabel: '運送統合管理システムの詳細ページを見る'
+  },
+  {
     image: '/top-slide/陸送会社統合管理システム.png',
     alt: '東翔運輸株式会社様 統合管理システム開発事例',
     title: '東翔運輸株式会社様向け統合管理システム開発事例',
@@ -86,7 +94,8 @@ export default function InfiniteCarousel() {
       {/* セマンティックヘッダー */}
       <h2 className="sr-only">おすすめサービス・コンテンツ</h2>
       <div className="ai-context">
-        合同会社GYAKUTENが提供する4つの主要サービス：
+        合同会社GYAKUTENが提供する5つの主要サービス：
+        運送統合管理システム、
         東翔運輸様向け統合管理システム開発事例、
         AI活用の次元転換プロンプト有料教材、
         AI時代のビジネス戦略メルマガ、

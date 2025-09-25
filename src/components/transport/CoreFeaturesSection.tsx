@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import {
   TruckIcon,
   UsersIcon,
@@ -26,6 +27,7 @@ const features = [
     ],
     benefits: '点検漏れゼロ化、車両稼働率向上',
     isUnique: false,
+    image: '/images/transport/features/vehicle-management.jpg'
   },
   {
     icon: UsersIcon,
@@ -40,6 +42,7 @@ const features = [
     ],
     benefits: '情報管理の一元化、セキュリティ強化',
     isUnique: false,
+    image: '/images/transport/features/driver-management.jpg'
   },
   {
     icon: CalendarIcon,
@@ -54,6 +57,7 @@ const features = [
     ],
     benefits: '電話対応80%削減、シフト管理効率化',
     isUnique: false,
+    image: '/images/transport/features/vacation-management.jpg'
   },
   {
     icon: ClockIcon,
@@ -68,6 +72,7 @@ const features = [
     ],
     benefits: '請求根拠明確化、売上管理精度向上',
     isUnique: true,
+    image: '/images/transport/features/departure-time.jpg'
   },
   {
     icon: BellIcon,
@@ -82,6 +87,7 @@ const features = [
     ],
     benefits: '業務漏れ防止、対応スピード向上',
     isUnique: false,
+    image: '/images/transport/features/notification-system.jpg'
   },
   {
     icon: BarChart3Icon,
@@ -96,6 +102,7 @@ const features = [
     ],
     benefits: '車両運用効率化、稼働率向上',
     isUnique: false,
+    image: '/images/transport/features/vehicle-operation.jpg'
   },
 ];
 
@@ -257,26 +264,34 @@ const CoreFeaturesSection: React.FC = () => {
               <div className="p-6">
                 {/* Large Image Area */}
                 <div className="mb-8">
-                  <div className="bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl aspect-[16/9] flex items-center justify-center border-2 border-dashed border-gray-300">
-                    <div className="text-center p-8">
-                      <div className={`inline-flex items-center justify-center w-20 h-20 rounded-2xl mb-6 ${
-                        features[activeFeature].isUnique
-                          ? 'bg-yellow-100 text-yellow-600'
-                          : 'bg-primary text-white'
-                      }`}>
-                        {React.createElement(features[activeFeature].icon, { className: "w-10 h-10" })}
-                      </div>
-                      <h4 className="text-2xl font-bold text-gray-900 mb-3">
-                        {features[activeFeature].title}画面
-                      </h4>
-                      <p className="text-gray-600 mb-4">
-                        システム画面のスクリーンショット
-                      </p>
-                      <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-lg shadow-sm">
-                        <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 002 2z" />
-                        </svg>
-                        <span className="text-sm text-gray-600">横長画像（16:9比率）</span>
+                  <div className="relative rounded-xl aspect-[16/9] overflow-hidden bg-gray-50 shadow-lg">
+                    <Image
+                      src={features[activeFeature].image}
+                      alt={`${features[activeFeature].title}の実際の画面`}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 80vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                    <div className="absolute bottom-4 left-4 right-4">
+                      <div className="bg-white/95 backdrop-blur-sm rounded-lg p-3">
+                        <div className="flex items-center gap-3">
+                          <div className={`flex items-center justify-center w-10 h-10 rounded-lg ${
+                            features[activeFeature].isUnique
+                              ? 'bg-yellow-100 text-yellow-600'
+                              : 'bg-primary text-white'
+                          }`}>
+                            {React.createElement(features[activeFeature].icon, { className: "w-5 h-5" })}
+                          </div>
+                          <div>
+                            <h4 className="font-bold text-gray-900">
+                              {features[activeFeature].title}
+                            </h4>
+                            <p className="text-sm text-gray-600">
+                              実際のシステム画面
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
