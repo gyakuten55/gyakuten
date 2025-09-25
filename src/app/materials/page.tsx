@@ -106,6 +106,12 @@ export default function Materials() {
       name: '逆転ブートキャンプ',
       description: '180日間完全マンツーマンプログラム',
       price: '15万円'
+    },
+    {
+      id: 'transport-system',
+      name: 'GYAKUTEN運送統合管理システム',
+      description: '管理業務50%削減を実証済みの運送業界専用システム',
+      price: '月額3万円〜4.5万円'
     }
   ];
 

@@ -35,10 +35,10 @@ export const navigationItems: NavigationItem[] = [
     ],
   },
   {
-    name: "アプリ",
+    name: "プロダクト",
     href: "/apps",
     children: [
-      { name: "アプリ1", href: "#" },
+      { name: "GYAKUTEN運送統合管理システム", href: "#" },
       { name: "アプリ2", href: "#" },
       { name: "アプリ3", href: "#" },
     ],
@@ -96,9 +96,9 @@ export const serviceItems: ServiceItem[] = [
 
 export const appItems: AppItem[] = [
   {
-    name: "FortPlan",
-    href: "https://fortplan.vercel.app/",
-    description: "大人気ゲームフォートナイトの戦略ボードアプリ",
-    price: "月額1,000円",
+    name: "GYAKUTEN運送統合管理システム",
+    href: "/products/transport-system",
+    description: "運送業界に特化した統合管理システム",
+    price: "初期費用0円、月額3万円〜4.5万円",
   },
 ];

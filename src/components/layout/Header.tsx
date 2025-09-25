@@ -87,17 +87,17 @@ const Header: React.FC = () => {
                 {item.children ? (
                   <div
                     className="relative"
-                    onMouseEnter={item.name === 'サービス' ? handleServiceMouseEnter : item.name === 'アプリ' ? handleAppMouseEnter : undefined}
-                    onMouseLeave={item.name === 'サービス' ? handleServiceMouseLeave : item.name === 'アプリ' ? handleAppMouseLeave : undefined}
+                    onMouseEnter={item.name === 'サービス' ? handleServiceMouseEnter : item.name === 'プロダクト' ? handleAppMouseEnter : undefined}
+                    onMouseLeave={item.name === 'サービス' ? handleServiceMouseLeave : item.name === 'プロダクト' ? handleAppMouseLeave : undefined}
                   >
                     <button className="text-black hover:text-primary px-2 py-2 text-sm font-medium flex items-center">
                       {item.name}
                     </button>
-                    {(item.name === 'サービス' && isServiceDropdownOpen) || (item.name === 'アプリ' && isAppDropdownOpen) ? (
+                    {(item.name === 'サービス' && isServiceDropdownOpen) || (item.name === 'プロダクト' && isAppDropdownOpen) ? (
                       <div 
                         className="absolute top-full left-1/2 transform -translate-x-1/2 pt-1 w-[900px] z-50"
-                        onMouseEnter={item.name === 'サービス' ? handleServiceMouseEnter : item.name === 'アプリ' ? handleAppMouseEnter : undefined}
-                        onMouseLeave={item.name === 'サービス' ? handleServiceMouseLeave : item.name === 'アプリ' ? handleAppMouseLeave : undefined}
+                        onMouseEnter={item.name === 'サービス' ? handleServiceMouseEnter : item.name === 'プロダクト' ? handleAppMouseEnter : undefined}
+                        onMouseLeave={item.name === 'サービス' ? handleServiceMouseLeave : item.name === 'プロダクト' ? handleAppMouseLeave : undefined}
                       >
                         <div className="bg-white shadow-lg rounded-md py-4 border border-gray-100">
                           <div className="grid grid-cols-3 gap-4 px-4">
@@ -113,8 +113,8 @@ const Header: React.FC = () => {
                                     setIsAppDropdownOpen(false);
                                   }
                                 }}
-                                target={item.name === 'アプリ' ? "_blank" : undefined}
-                                rel={item.name === 'アプリ' ? "noopener noreferrer" : undefined}
+                                target={item.name === 'プロダクト' ? "_blank" : undefined}
+                                rel={item.name === 'プロダクト' ? "noopener noreferrer" : undefined}
                               >
                                 <div className="font-semibold text-gray-800 text-sm mb-2">{dropdownItem.name}</div>
                                 <div className="text-xs text-gray-500 mb-2 line-clamp-2">
@@ -208,8 +208,8 @@ const Header: React.FC = () => {
                             href={menuItem.href}
                             className="block px-3 py-2 text-sm text-black hover:text-primary"
                             onClick={closeMenu}
-                            target={item.name === 'アプリ' ? "_blank" : undefined}
-                            rel={item.name === 'アプリ' ? "noopener noreferrer" : undefined}
+                            target={item.name === 'プロダクト' ? "_blank" : undefined}
+                            rel={item.name === 'プロダクト' ? "noopener noreferrer" : undefined}
                           >
                             {menuItem.name}
                           </Link>

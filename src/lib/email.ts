@@ -1134,3 +1134,159 @@ export async function sendReservationRequest(data: ReservationFormData) {
     throw new Error('予約確認メール送信に失敗しました');
   }
 }
+
+export interface TransportResourceRequestData {
+  name: string;
+  company: string;
+  email: string;
+  phone?: string;
+}
+
+export async function sendTransportResourceRequest(
+  data: TransportResourceRequestData,
+  attachment: { filename: string; path: string; contentType: string }
+) {
+  const userMailOptions = {
+    from: `${process.env.FROM_NAME} <${process.env.FROM_EMAIL}>`,
+    to: data.email,
+    subject: '【GYAKUTEN】運送統合管理システムの資料をお送りいたします',
+    html: `
+      <div style="font-family: 'Hiragino Sans', 'ヒラギノ角ゴシック', 'Yu Gothic', 'メイリオ', sans-serif; max-width: 600px; margin: 0 auto; background-color: #ffffff;">
+        <!-- ヘッダー -->
+        <div style="background: linear-gradient(135deg, #8f2c34 0%, #a53d45 100%); padding: 30px 20px; text-align: center;">
+          <h1 style="color: #ffffff; font-size: 24px; margin: 0; font-weight: bold;">
+            GYAKUTEN運送統合管理システム
+          </h1>
+          <p style="color: #ffffff; margin: 10px 0 0 0; opacity: 0.9;">
+            詳細資料をお送りいたします
+          </p>
+        </div>
+
+        <!-- メインコンテンツ -->
+        <div style="padding: 30px 20px;">
+          <div style="background-color: #f8f9fa; border-left: 4px solid #8f2c34; padding: 20px; margin-bottom: 30px;">
+            <h2 style="color: #8f2c34; font-size: 20px; margin: 0 0 10px 0;">
+              ${data.name}様、資料をお送りいたします
+            </h2>
+            <p style="margin: 0; color: #333333; line-height: 1.6;">
+              この度は、GYAKUTEN運送統合管理システムの資料をご請求いただき、誠にありがとうございます。<br>
+              <strong>管理業務50%削減を実証済み</strong>のシステム詳細資料をお送りいたします。
+            </p>
+          </div>
+
+          <!-- システム特徴 -->
+          <div style="margin-bottom: 30px;">
+            <h3 style="color: #333333; font-size: 18px; margin-bottom: 15px; border-bottom: 2px solid #8f2c34; padding-bottom: 5px;">
+              システムの特徴
+            </h3>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px;">
+              <div style="background-color: #e8f5e8; padding: 10px; border-radius: 5px; text-align: center;">
+                <strong style="color: #2d5a2d;">初期費用0円</strong>
+              </div>
+              <div style="background-color: #e8f3ff; padding: 10px; border-radius: 5px; text-align: center;">
+                <strong style="color: #1a5490;">最短3日導入</strong>
+              </div>
+              <div style="background-color: #f3e8ff; padding: 10px; border-radius: 5px; text-align: center;">
+                <strong style="color: #6a1b9a;">業界唯一機能</strong>
+              </div>
+              <div style="background-color: #fff3e0; padding: 10px; border-radius: 5px; text-align: center;">
+                <strong style="color: #e65100;">60代でも使用可</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- 実証データ -->
+          <div style="background-color: #f0f8ff; border: 1px solid #ddeeff; border-radius: 8px; padding: 20px; margin-bottom: 30px;">
+            <h3 style="color: #1a5490; font-size: 18px; margin: 0 0 15px 0; text-align: center;">
+              🚛 東翔運輸株式会社での実証結果
+            </h3>
+            <div style="text-align: center;">
+              <p style="font-size: 16px; color: #333; margin: 10px 0;">
+                <strong>管理業務時間：50%削減</strong><br>
+                <strong>点検漏れ：ゼロ化達成</strong><br>
+                <strong>車両台数：43台で実証済み</strong>
+              </p>
+            </div>
+          </div>
+
+          <!-- 添付資料説明 -->
+          <div style="margin-bottom: 30px;">
+            <h3 style="color: #333333; font-size: 18px; margin-bottom: 15px; border-bottom: 2px solid #8f2c34; padding-bottom: 5px;">
+              添付資料の内容
+            </h3>
+            <ul style="color: #333333; line-height: 1.8; padding-left: 20px;">
+              <li><strong>6大主要機能</strong>の詳細解説</li>
+              <li><strong>東翔運輸での実証データ</strong>と導入効果分析</li>
+              <li><strong>詳細料金表</strong>と導入プロセス</li>
+              <li><strong>競合優位性</strong>と業界唯一の機能紹介</li>
+              <li><strong>導入スケジュール</strong>と運用サポート内容</li>
+            </ul>
+          </div>
+
+          <!-- お問い合わせ案内 -->
+          <div style="background-color: #fff9c4; border: 1px solid #f0e68c; border-radius: 8px; padding: 20px; margin-bottom: 30px;">
+            <h3 style="color: #8b6914; font-size: 18px; margin: 0 0 15px 0;">
+              次のステップ
+            </h3>
+            <p style="color: #333333; line-height: 1.6; margin: 0;">
+              資料をご確認いただき、ご不明な点やご質問がございましたら、お気軽にお問い合わせください。<br>
+              <strong>無料相談・お見積もり</strong>も承っております。<br>
+              お急ぎの場合は直接お電話ください：<strong>070-6664-4597</strong>
+            </p>
+          </div>
+
+          <!-- 会社情報 -->
+          <div style="border-top: 1px solid #eee; padding-top: 20px; text-align: center; color: #666;">
+            <p style="margin: 5px 0; font-size: 14px;">
+              <strong>合同会社GYAKUTEN</strong><br>
+              〒460-0008 愛知県名古屋市中区栄3-15-33 栄ガスビル7F<br>
+              TEL: 070-6664-4597 | Email: info@gyakuten.com
+            </p>
+            <p style="margin: 15px 0 0 0; font-size: 12px; color: #999;">
+              ※このメールは送信専用です。返信はできませんのでご了承ください。<br>
+              ※資料請求後の強引な営業は一切いたしません。
+            </p>
+          </div>
+        </div>
+      </div>
+    `,
+    attachments: [attachment]
+  };
+
+  const adminMailOptions = {
+    from: `${process.env.FROM_NAME} <${process.env.FROM_EMAIL}>`,
+    to: process.env.ADMIN_EMAIL,
+    subject: '【運送システム】資料請求がありました',
+    html: `
+      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
+        <h2 style="color: #333;">運送統合管理システム 資料請求</h2>
+        <div style="background: #f9f9f9; padding: 20px; border-radius: 8px;">
+          <h3>お客様情報</h3>
+          <p><strong>氏名：</strong>${data.name}</p>
+          <p><strong>会社名：</strong>${data.company}</p>
+          <p><strong>メールアドレス：</strong>${data.email}</p>
+          ${data.phone ? `<p><strong>電話番号：</strong>${data.phone}</p>` : ''}
+
+          <div style="margin-top: 20px; padding: 10px; background: #e8f4f8; border-radius: 5px;">
+            <p><strong>資料請求日時：</strong>${new Date().toLocaleString('ja-JP')}</p>
+          </div>
+        </div>
+      </div>
+    `
+  };
+
+  try {
+    // お客様宛と会社宛の両方を送信
+    await Promise.all([
+      transporter.sendMail(userMailOptions),
+      transporter.sendMail(adminMailOptions)
+    ]);
+
+    console.log(`Transport system resource sent to: ${data.email}`);
+    console.log(`Admin notification sent for transport resource request from: ${data.email}`);
+    return { success: true };
+  } catch (error) {
+    console.error('Transport resource email sending failed:', error);
+    throw new Error('資料送信メール送信に失敗しました');
+  }
+}

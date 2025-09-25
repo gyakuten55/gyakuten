@@ -291,13 +291,31 @@ export default function Contact() {
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                   >
                     <option value="">選択してください</option>
-                    <option value="llmo-diagnosis">GYAKUTEN LLMO診断</option>
-                    <option value="web-llmo">GYAKUTEN LLMO ウェブ制作</option>
-                    <option value="write-llmo">GYAKUTEN LLMO ライティング</option>
-                    <option value="llmo-consulting">GYAKUTEN LLMO コンサル</option>
-                    <option value="dx">GYAKUTEN システム開発</option>
-                    <option value="bootcamp">逆転ブートキャンプ</option>
-                    <option value="other">その他</option>
+
+                    <optgroup label="🚀 LLMOサービス（AI検索最適化）">
+                      <option value="llmo-diagnosis">GYAKUTEN LLMO診断</option>
+                      <option value="web-llmo">GYAKUTEN LLMO ウェブ制作</option>
+                      <option value="write-llmo">GYAKUTEN LLMO ライティング</option>
+                      <option value="llmo-consulting">GYAKUTEN LLMO コンサル</option>
+                    </optgroup>
+
+                    <optgroup label="💼 その他サービス">
+                      <option value="dx">GYAKUTEN システム開発</option>
+                      <option value="bootcamp">逆転ブートキャンプ</option>
+                      <option value="quick-support">GYAKUTENクイックサポート</option>
+                    </optgroup>
+
+                    <optgroup label="📦 プロダクト">
+                      <option value="transport-system">GYAKUTEN運送統合管理システム</option>
+                    </optgroup>
+
+                    <optgroup label="🤝 その他のお問い合わせ">
+                      <option value="partner">パートナーシップ・協業相談</option>
+                      <option value="materials">資料請求</option>
+                      <option value="recruitment">採用・求人について</option>
+                      <option value="media">取材・メディア掲載</option>
+                      <option value="general">一般的なお問い合わせ</option>
+                    </optgroup>
                   </select>
                 </div>
 
