@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     siteName: '合同会社GYAKUTEN',
     images: [
       {
-        url: '/images/transport-system-og.jpg',
+        url: '/top-slide/陸送会社統合管理システム.png',
         width: 1200,
         height: 630,
         alt: 'GYAKUTEN運送統合管理システム - 東翔運輸監修・43台実証済み',
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     site: '@gyakuten_llc',
     title: '【東翔運輸監修】GYAKUTEN運送統合管理システム | 43台実証・管理業務50%削減',
     description: '東翔運輸株式会社監修・43台53名で実証済み。管理業務時間50%削減・点検漏れゼロ・電話連絡80%削減を実現。運送業界専用統合管理システム。',
-    images: ['/images/transport-system-og.jpg'],
+    images: ['/top-slide/陸送会社統合管理システム.png'],
   },
   alternates: {
     canonical: '/products/transport-system',
