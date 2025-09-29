@@ -347,22 +347,32 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               </header>
 
               {/* 記事本文 */}
-              <div 
+              <div
                 className="prose prose-lg max-w-none
                   [&>h1]:text-3xl [&>h1]:font-bold [&>h1]:text-black [&>h1]:mt-16 [&>h1]:mb-8 [&>h1]:border-b-2 [&>h1]:border-primary [&>h1]:pb-4
                   [&>h2]:text-2xl [&>h2]:font-bold [&>h2]:text-primary [&>h2]:mt-12 [&>h2]:mb-6 [&>h2]:border-b [&>h2]:border-gray-300 [&>h2]:pb-3
                   [&>h3]:text-xl [&>h3]:font-bold [&>h3]:text-gray-900 [&>h3]:mt-10 [&>h3]:mb-5 [&>h3]:relative [&>h3]:pl-4 [&>h3]:before:content-[''] [&>h3]:before:absolute [&>h3]:before:left-0 [&>h3]:before:top-1 [&>h3]:before:w-1 [&>h3]:before:h-6 [&>h3]:before:bg-primary
                   [&>h4]:text-lg [&>h4]:font-semibold [&>h4]:text-gray-800 [&>h4]:mt-8 [&>h4]:mb-4
                   [&>p]:text-gray-800 [&>p]:leading-loose [&>p]:mb-6 [&>p]:text-base
-                  [&>ul]:mb-8 [&>ul]:pl-6 [&>ol]:mb-8 [&>ol]:pl-6
-                  [&>ul>li]:text-gray-800 [&>ul>li]:mb-3 [&>ul>li]:leading-relaxed [&>ul>li]:marker:text-primary
-                  [&>ol>li]:text-gray-800 [&>ol>li]:mb-3 [&>ol>li]:leading-relaxed [&>ol>li]:marker:text-primary
+                  [&>ul]:mb-8 [&>ul]:pl-0 [&>ul]:space-y-3
+                  [&>ul>li]:text-gray-800 [&>ul>li]:leading-relaxed [&>ul>li]:relative [&>ul>li]:pl-6
+                  [&>ul>li]:before:content-['•'] [&>ul>li]:before:absolute [&>ul>li]:before:left-0 [&>ul>li]:before:top-0 [&>ul>li]:before:text-primary [&>ul>li]:before:font-bold [&>ul>li]:before:text-lg
+                  [&>ol]:mb-8 [&>ol]:pl-0 [&>ol]:space-y-3 [&>ol]:counter-reset-[list-counter]
+                  [&>ol>li]:text-gray-800 [&>ol>li]:leading-relaxed [&>ol>li]:relative [&>ol>li]:pl-8 [&>ol>li]:counter-increment-[list-counter]
+                  [&>ol>li]:before:content-[counter(list-counter)] [&>ol>li]:before:absolute [&>ol>li]:before:left-0 [&>ol>li]:before:top-0 [&>ol>li]:before:bg-primary [&>ol>li]:before:text-white [&>ol>li]:before:w-6 [&>ol>li]:before:h-6 [&>ol>li]:before:rounded-full [&>ol>li]:before:flex [&>ol>li]:before:items-center [&>ol>li]:before:justify-center [&>ol>li]:before:text-sm [&>ol>li]:before:font-bold
                   [&>p>strong]:text-black [&>p>strong]:font-bold [&>p>strong]:bg-yellow-100 [&>p>strong]:px-1 [&>p>strong]:py-0.5 [&>p>strong]:rounded
                   [&>li>strong]:text-black [&>li>strong]:font-bold [&>li>strong]:bg-yellow-100 [&>li>strong]:px-1 [&>li>strong]:py-0.5 [&>li>strong]:rounded
                   [&>p>em]:text-gray-700 [&>p>em]:italic [&>p>em]:font-medium
                   [&>p>a]:text-primary [&>p>a]:font-medium [&>p>a]:no-underline [&>p>a]:border-b [&>p>a]:border-primary/30 [&>p>a]:transition-all [&>p>a]:duration-200 hover:[&>p>a]:border-primary hover:[&>p>a]:bg-primary/5
-                  [&>blockquote]:border-l-4 [&>blockquote]:border-primary [&>blockquote]:bg-gray-50 [&>blockquote]:py-4 [&>blockquote]:px-6 [&>blockquote]:my-8 [&>blockquote]:italic [&>blockquote]:text-gray-700
+                  [&>blockquote]:border-l-4 [&>blockquote]:border-primary [&>blockquote]:bg-gray-50 [&>blockquote]:py-4 [&>blockquote]:px-6 [&>blockquote]:my-8 [&>blockquote]:italic [&>blockquote]:text-gray-700 [&>blockquote]:rounded-r-md [&>blockquote]:shadow-sm
                   [&>p>code]:bg-gray-100 [&>p>code]:text-primary [&>p>code]:px-2 [&>p>code]:py-1 [&>p>code]:rounded [&>p>code]:text-sm [&>p>code]:font-mono
+                  [&>pre]:bg-gray-900 [&>pre]:text-gray-100 [&>pre]:p-6 [&>pre]:rounded-lg [&>pre]:overflow-x-auto [&>pre]:my-8 [&>pre]:shadow-lg [&>pre]:border [&>pre]:border-gray-700
+                  [&>pre>code]:bg-transparent [&>pre>code]:text-gray-100 [&>pre>code]:p-0 [&>pre>code]:font-mono [&>pre>code]:text-sm [&>pre>code]:leading-relaxed
+                  [&>table]:w-full [&>table]:border-collapse [&>table]:border [&>table]:border-gray-300 [&>table]:my-8 [&>table]:rounded-lg [&>table]:shadow-sm
+                  [&>table]:block [&>table]:overflow-x-auto [&>table]:whitespace-nowrap sm:[&>table]:table sm:[&>table]:whitespace-normal
+                  [&>table>thead]:bg-gray-50 [&>table>thead>tr>th]:border [&>table>thead>tr>th]:border-gray-300 [&>table>thead>tr>th]:px-4 [&>table>thead>tr>th]:py-3 [&>table>thead>tr>th]:text-left [&>table>thead>tr>th]:font-semibold [&>table>thead>tr>th]:text-gray-900
+                  [&>table>tbody>tr>td]:border [&>table>tbody>tr>td]:border-gray-300 [&>table>tbody>tr>td]:px-4 [&>table>tbody>tr>td]:py-3 [&>table>tbody>tr>td]:text-gray-800
+                  [&>table>tbody>tr:nth-child(even)]:bg-gray-50 [&>table>tbody>tr:hover]:bg-gray-100
                   [&>figure]:my-8 [&>figure>img]:rounded-lg [&>figure>img]:shadow-md [&>figure>img]:w-full
                   [&>figure>p]:text-sm [&>figure>p]:text-gray-600 [&>figure>p]:text-center [&>figure>p]:mt-3 [&>figure>p]:italic"
                 dangerouslySetInnerHTML={{ __html: article.content }}
