@@ -147,7 +147,7 @@ const CoreFeaturesSection: React.FC = () => {
         <header className={`text-center mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <h2
             id="core-features-heading"
-            className="text-4xl lg:text-5xl font-black text-gray-900 mb-6"
+            className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 mb-6"
             itemProp="name"
             data-feature-count="6つの統合機能"
             data-industry="運送業界"
@@ -156,7 +156,7 @@ const CoreFeaturesSection: React.FC = () => {
             <span className="text-primary block" aria-label="6つの統合機能">6つの統合機能</span>
           </h2>
           <p
-            className="text-xl text-gray-600 max-w-3xl mx-auto"
+            className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto"
             itemProp="description"
             data-proof-company="東翔運輸"
             data-result="管理業務50%削減"
@@ -171,7 +171,7 @@ const CoreFeaturesSection: React.FC = () => {
           {features.map((feature, index) => (
             <div
               key={index}
-              className={`flex items-center gap-6 p-6 bg-white border border-gray-200 hover:border-primary/30 transition-all duration-300 cursor-pointer ${
+              className={`flex items-center gap-4 p-4 bg-white border border-gray-200 hover:border-primary/30 transition-all duration-300 cursor-pointer ${
                 isVisible
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-4'
@@ -183,7 +183,7 @@ const CoreFeaturesSection: React.FC = () => {
               }}
             >
               {/* Icon */}
-              <div className={`flex items-center justify-center w-12 h-12 rounded-lg ${
+              <div className={`flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-lg ${
                 feature.isUnique
                   ? 'bg-yellow-100 text-yellow-600'
                   : 'bg-primary/10 text-primary'
@@ -193,31 +193,29 @@ const CoreFeaturesSection: React.FC = () => {
 
               {/* Content */}
               <div className="flex-grow">
-                <div className="flex items-center gap-2 mb-1">
-                  <h3 className="text-lg font-bold text-gray-900">
-                    {feature.title}
-                  </h3>
-                  {feature.isUnique && (
-                    <span className="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs font-bold">
-                      業界初
-                    </span>
-                  )}
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-2">
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-base font-bold text-gray-900 whitespace-nowrap">
+                      {feature.title}
+                    </h3>
+                    {feature.isUnique && (
+                      <span className="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs font-bold whitespace-nowrap">
+                        業界初
+                      </span>
+                    )}
+                  </div>
+                  <div className="text-xs sm:text-sm font-semibold text-primary whitespace-nowrap">
+                    {feature.benefits}
+                  </div>
                 </div>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-gray-600 mt-1">
                   {feature.subtitle}
                 </p>
               </div>
 
-              {/* Benefits */}
-              <div className="text-right">
-                <div className="text-sm font-semibold text-primary">
-                  {feature.benefits}
-                </div>
-              </div>
-
               {/* Expand indicator */}
-              <div className="text-gray-400">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="flex-shrink-0 text-gray-400">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </div>
@@ -227,10 +225,10 @@ const CoreFeaturesSection: React.FC = () => {
 
         {/* Modal */}
         {showModal && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-2 sm:p-4">
+            <div className="bg-white rounded-lg sm:rounded-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto">
               {/* Modal Header */}
-              <div className="flex items-center justify-between p-6 border-b border-gray-200">
+              <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gray-200">
                 <div className="flex items-center gap-3">
                   <div className={`flex items-center justify-center w-12 h-12 rounded-xl ${
                     features[activeFeature].isUnique
@@ -240,7 +238,7 @@ const CoreFeaturesSection: React.FC = () => {
                     {React.createElement(features[activeFeature].icon, { className: "w-6 h-6" })}
                   </div>
                   <div>
-                    <h3 className="text-2xl font-bold text-gray-900">
+                    <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
                       {features[activeFeature].title}
                     </h3>
                     {features[activeFeature].isUnique && (
@@ -336,18 +334,17 @@ const CoreFeaturesSection: React.FC = () => {
         )}
 
         {/* Integration Message */}
-        <div className={`mt-16 text-center transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <div className="bg-gradient-to-r from-primary to-primary/80 text-white rounded-2xl p-8 max-w-4xl mx-auto">
-            <h3 className="text-2xl font-bold mb-4">
-              これら6つの機能が、すべて統合されたシステムです
+        <div className={`mt-12 text-center transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          <div className="bg-gradient-to-r from-primary to-primary/80 text-white rounded-2xl p-4 sm:p-6 max-w-3xl mx-auto">
+            <h3 className="text-lg sm:text-xl font-bold mb-3 leading-tight">
+              6つの機能すべてが統合されたシステム
             </h3>
-            <p className="text-lg opacity-90 mb-6">
-              別々のシステムを導入する必要はありません。東翔運輸が実証した、<br />
-              運送業界に特化した統合管理システムをそのまま導入できます。
+            <p className="text-sm sm:text-base opacity-90 mb-4 leading-normal">
+              東翔運輸実証済みの運送業界特化型システムを<br className="sm:hidden" />そのまま導入できます
             </p>
-            <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4 inline-block">
-              <div className="text-sm font-semibold">
-                導入効果: 管理業務50%削減 × 点検漏れゼロ化 = 業務効率革命
+            <div className="bg-white/20 backdrop-blur-sm rounded-lg p-2 sm:p-3 inline-block">
+              <div className="text-xs sm:text-sm font-semibold">
+                管理業務50%削減 × 点検漏れゼロ化 = 業務効率革命
               </div>
             </div>
           </div>

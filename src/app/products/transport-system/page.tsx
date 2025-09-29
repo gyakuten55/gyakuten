@@ -6,7 +6,6 @@ import HeroSection from '@/components/transport/HeroSection';
 import PainPointsSection from '@/components/transport/PainPointsSection';
 import CoreFeaturesSection from '@/components/transport/CoreFeaturesSection';
 import CompetitiveAdvantageSection from '@/components/transport/CompetitiveAdvantageSection';
-import CaseStudySection from '@/components/transport/CaseStudySection';
 import PricingSection from '@/components/transport/PricingSection';
 import ImplementationSection from '@/components/transport/ImplementationSection';
 import InfiniteCarousel from '@/components/InfiniteCarousel';
@@ -191,7 +190,7 @@ export default function TransportSystemPage() {
       <main className="min-h-screen bg-white">
         <nav className="bg-white border-b border-gray-200">
           <div className="max-w-7xl mx-auto px-4 py-3">
-            <ol className="flex items-center space-x-2 text-sm text-gray-600">
+            <ol className="flex items-center space-x-2 text-xs sm:text-sm text-gray-600">
               <li>
                 <Link href="/" className="hover:text-primary">
                   ホーム
@@ -208,7 +207,7 @@ export default function TransportSystemPage() {
               <li>
                 <span className="text-gray-400">/</span>
               </li>
-              <li className="text-black font-medium">
+              <li className="text-black font-medium truncate">
                 運送統合管理システム
               </li>
             </ol>
@@ -230,8 +229,6 @@ export default function TransportSystemPage() {
         {/* 競合優位性 */}
         <CompetitiveAdvantageSection />
 
-        {/* 導入事例（東翔運輸） */}
-        <CaseStudySection />
 
         {/* 料金体系 */}
         <PricingSection />

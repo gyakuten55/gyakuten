@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
 export default function FixedDiagnosisCTA() {
@@ -39,43 +38,62 @@ export default function FixedDiagnosisCTA() {
 
   return (
     <div
-      className={`fixed bottom-6 right-6 z-50 transition-all duration-300 ${
-        isVisible ? 'translate-y-0 opacity-100' : 'translate-y-16 opacity-0'
+      className={`fixed bottom-6 right-6 z-50 transition-all duration-500 ease-out ${
+        isVisible ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-12 opacity-0 scale-95'
       }`}
     >
       <Link
         href="/diagnosis"
-        className="bg-primary hover:bg-primary/90 text-white px-6 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center space-x-3 group"
+        className="group relative bg-primary hover:bg-primary/90 text-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center overflow-hidden backdrop-blur-sm border border-white/10"
       >
-        <div className="bg-white rounded-full p-2 flex items-center justify-center">
-          <Image
-            src="/logo.png"
-            alt="GYAKUTEN Logo"
-            width={20}
-            height={20}
-            className="object-contain"
-          />
+        {/* モバイル表示 */}
+        <div className="sm:hidden flex items-center">
+          <div className="px-4 py-3">
+            <div className="text-sm font-bold leading-none mb-0.5">無料診断</div>
+            <div className="text-xs opacity-85 leading-none">AI最適化</div>
+          </div>
+          <div className="bg-white/10 group-hover:bg-white/20 transition-colors duration-300 px-3 py-3 flex items-center justify-center">
+            <svg
+              className="w-4 h-4 text-white group-hover:translate-x-0.5 transition-transform duration-300"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2.5}
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </div>
         </div>
-        <div className="hidden sm:block">
-          <div className="text-sm font-bold">無料診断</div>
-          <div className="text-xs opacity-90">AI最適化チェック</div>
+
+        {/* デスクトップ表示 */}
+        <div className="hidden sm:flex items-center">
+          <div className="px-5 py-3.5">
+            <div className="text-sm font-bold leading-none mb-1">無料診断</div>
+            <div className="text-xs opacity-85 leading-none">AI最適化チェック</div>
+          </div>
+          <div className="bg-white/10 group-hover:bg-white/20 transition-colors duration-300 px-3 py-3.5 flex items-center justify-center">
+            <svg
+              className="w-4 h-4 text-white group-hover:translate-x-0.5 transition-transform duration-300"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2.5}
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </div>
         </div>
-        <div className="sm:hidden">
-          <div className="text-sm font-bold">無料診断</div>
-        </div>
-        <svg
-          className="w-4 h-4 text-white group-hover:translate-x-1 transition-transform duration-300"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M9 5l7 7-7 7"
-          />
-        </svg>
+
+        {/* ホバー効果 */}
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
       </Link>
     </div>
   );

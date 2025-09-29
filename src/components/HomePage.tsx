@@ -59,7 +59,7 @@ export default function HomePage() {
       <InfiniteCarousel />
 
       {/* キーワード最適化セクション */}
-      <section className="py-12 bg-gray-50" aria-labelledby="services-heading">
+      <section className="hidden md:block py-12 bg-gray-50" aria-labelledby="services-heading">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <header className="text-center mb-8">
             <h2 id="services-heading" className="text-2xl md:text-3xl font-bold text-black mb-4">

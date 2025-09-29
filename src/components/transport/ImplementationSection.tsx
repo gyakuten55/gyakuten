@@ -117,11 +117,11 @@ const ImplementationSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className={`text-center mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <h2 className="text-4xl lg:text-5xl font-black text-gray-900 mb-6">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 mb-6">
             最短3日で
             <span className="text-primary block">完全運用開始</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
             東翔運輸での実績を基に確立された効率的な導入プロセス。<br />
             複雑な設定は一切不要で、ITが苦手な方でも安心して導入いただけます。
           </p>

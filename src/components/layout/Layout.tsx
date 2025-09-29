@@ -2,7 +2,6 @@ import React from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import ScrollToTop from '../ScrollToTop';
-import FixedDiagnosisCTA from '../FixedDiagnosisCTA';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -35,7 +34,6 @@ const Layout: React.FC<LayoutProps> = ({ children, className = '' }) => {
       </main>
       <Footer />
       <ScrollToTop />
-      <FixedDiagnosisCTA />
     </div>
   );
 };

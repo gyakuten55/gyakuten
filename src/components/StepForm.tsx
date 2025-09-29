@@ -148,7 +148,7 @@ export default function StepForm({ serviceId, serviceName }: StepFormProps) {
             value={formData.company}
             onChange={(e) => handleInputChange('company', e.target.value)}
             placeholder="貴社名を入力してください"
-            className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+            className="w-full px-3 py-3 sm:px-2 sm:py-1.5 border border-gray-300 rounded text-base sm:text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary min-h-[44px] sm:min-h-auto"
             required
           />
         </div>
@@ -162,7 +162,7 @@ export default function StepForm({ serviceId, serviceName }: StepFormProps) {
             value={formData.department}
             onChange={(e) => handleInputChange('department', e.target.value)}
             placeholder="部署名を入力してください"
-            className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+            className="w-full px-3 py-3 sm:px-2 sm:py-1.5 border border-gray-300 rounded text-base sm:text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary min-h-[44px] sm:min-h-auto"
           />
         </div>
 
@@ -175,7 +175,7 @@ export default function StepForm({ serviceId, serviceName }: StepFormProps) {
             value={isPartner ? formData.contactPerson : formData.name}
             onChange={(e) => handleInputChange(isPartner ? 'contactPerson' : 'name', e.target.value)}
             placeholder="ご担当者名を入力してください"
-            className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+            className="w-full px-3 py-3 sm:px-2 sm:py-1.5 border border-gray-300 rounded text-base sm:text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary min-h-[44px] sm:min-h-auto"
             required
           />
         </div>
@@ -189,7 +189,7 @@ export default function StepForm({ serviceId, serviceName }: StepFormProps) {
             value={formData.email}
             onChange={(e) => handleInputChange('email', e.target.value)}
             placeholder="メールアドレスを入力してください"
-            className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+            className="w-full px-3 py-3 sm:px-2 sm:py-1.5 border border-gray-300 rounded text-base sm:text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary min-h-[44px] sm:min-h-auto"
             required
           />
         </div>
@@ -203,7 +203,7 @@ export default function StepForm({ serviceId, serviceName }: StepFormProps) {
             value={formData.phone}
             onChange={(e) => handleInputChange('phone', e.target.value)}
             placeholder="お電話番号を入力してください"
-            className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+            className="w-full px-3 py-3 sm:px-2 sm:py-1.5 border border-gray-300 rounded text-base sm:text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary min-h-[44px] sm:min-h-auto"
             required
           />
         </div>
@@ -218,7 +218,7 @@ export default function StepForm({ serviceId, serviceName }: StepFormProps) {
               onChange={(e) => handleInputChange('projectDetails', e.target.value)}
               placeholder="案件の詳細、予算感、協業形態のご希望などがあればご記入ください"
               rows={3}
-              className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary resize-none"
+              className="w-full px-3 py-3 sm:px-2 sm:py-1.5 border border-gray-300 rounded text-base sm:text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary resize-none min-h-[80px]"
             />
           </div>
         )}
@@ -230,7 +230,7 @@ export default function StepForm({ serviceId, serviceName }: StepFormProps) {
               <select
                 value={formData.industry}
                 onChange={(e) => handleInputChange('industry', e.target.value)}
-                className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+                className="w-full px-3 py-3 sm:px-2 sm:py-1.5 border border-gray-300 rounded text-base sm:text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary min-h-[44px] sm:min-h-auto"
               >
                 <option value="">選択してください</option>
                 <option value="製造業">製造業</option>
@@ -250,7 +250,7 @@ export default function StepForm({ serviceId, serviceName }: StepFormProps) {
               <select
                 value={formData.employeeCount}
                 onChange={(e) => handleInputChange('employeeCount', e.target.value)}
-                className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+                className="w-full px-3 py-3 sm:px-2 sm:py-1.5 border border-gray-300 rounded text-base sm:text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary min-h-[44px] sm:min-h-auto"
               >
                 <option value="">選択してください</option>
                 <option value="1-10名">1-10名</option>
@@ -268,14 +268,14 @@ export default function StepForm({ serviceId, serviceName }: StepFormProps) {
 
   if (isCompleted) {
     return (
-      <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-4">
+      <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-4 sm:p-6">
         <div className="text-center">
           <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
             <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h3 className="text-lg font-bold text-black mb-2">
+          <h3 className="text-lg sm:text-xl font-bold text-black mb-2">
             {serviceId === 'partner' ? 'パートナー申込みありがとうございます！' : '資料請求ありがとうございます！'}
           </h3>
           <p className="text-sm text-gray-600 mb-3">
@@ -312,7 +312,7 @@ export default function StepForm({ serviceId, serviceName }: StepFormProps) {
   const isPartnerPage = serviceId === 'partner';
   
   return (
-    <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-3">
+    <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-4 sm:p-3">
       <div className="text-center mb-2">
         <div className="bg-primary text-white text-sm font-bold py-1 px-3 rounded-full inline-block mb-1">
           {isPartnerPage ? 'パートナー募集申込み' : '詳細資料ダウンロード'}
@@ -335,7 +335,7 @@ export default function StepForm({ serviceId, serviceName }: StepFormProps) {
         <button
           onClick={handleSubmit}
           disabled={!isFormValid() || isSubmitting}
-          className={`px-6 py-2 rounded text-sm font-bold transition-colors ${
+          className={`px-8 py-3 sm:px-6 sm:py-2 rounded text-base sm:text-sm font-bold transition-colors min-h-[44px] w-full sm:w-auto ${
             isSubmitting
               ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
               : isFormValid()

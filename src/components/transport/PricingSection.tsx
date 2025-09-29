@@ -87,19 +87,19 @@ const PricingSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <header className={`text-center mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <h2 className="text-4xl lg:text-5xl font-black text-gray-900 mb-6">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 mb-6">
             業界最安水準の
             <span className="text-primary block">透明性料金体系</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+          <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto mb-8">
             初期費用0円、シンプルな月額制。車両台数に応じた明確な料金設定で、<br />
             予算計画も立てやすく、導入後の追加費用も一切ありません。
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <div className="bg-green-100 text-green-800 px-6 py-3 rounded-full font-bold text-lg">
+            <div className="bg-green-100 text-green-800 px-4 py-2 sm:px-6 sm:py-3 rounded-full font-bold text-base sm:text-lg">
               初期費用 0円
             </div>
-            <div className="bg-blue-100 text-blue-800 px-6 py-3 rounded-full font-bold text-lg">
+            <div className="bg-blue-100 text-blue-800 px-4 py-2 sm:px-6 sm:py-3 rounded-full font-bold text-base sm:text-lg">
               最低契約期間 6ヶ月
             </div>
           </div>
@@ -118,45 +118,47 @@ const PricingSection: React.FC = () => {
               </div>
             </div>
 
-            <div className="p-8">
+            <div className="p-4 sm:p-8">
               {/* Plan Header */}
-              <div className="text-center mb-8">
-                <h3 className="text-3xl font-bold text-gray-900 mb-2">
+              <div className="text-center mb-8 mt-6">
+                <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
                   {pricingPlan.name}
                 </h3>
-                <p className="text-xl text-gray-600 mb-6">{pricingPlan.subtitle}</p>
+                <p className="text-lg sm:text-xl text-gray-600 mb-6">{pricingPlan.subtitle}</p>
 
                 {/* Price */}
                 <div className="mb-6">
-                  <div className="text-5xl font-black text-gray-900 mb-2">
+                  <div className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 mb-2">
                     ¥{pricingPlan.basePrice}
-                    <span className="text-2xl font-normal text-gray-600"> ~ </span>
+                    <span className="text-xl sm:text-2xl font-normal text-gray-600"> ~ </span>
                     ¥{pricingPlan.maxPrice}
-                    <span className="text-xl font-normal text-gray-600">/月</span>
+                    <span className="text-lg sm:text-xl font-normal text-gray-600">/月</span>
                   </div>
-                  <p className="text-lg text-gray-600 mb-2">車両台数に応じた料金設定</p>
+                  <p className="text-base sm:text-lg text-gray-600 mb-2">車両台数に応じた料金設定</p>
                   <p className="text-sm text-gray-500">税込価格・初期費用0円</p>
                 </div>
 
-                {/* Price Range */}
-                <div className="bg-gray-50 rounded-xl p-6 mb-8">
-                  <h4 className="font-bold text-gray-900 mb-4 text-center">料金目安</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-                    <div className="bg-white rounded-lg p-4">
-                      <div className="text-xl font-bold text-primary mb-1">¥30,000/月</div>
-                      <div className="text-sm text-gray-600">~20台</div>
+                {/* Compact Price Range */}
+                <div className="space-y-3 mb-6">
+                  <h4 className="font-bold text-gray-900 text-center text-base sm:text-lg">料金目安</h4>
+
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between bg-gray-50 rounded-lg px-4 py-3">
+                      <span className="text-sm font-medium text-gray-700">~20台</span>
+                      <span className="text-lg font-bold text-primary">¥30,000/月</span>
                     </div>
-                    <div className="bg-white rounded-lg p-4">
-                      <div className="text-xl font-bold text-primary mb-1">¥35,000/月</div>
-                      <div className="text-sm text-gray-600">21-40台</div>
+                    <div className="flex items-center justify-between bg-gray-50 rounded-lg px-4 py-3">
+                      <span className="text-sm font-medium text-gray-700">21-40台</span>
+                      <span className="text-lg font-bold text-primary">¥35,000/月</span>
                     </div>
-                    <div className="bg-white rounded-lg p-4">
-                      <div className="text-xl font-bold text-primary mb-1">¥40,000/月</div>
-                      <div className="text-sm text-gray-600">41台~</div>
+                    <div className="flex items-center justify-between bg-gray-50 rounded-lg px-4 py-3">
+                      <span className="text-sm font-medium text-gray-700">41台~</span>
+                      <span className="text-lg font-bold text-primary">¥40,000/月</span>
                     </div>
                   </div>
-                  <div className="text-center mt-4">
-                    <div className="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-semibold inline-block">
+
+                  <div className="text-center pt-2">
+                    <div className="bg-blue-50 text-blue-700 px-3 py-2 rounded-lg text-sm font-medium inline-block">
                       カスタマイズ対応: +¥5,000~/月
                     </div>
                   </div>
@@ -165,12 +167,12 @@ const PricingSection: React.FC = () => {
 
               {/* Features */}
               <div className="mb-8">
-                <h4 className="font-bold text-gray-900 mb-6 text-center text-xl">全機能標準搭載</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <h4 className="font-bold text-gray-900 mb-6 text-center text-lg sm:text-xl">全機能標準搭載</h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {pricingPlan.features.map((feature, idx) => (
                     <div key={idx} className="flex items-start gap-3">
                       <CheckIcon className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                      <span className="text-gray-700">{feature}</span>
+                      <span className="text-sm sm:text-base text-gray-700">{feature}</span>
                     </div>
                   ))}
                 </div>
@@ -178,7 +180,7 @@ const PricingSection: React.FC = () => {
 
               {/* CTA */}
               <div className="text-center">
-                <a href="/contact" className={`${pricingPlan.ctaColor} text-white px-12 py-4 rounded-lg font-semibold text-xl transition-colors duration-200 mb-4 inline-block`}>
+                <a href="/contact" className={`${pricingPlan.ctaColor} text-white px-8 py-3 sm:px-12 sm:py-4 rounded-lg font-semibold text-lg sm:text-xl transition-colors duration-200 mb-4 inline-block min-h-[44px] flex items-center justify-center`}>
                   {pricingPlan.ctaText}
                 </a>
                 <p className="text-sm text-gray-500">お気軽にお問い合わせください</p>
@@ -284,32 +286,32 @@ const PricingSection: React.FC = () => {
 
         {/* Cost Comparison */}
         <div className={`mb-16 transition-all duration-1000 delay-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <div className="bg-gradient-to-br from-primary to-primary/80 text-white rounded-2xl p-8">
-            <h3 className="text-2xl font-bold mb-6 text-center">
+          <div className="bg-gradient-to-br from-primary to-primary/80 text-white rounded-2xl p-4 sm:p-6 lg:p-8">
+            <h3 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-center">
               年間コスト比較（20台の場合）
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-              <div>
-                <div className="text-3xl font-black mb-2">¥360,000</div>
-                <div className="text-lg mb-1">GYAKUTEN</div>
-                <div className="text-sm opacity-90">月額30,000円 × 12ヶ月</div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 text-center">
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3 sm:p-4">
+                <div className="text-2xl sm:text-3xl font-black mb-1 sm:mb-2">¥360,000</div>
+                <div className="text-base sm:text-lg mb-1 font-bold">GYAKUTEN</div>
+                <div className="text-xs sm:text-sm opacity-90">月額30,000円 × 12ヶ月</div>
               </div>
-              <div>
-                <div className="text-3xl font-black mb-2">¥900,000</div>
-                <div className="text-lg mb-1">大手A社</div>
-                <div className="text-sm opacity-90">初期15万円 + 月額6.25万円 × 12ヶ月</div>
+              <div className="bg-white/5 backdrop-blur-sm rounded-xl p-3 sm:p-4">
+                <div className="text-2xl sm:text-3xl font-black mb-1 sm:mb-2">¥900,000</div>
+                <div className="text-base sm:text-lg mb-1 font-bold">大手A社</div>
+                <div className="text-xs sm:text-sm opacity-90">初期15万円 + 月額6.25万円 × 12ヶ月</div>
               </div>
-              <div>
-                <div className="text-3xl font-black mb-2">¥1,200,000</div>
-                <div className="text-lg mb-1">大手B社</div>
-                <div className="text-sm opacity-90">初期20万円 + 月額8.33万円 × 12ヶ月</div>
+              <div className="bg-white/5 backdrop-blur-sm rounded-xl p-3 sm:p-4">
+                <div className="text-2xl sm:text-3xl font-black mb-1 sm:mb-2">¥1,200,000</div>
+                <div className="text-base sm:text-lg mb-1 font-bold">大手B社</div>
+                <div className="text-xs sm:text-sm opacity-90">初期20万円 + 月額8.33万円 × 12ヶ月</div>
               </div>
             </div>
-            <div className="mt-8 text-center">
-              <div className="text-2xl font-bold mb-2">
+            <div className="mt-6 sm:mt-8 text-center">
+              <div className="text-lg sm:text-xl lg:text-2xl font-bold mb-2">
                 年間最大84万円の削減効果
               </div>
-              <div className="text-lg opacity-90">
+              <div className="text-sm sm:text-base lg:text-lg opacity-90">
                 削減したコストで新しい車両の購入も可能です
               </div>
             </div>

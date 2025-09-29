@@ -75,7 +75,7 @@ const PainPointsSection: React.FC = () => {
         <header className={`text-center mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <h2
             id="pain-points-heading"
-            className="text-4xl lg:text-5xl font-black text-gray-900 mb-6"
+            className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 mb-6"
             itemProp="name"
             data-problem-category="運送業界課題"
           >
@@ -83,7 +83,7 @@ const PainPointsSection: React.FC = () => {
             <span className="text-primary block" aria-label="解決可能な問題">まだ続けますか？</span>
           </h2>
           <p
-            className="text-xl text-gray-600 max-w-3xl mx-auto"
+            className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto"
             itemProp="description"
             data-target-audience="運送業界経営者"
             data-problem-count="5つの共通課題"
@@ -98,11 +98,11 @@ const PainPointsSection: React.FC = () => {
           {painPoints.map((point, index) => (
             <article
               key={index}
-              className={`flex items-start gap-8 transition-all duration-700 ${
+              className={`flex flex-col sm:flex-row items-start gap-4 sm:gap-8 transition-all duration-700 ${
                 isVisible
                   ? 'opacity-100 translate-x-0'
                   : 'opacity-0 -translate-x-8'
-              } ${index % 2 === 1 ? 'flex-row-reverse' : ''}`}
+              } ${index % 2 === 1 ? 'sm:flex-row-reverse' : ''}`}
               style={{ transitionDelay: `${index * 200}ms` }}
               itemScope
               itemType="https://schema.org/Problem"
@@ -111,30 +111,30 @@ const PainPointsSection: React.FC = () => {
             >
               {/* Icon */}
               <div
-                className="flex-shrink-0 flex items-center justify-center w-20 h-20 bg-red-100 text-red-600 rounded-full"
+                className="flex-shrink-0 flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-red-100 text-red-600 rounded-full"
                 role="img"
                 aria-label={`課題${index + 1}のアイコン`}
               >
-                <point.icon className="w-10 h-10" aria-hidden="true" />
+                <point.icon className="w-8 h-8 sm:w-10 sm:h-10" aria-hidden="true" />
               </div>
 
               {/* Content */}
-              <div className={`flex-grow ${index % 2 === 1 ? 'text-right' : ''}`}>
+              <div className={`flex-grow ${index % 2 === 1 ? 'sm:text-right' : ''}`}>
                 <h3
-                  className="text-2xl font-bold text-gray-900 mb-4 leading-tight"
+                  className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 leading-tight"
                   itemProp="name"
                   data-problem-category="運送業界課題"
                 >
                   {point.title}
                 </h3>
                 <p
-                  className="text-lg text-gray-600 mb-4 leading-relaxed"
+                  className="text-base sm:text-lg text-gray-600 mb-4 leading-relaxed"
                   itemProp="description"
                   data-problem-description="true"
                 >
                   {point.description}
                 </p>
-                <div className={`inline-flex items-center gap-2 text-red-600 font-semibold ${index % 2 === 1 ? 'flex-row-reverse' : ''}`}>
+                <div className={`inline-flex items-center gap-2 text-red-600 font-semibold text-sm sm:text-base ${index % 2 === 1 ? 'sm:flex-row-reverse' : ''}`}>
                   <div
                     className="w-2 h-2 bg-red-500 rounded-full"
                     role="img"
@@ -156,10 +156,10 @@ const PainPointsSection: React.FC = () => {
         {/* Solution Section */}
         <div className={`mt-20 text-center transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ transitionDelay: `${painPoints.length * 200}ms` }}>
           <div className="max-w-3xl mx-auto">
-            <div className="text-6xl font-black text-primary mb-6">
+            <div className="text-4xl sm:text-5xl lg:text-6xl font-black text-primary mb-6">
               解決できます
             </div>
-            <p className="text-2xl text-gray-700 mb-8 leading-relaxed">
+            <p className="text-lg sm:text-xl lg:text-2xl text-gray-700 mb-8 leading-relaxed">
               これら5つの課題を<span className="font-bold text-primary">すべて解決</span>した<br />
               運送業界専用システムがあります
             </p>

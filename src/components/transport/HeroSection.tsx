@@ -31,7 +31,7 @@ const HeroSection: React.FC = () => {
 
   return (
     <section
-      className="py-8 bg-gradient-to-br from-primary/5 to-primary/10"
+      className="py-6 sm:py-8 bg-gradient-to-br from-primary/5 to-primary/10"
       itemScope
       itemType="https://schema.org/SoftwareApplication"
       aria-labelledby="hero-heading"
@@ -42,7 +42,7 @@ const HeroSection: React.FC = () => {
           <header>
             <h1
               id="hero-heading"
-              className="text-3xl md:text-4xl font-black text-black mb-4 leading-tight"
+              className="text-2xl sm:text-3xl md:text-4xl font-black text-black mb-4 leading-tight"
               itemProp="name"
               title="東翔運輸株式会社監修 - 43台53名で実証済みの運送統合管理システム"
             >
@@ -50,7 +50,7 @@ const HeroSection: React.FC = () => {
               GYAKUTEN運送統合管理システム
             </h1>
             <p
-              className="text-lg text-gray-700 mb-4 leading-relaxed"
+              className="text-base sm:text-lg text-gray-700 mb-4 leading-relaxed"
               itemProp="description"
               aria-describedby="hero-benefits"
             >
@@ -78,7 +78,7 @@ const HeroSection: React.FC = () => {
                 <div className="w-5 h-5 bg-primary rounded-full flex items-center justify-center mr-3" role="img" aria-label="チェックマーク">
                   <span className="text-white text-xs font-bold" aria-hidden="true">✓</span>
                 </div>
-                <span className="text-sm text-gray-700" itemProp="price" data-currency="JPY" data-price-range="30000-45000">
+                <span className="text-sm sm:text-base text-gray-700" itemProp="price" data-currency="JPY" data-price-range="30000-45000">
                   初期費用<strong>0円</strong>・月額<strong>3万円〜4.5万円</strong>の明確料金
                 </span>
               </li>
@@ -86,7 +86,7 @@ const HeroSection: React.FC = () => {
                 <div className="w-5 h-5 bg-primary rounded-full flex items-center justify-center mr-3" role="img" aria-label="チェックマーク">
                   <span className="text-white text-xs font-bold" aria-hidden="true">✓</span>
                 </div>
-                <span className="text-sm text-gray-700" data-implementation-time="3日">
+                <span className="text-sm sm:text-base text-gray-700" data-implementation-time="3日">
                   最短<strong>3日</strong>で導入完了
                 </span>
               </li>
@@ -94,7 +94,7 @@ const HeroSection: React.FC = () => {
                 <div className="w-5 h-5 bg-primary rounded-full flex items-center justify-center mr-3" role="img" aria-label="チェックマーク">
                   <span className="text-white text-xs font-bold" aria-hidden="true">✓</span>
                 </div>
-                <span className="text-sm text-gray-700" data-user-age-range="60代以上対応">
+                <span className="text-sm sm:text-base text-gray-700" data-user-age-range="60代以上対応">
                   <strong>60代</strong>でも即日利用可能
                 </span>
               </li>
