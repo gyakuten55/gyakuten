@@ -357,9 +357,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                   [&>ul]:mb-8 [&>ul]:pl-0 [&>ul]:space-y-3
                   [&>ul>li]:text-gray-800 [&>ul>li]:leading-relaxed [&>ul>li]:relative [&>ul>li]:pl-6
                   [&>ul>li]:before:content-['•'] [&>ul>li]:before:absolute [&>ul>li]:before:left-0 [&>ul>li]:before:top-0 [&>ul>li]:before:text-primary [&>ul>li]:before:font-bold [&>ul>li]:before:text-lg
-                  [&>ol]:mb-8 [&>ol]:pl-0 [&>ol]:space-y-3 [&>ol]:counter-reset-[list-counter]
-                  [&>ol>li]:text-gray-800 [&>ol>li]:leading-relaxed [&>ol>li]:relative [&>ol>li]:pl-8 [&>ol>li]:counter-increment-[list-counter]
-                  [&>ol>li]:before:content-[counter(list-counter)] [&>ol>li]:before:absolute [&>ol>li]:before:left-0 [&>ol>li]:before:top-0 [&>ol>li]:before:bg-primary [&>ol>li]:before:text-white [&>ol>li]:before:w-6 [&>ol>li]:before:h-6 [&>ol>li]:before:rounded-full [&>ol>li]:before:flex [&>ol>li]:before:items-center [&>ol>li]:before:justify-center [&>ol>li]:before:text-sm [&>ol>li]:before:font-bold
+                  [&>ol]:mb-8 [&>ol]:pl-0 [&>ol]:space-y-3 [&>ol]:list-none
+                  [&>ol>li]:text-gray-800 [&>ol>li]:leading-relaxed [&>ol>li]:relative [&>ol>li]:pl-8
+                  [&>ol>li]:before:absolute [&>ol>li]:before:left-0 [&>ol>li]:before:top-0 [&>ol>li]:before:bg-primary [&>ol>li]:before:text-white [&>ol>li]:before:w-6 [&>ol>li]:before:h-6 [&>ol>li]:before:rounded-full [&>ol>li]:before:flex [&>ol>li]:before:items-center [&>ol>li]:before:justify-center [&>ol>li]:before:text-sm [&>ol>li]:before:font-bold
                   [&>p>strong]:text-black [&>p>strong]:font-bold [&>p>strong]:bg-yellow-100 [&>p>strong]:px-1 [&>p>strong]:py-0.5 [&>p>strong]:rounded
                   [&>li>strong]:text-black [&>li>strong]:font-bold [&>li>strong]:bg-yellow-100 [&>li>strong]:px-1 [&>li>strong]:py-0.5 [&>li>strong]:rounded
                   [&>p>em]:text-gray-700 [&>p>em]:italic [&>p>em]:font-medium

@@ -102,6 +102,19 @@ body {
   animation: float-slow 5s ease-in-out infinite 2s;
 }
 
+/* microCMS番号付きリストのカウンター */
+.prose ol {
+  counter-reset: list-counter;
+}
+
+.prose ol > li {
+  counter-increment: list-counter;
+}
+
+.prose ol > li:before {
+  content: counter(list-counter);
+}
+
 .bg-gradient-radial {
   background: radial-gradient(circle, var(--tw-gradient-stops));
 }
