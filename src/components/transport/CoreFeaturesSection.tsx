@@ -226,36 +226,37 @@ const CoreFeaturesSection: React.FC = () => {
         {/* Modal */}
         {showModal && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-2 sm:p-4">
-            <div className="bg-white rounded-lg sm:rounded-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="bg-white rounded-lg sm:rounded-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto relative">
+              {/* Sticky Close Button */}
+              <button
+                onClick={() => setShowModal(false)}
+                className="sticky top-4 right-4 z-10 ml-auto mb-[-2rem] w-8 h-8 flex items-center justify-center rounded-full bg-white shadow-lg hover:bg-gray-100 transition-all duration-200 border border-gray-200"
+                style={{ float: 'right' }}
+              >
+                <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+
               {/* Modal Header */}
-              <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gray-200">
-                <div className="flex items-center gap-3">
-                  <div className={`flex items-center justify-center w-12 h-12 rounded-xl ${
-                    features[activeFeature].isUnique
-                      ? 'bg-yellow-100 text-yellow-600'
-                      : 'bg-primary text-white'
-                  }`}>
-                    {React.createElement(features[activeFeature].icon, { className: "w-6 h-6" })}
-                  </div>
-                  <div>
-                    <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
-                      {features[activeFeature].title}
-                    </h3>
-                    {features[activeFeature].isUnique && (
-                      <span className="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs font-bold">
-                        業界初
-                      </span>
-                    )}
-                  </div>
+              <div className="flex items-center gap-3 p-4 sm:p-6 border-b border-gray-200">
+                <div className={`flex items-center justify-center w-12 h-12 rounded-xl ${
+                  features[activeFeature].isUnique
+                    ? 'bg-yellow-100 text-yellow-600'
+                    : 'bg-primary text-white'
+                }`}>
+                  {React.createElement(features[activeFeature].icon, { className: "w-6 h-6" })}
                 </div>
-                <button
-                  onClick={() => setShowModal(false)}
-                  className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
+                <div>
+                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
+                    {features[activeFeature].title}
+                  </h3>
+                  {features[activeFeature].isUnique && (
+                    <span className="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs font-bold">
+                      業界初
+                    </span>
+                  )}
+                </div>
               </div>
 
               {/* Modal Content */}
@@ -270,28 +271,6 @@ const CoreFeaturesSection: React.FC = () => {
                       className="object-cover"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 80vw"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-                    <div className="absolute bottom-4 left-4 right-4">
-                      <div className="bg-white/95 backdrop-blur-sm rounded-lg p-3">
-                        <div className="flex items-center gap-3">
-                          <div className={`flex items-center justify-center w-10 h-10 rounded-lg ${
-                            features[activeFeature].isUnique
-                              ? 'bg-yellow-100 text-yellow-600'
-                              : 'bg-primary text-white'
-                          }`}>
-                            {React.createElement(features[activeFeature].icon, { className: "w-5 h-5" })}
-                          </div>
-                          <div>
-                            <h4 className="font-bold text-gray-900">
-                              {features[activeFeature].title}
-                            </h4>
-                            <p className="text-sm text-gray-600">
-                              実際のシステム画面
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 </div>
 
