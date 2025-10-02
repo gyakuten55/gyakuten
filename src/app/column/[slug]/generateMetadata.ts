@@ -8,7 +8,7 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   try {
     const article = await getArticleBySlug(params.slug);
-    
+
     if (!article) {
       return {
         title: '記事が見つかりません | GYAKUTEN',
@@ -17,7 +17,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
 
     const title = article.seo?.title || `${article.title} | GYAKUTEN コラム`;
-    const description = article.seo?.description || article.excerpt;
+    // LLMO最適化: summary > seo.description > excerpt の優先順位
+    // LLM向けのdescriptionは「問題提起→解決策提示」の形式が効果的
+    const description = article.summary || article.seo?.description || article.excerpt;
     const url = `${process.env.NEXT_PUBLIC_SITE_URL || 'https://gyaku-ten.jp'}/column/${article.slug}`;
 
     return {
@@ -51,38 +53,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
       alternates: {
         canonical: url,
-      },
-      other: {
-        // 構造化データ（JSON-LD）
-        'structured-data': JSON.stringify({
-          '@context': 'https://schema.org',
-          '@type': 'Article',
-          headline: article.title,
-          description: article.excerpt,
-          image: article.featuredImage?.url,
-          datePublished: article.publishedAt,
-          dateModified: article.updatedAt,
-          author: {
-            '@type': 'Organization',
-            name: '合同会社GYAKUTEN',
-            url: process.env.NEXT_PUBLIC_SITE_URL || 'https://gyaku-ten.jp',
-          },
-          publisher: {
-            '@type': 'Organization',
-            name: '合同会社GYAKUTEN',
-            url: process.env.NEXT_PUBLIC_SITE_URL || 'https://gyaku-ten.jp',
-            logo: {
-              '@type': 'ImageObject',
-              url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://gyaku-ten.jp'}/logo.png`,
-            },
-          },
-          mainEntityOfPage: {
-            '@type': 'WebPage',
-            '@id': url,
-          },
-          keywords: article.tags?.map(tag => tag.name),
-          articleSection: article.category?.name,
-        }),
       },
     };
   } catch (error) {

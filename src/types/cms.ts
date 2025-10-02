@@ -13,6 +13,11 @@ export interface Category extends MicroCMSDate {
   slug: string;
 }
 
+export interface FAQItem {
+  question: string;
+  answer: string;
+}
+
 export interface Blog extends MicroCMSDate {
   id: string;
   title: string;
@@ -23,6 +28,12 @@ export interface Blog extends MicroCMSDate {
     width: number;
   };
   category?: Category;
+  // LLMO最適化フィールド
+  summary?: string;
+  faq?: FAQItem[];
+  targetAudience?: 'beginner' | 'intermediate' | 'advanced' | 'all';
+  difficultyLevel?: 'easy' | 'medium' | 'hard';
+  keyTakeaways?: string[];
 }
 
 // 下位互換のためのエイリアス

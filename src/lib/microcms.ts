@@ -1,5 +1,5 @@
 import { createClient, MicroCMSQueries } from 'microcms-js-sdk';
-import { Article, Blog, Category, Tag, MicroCMSListResponse } from '@/types/cms';
+import { Article, Blog, Category, Tag, MicroCMSListResponse, FAQItem } from '@/types/cms';
 
 // microCMSクライアントの作成
 const createMicroCMSClient = () => {
@@ -196,16 +196,65 @@ export const getNewsArticles = async (limit: number = 10): Promise<Article[]> =>
 // 関連記事を取得
 export const getRelatedArticles = async (currentArticleId: string, categoryId?: string, limit: number = 3): Promise<Article[]> => {
   let filters = `id[not_equals]${currentArticleId}`;
-  
+
   if (categoryId) {
     filters += `[and]category[equals]${categoryId}`;
   }
-  
+
   const listData = await getArticles({
     filters,
     limit,
     orders: '-publishedAt',
   });
-  
+
   return listData.contents;
+};
+
+// 記事本文からFAQを自動抽出
+export const extractFAQFromContent = (htmlContent: string): FAQItem[] => {
+  const faqs: FAQItem[] = [];
+
+  // HTMLタグを除去してテキストを抽出するヘルパー関数
+  const stripHtml = (html: string): string => {
+    return html.replace(/<[^>]*>/g, '').trim();
+  };
+
+  // パターン1: h2/h3見出しに「？」「?」が含まれている場合
+  const headingPattern = /<h[23][^>]*>([^<]*[？?][^<]*)<\/h[23]>\s*<p[^>]*>([^<]+)<\/p>/gi;
+  let match;
+
+  while ((match = headingPattern.exec(htmlContent)) !== null) {
+    const question = stripHtml(match[1]);
+    const answer = stripHtml(match[2]);
+
+    if (question && answer) {
+      faqs.push({ question, answer });
+    }
+  }
+
+  // パターン2: Q: と A: の形式
+  const qaPattern = /(?:Q:|質問[:：])\s*([^\n<]+)[\s\S]*?(?:A:|回答[:：])\s*([^\n<]+)/gi;
+
+  while ((match = qaPattern.exec(htmlContent)) !== null) {
+    const question = stripHtml(match[1]);
+    const answer = stripHtml(match[2]);
+
+    if (question && answer && !faqs.some(f => f.question === question)) {
+      faqs.push({ question, answer });
+    }
+  }
+
+  // パターン3: dt/dd形式
+  const dlPattern = /<dt[^>]*>([^<]+)<\/dt>\s*<dd[^>]*>([^<]+)<\/dd>/gi;
+
+  while ((match = dlPattern.exec(htmlContent)) !== null) {
+    const question = stripHtml(match[1]);
+    const answer = stripHtml(match[2]);
+
+    if (question && answer && !faqs.some(f => f.question === question)) {
+      faqs.push({ question, answer });
+    }
+  }
+
+  return faqs;
 };
