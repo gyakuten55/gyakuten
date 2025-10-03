@@ -6,6 +6,8 @@ import Link from 'next/link';
 import Layout from '@/components/layout/Layout';
 import { RelatedArticles } from '@/components/column/RelatedArticles';
 import { ShareButtons } from '@/components/column/ShareButtons';
+import { FloatingFAQ } from '@/components/column/FloatingFAQ';
+import { InlineFAQ } from '@/components/column/InlineFAQ';
 import { getArticleBySlug, getRelatedArticles, getPopularArticles, extractFAQFromContent } from '@/lib/microcms';
 import { Article } from '@/types/cms';
 import StructuredData from '@/components/seo/StructuredData';
@@ -422,6 +424,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 />
               </section>
 
+              {/* FAQ（モバイル版: インライン表示） */}
+              <InlineFAQ faqs={extractedFAQs} />
+
               {/* シェアボタン */}
               <div className="mt-12">
                 <ShareButtons title={article.title} />
@@ -440,6 +445,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           </div>
         </div>
       </main>
+
+      {/* FAQ（PC版: 右下固定表示） */}
+      <FloatingFAQ faqs={extractedFAQs} />
     </Layout>
   );
 }
