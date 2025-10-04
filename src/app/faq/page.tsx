@@ -1,14 +1,15 @@
 import type { Metadata } from 'next';
 import Layout from '@/components/layout/Layout';
 import FAQStructuredData from '@/components/seo/FAQStructuredData';
+import FAQContent from './FAQContent';
 
 export const metadata: Metadata = {
-  title: 'よくある質問 | GYAKUTEN - LLMO（AI最適化）に関するFAQ',
-  description: 'GYAKUTENのLLMO（大規模言語モデル最適化）サービスに関するよくある質問をまとめました。料金、効果、実装方法、技術的な疑問まで詳しく解説しています。',
-  keywords: 'FAQ, よくある質問, LLMO, AI最適化, 料金, 効果, 実装, サポート, GYAKUTEN',
+  title: 'よくある質問50選 | LLMO・AI検索対策・DX支援 - 料金・効果・実装まで徹底解説 | GYAKUTEN',
+  description: 'GYAKUTENのLLMO・AI検索対策・DX支援に関する50以上のよくある質問。料金、効果、実装方法、補助金、セキュリティ、政府統計データに基づく正確な情報まで詳しく解説。ChatGPT・Perplexity・Gemini対応。',
+  keywords: 'FAQ, よくある質問, LLMO, AI検索, ChatGPT, Perplexity, Gemini, 料金, 効果, 実装, 補助金, IT導入補助金, DX, セキュリティ, 中小企業, GYAKUTEN',
   openGraph: {
-    title: 'よくある質問 | GYAKUTEN - LLMO（AI最適化）に関するFAQ',
-    description: 'GYAKUTENのLLMO（大規模言語モデル最適化）サービスに関するよくある質問をまとめました。料金、効果、実装方法、技術的な疑問まで詳しく解説しています。',
+    title: 'よくある質問50選 | LLMO・AI検索対策・DX支援 | GYAKUTEN',
+    description: 'LLMO・AI検索対策・DX支援に関する50以上のFAQ。料金、効果、補助金、セキュリティまで徹底解説。',
     url: 'https://gyaku-ten.jp/faq',
   },
   alternates: {
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
   },
 };
 
-interface FAQ {
+export interface FAQ {
   question: string;
   answer: string;
   category: string;
@@ -61,7 +62,7 @@ const faqData: FAQ[] = [
   {
     category: '料金・契約',
     question: '料金はどのように設定されていますか？',
-    answer: 'サービスごとに明確な料金設定をしています。LLMO診断は無料〜35,000円、ウェブ制作は初期10万円＋月額5,000円（最低7ヶ月契約）、ライティングは2.5円/文字（1,000字から）、コンサルティングは15万円/月〜となっています。追加費用は事前にご相談し、明確にお伝えします。'
+    answer: 'サービスごとに明確な料金設定をしています。LLMO診断は無料〜35,000円、ウェブ制作は初期10万円＋月額5,000円（最低7ヶ月契約）、ライティングは2.5円/文字（1,000字から）、コンサルティングは15万円/月〜となっています。追加費用は事前にご相談し、明確にお伝えします。※記載の価格は予告なく変更される場合があります。最新の料金については無料相談でお問い合わせください。'
   },
   {
     category: '料金・契約',
@@ -123,119 +124,209 @@ const faqData: FAQ[] = [
     category: '会社・サポート',
     question: '地方の企業でも対応可能ですか？',
     answer: 'はい、全国どこでも対応可能です。オンラインでのミーティングやサポートが中心となりますが、必要に応じて訪問も承ります。これまでも北海道から沖縄まで、全国の企業様にサービスを提供しています。'
+  },
+
+  // 補助金・助成金
+  {
+    category: '補助金・助成金',
+    question: 'IT導入補助金は利用できますか？',
+    answer: 'はい、当社のサービスはIT導入補助金の対象となる可能性があります。ただし、補助金の採択は申請内容や予算状況により変動します。申請サポートも承っておりますので、詳細はお問い合わせください。※補助金制度は年度により変更される場合があります。'
+  },
+  {
+    category: '補助金・助成金',
+    question: '補助金申請のサポートはありますか？',
+    answer: 'はい、IT導入補助金をはじめとする各種補助金の申請サポートを提供しています。申請書類の作成支援、必要資料の準備アドバイス、申請後のフォローまで一貫してサポートいたします。'
+  },
+  {
+    category: '補助金・助成金',
+    question: 'どのような補助金が対象になりますか？',
+    answer: 'IT導入補助金、小規模事業者持続化補助金、事業再構築補助金などが対象となる可能性があります。お客様の事業内容や規模に応じて、最適な補助金をご提案いたします。※補助金制度は年度や地域により異なります。'
+  },
+  {
+    category: '補助金・助成金',
+    question: '補助金を使った場合の実質負担額はどのくらいですか？',
+    answer: 'IT導入補助金を利用した場合、最大で費用の2/3（上限450万円）が補助されるケースがあります。例えば初期費用10万円のウェブ制作の場合、実質負担は約3.3万円程度となる可能性があります。※補助金額は申請内容や年度により異なります。'
+  },
+
+  // DX・デジタル化
+  {
+    category: 'DX・デジタル化',
+    question: 'なぜ今DXが必要なのですか？',
+    answer: '経済産業省「中小企業白書2024」によると、2024年時点で30.8%の企業がDXに未着手、特に小規模企業（従業員100人以下）では60%以上がDX未実施です。一方で、デジタル庁は2025年5月に生成AIガイドラインを策定し、政府全体でAI活用を推進しています。早期のDX対応が競争力維持の鍵となります。'
+  },
+  {
+    category: 'DX・デジタル化',
+    question: '中小企業のDX実施率はどのくらいですか？',
+    answer: '中小企業白書2024のデータによると、2024年時点で全体の30.8%がDXに未着手、小規模企業（従業員100人以下）では60%以上が未実施となっています。つまり、早期にDXに取り組むことで競合他社に対する優位性を確保できる状況です。'
+  },
+  {
+    category: 'DX・デジタル化',
+    question: 'IT人材不足でもDXを進められますか？',
+    answer: '可能です。中小企業基盤整備機構「DX推進に関する調査2024」では、IT人材不足が25.4%、DX推進人材不足が24.8%と報告されています。当社は外部パートナーとしてこの課題を解決し、専門知識不要で取り組めるサポート体制を提供しています。'
+  },
+  {
+    category: 'DX・デジタル化',
+    question: '生成AIの利用率はどのくらいですか？',
+    answer: '総務省「令和7年版 情報通信白書」によると、2024年の生成AI個人利用率は26.7%（2023年9.1%から約3倍増）、企業業務利用率は55.2%となっています。急速に普及が進んでおり、AI時代への対応が急務となっています。'
+  },
+  {
+    category: 'DX・デジタル化',
+    question: 'DXとLLMOの関係は？',
+    answer: 'DX（デジタルトランスフォーメーション）は業務のデジタル化全般を指し、LLMO（大規模言語モデル最適化）はその中でもAI検索時代に対応したWeb戦略です。DXの一環としてLLMOに取り組むことで、AI時代の集客基盤を構築できます。'
+  },
+
+  // AI検索エンジン対応
+  {
+    category: 'AI検索エンジン対応',
+    question: 'ChatGPT Searchで表示されますか？',
+    answer: 'はい、LLMO対策を行うことでChatGPT Searchの検索結果に表示される可能性が高まります。AIが理解しやすいコンテンツ構造にすることで、ChatGPTが情報源として引用しやすくなります。'
+  },
+  {
+    category: 'AI検索エンジン対応',
+    question: 'Perplexity AIに対応していますか？',
+    answer: 'はい、Perplexity AIを含む主要なAI検索エンジンに対応しています。Perplexity特有の引用スタイルに最適化されたコンテンツ構造を提案し、AI検索結果での露出を最大化します。'
+  },
+  {
+    category: 'AI検索エンジン対応',
+    question: 'Google Geminiでの検索結果に影響しますか？',
+    answer: 'はい、影響します。Google GeminiもLLMベースの検索エンジンであり、LLMO対策により検索結果での表示が改善されます。従来のGoogle SEOとの相乗効果も期待できます。'
+  },
+  {
+    category: 'AI検索エンジン対応',
+    question: 'AI検索で上位表示されるまでの期間は？',
+    answer: 'サイトの現状や競合状況により異なりますが、通常1-3ヶ月で効果が現れ始めます。AI検索エンジンは従来の検索エンジンよりも新しいコンテンツを迅速に反映する傾向があるため、SEOよりも早期に効果を実感できることが多いです。'
+  },
+  {
+    category: 'AI検索エンジン対応',
+    question: 'AI検索での引用率を測定できますか？',
+    answer: 'はい、AI検索エンジンでの言及回数や引用率を専門ツールで測定し、月次レポートでお届けします。どのようなクエリで引用されているか、競合と比較してどうかなどを具体的に分析します。'
+  },
+  {
+    category: 'AI検索エンジン対応',
+    question: '従来のSEOと併用できますか？',
+    answer: 'はい、むしろ推奨しています。LLMOと従来のSEOは補完的な関係にあり、両方を実施することで包括的なデジタル戦略が可能になります。Google検索とAI検索の両方からの流入を確保できます。'
+  },
+
+  // セキュリティ・プライバシー
+  {
+    category: 'セキュリティ・プライバシー',
+    question: 'セキュリティ対策はどうなっていますか？',
+    answer: '当社のWebサイト制作では、SSL/TLS暗号化、定期的なセキュリティアップデート、脆弱性診断を標準実装しています。お客様のデータは厳重に管理し、第三者への提供は一切行いません。'
+  },
+  {
+    category: 'セキュリティ・プライバシー',
+    question: '個人情報の取り扱いは？',
+    answer: '個人情報保護法に準拠し、取得した個人情報は契約業務の範囲内でのみ使用します。第三者への提供、外部サービスへの不正な送信は一切行いません。詳細はプライバシーポリシーをご確認ください。'
+  },
+  {
+    category: 'セキュリティ・プライバシー',
+    question: 'データのバックアップは？',
+    answer: '制作したWebサイトのデータは定期的に自動バックアップを取得し、複数の場所に保管しています。万が一のトラブル時にも迅速に復旧できる体制を整えています。'
+  },
+  {
+    category: 'セキュリティ・プライバシー',
+    question: '秘密保持契約（NDA）は締結できますか？',
+    answer: 'はい、ご要望に応じて秘密保持契約（NDA）を締結いたします。プロジェクトで知り得た情報は厳重に管理し、契約期間中および契約終了後も守秘義務を遵守します。'
+  },
+
+  // 技術仕様・対応範囲
+  {
+    category: '技術仕様・対応範囲',
+    question: 'WordPressに対応していますか？',
+    answer: 'はい、WordPressサイトのLLMO最適化に対応しています。既存のWordPressサイトへのLLMO導入、新規WordPress構築、プラグインによる機能拡張など、幅広くサポートいたします。'
+  },
+  {
+    category: '技術仕様・対応範囲',
+    question: '既存サイトのリニューアルは可能ですか？',
+    answer: 'はい、既存サイトのリニューアルにも対応しています。現在のデザインやコンテンツを活かしながら、LLMO対応を行うことも、完全リニューアルすることも可能です。現状診断からご提案いたします。'
+  },
+  {
+    category: '技術仕様・対応範囲',
+    question: 'ドメイン・サーバーの手配も依頼できますか？',
+    answer: 'はい、ドメイン取得・サーバー契約の代行も承ります。お客様に最適なドメイン名の提案、コストパフォーマンスに優れたサーバー選定、初期設定まで一括してサポートいたします。'
+  },
+  {
+    category: '技術仕様・対応範囲',
+    question: 'カスタマイズは可能ですか？',
+    answer: 'はい、お客様の業界・業種・ご要望に応じたカスタマイズが可能です。標準パッケージをベースに、必要な機能追加や独自デザインの実装など、柔軟に対応いたします。'
+  },
+  {
+    category: '技術仕様・対応範囲',
+    question: '解約後もサイトは使えますか？',
+    answer: 'はい、解約後もサイトは引き続きご利用いただけます。ただし、月額サービスに含まれるサポートや更新作業は終了となります。サイトデータは全てお渡しいたしますので、他社への移管も可能です。'
+  },
+  {
+    category: '技術仕様・対応範囲',
+    question: 'スマートフォン対応（レスポンシブデザイン）は標準ですか？',
+    answer: 'はい、全てのWebサイトでレスポンシブデザインを標準実装しています。PC・タブレット・スマートフォンのあらゆるデバイスで最適な表示を実現します。'
+  },
+  {
+    category: '技術仕様・対応範囲',
+    question: 'ECサイト（ネットショップ）も対応していますか？',
+    answer: 'はい、ECサイトの構築・LLMO最適化にも対応しています。Shopify、BASE、カラーミーショップなどの主要ECプラットフォームに対応可能です。商品ページのAI最適化により、AI検索経由の売上向上を支援します。'
+  },
+  {
+    category: '技術仕様・対応範囲',
+    question: '多言語サイトに対応していますか？',
+    answer: 'はい、英語をはじめとする多言語サイトの構築に対応しています。各言語でのLLMO最適化も可能です。海外展開を検討されている企業様もご相談ください。'
+  },
+  {
+    category: '技術仕様・対応範囲',
+    question: 'アクセス解析ツールの導入もできますか？',
+    answer: 'はい、Google Analytics 4、Search Console等の主要な解析ツールの導入・設定を標準で行います。AI検索特有の指標測定ツールの導入も承ります。'
+  },
+  {
+    category: '技術仕様・対応範囲',
+    question: '定期的なメンテナンスは必要ですか？',
+    answer: 'AI検索エンジンのアルゴリズムは常に進化しているため、定期的な見直しとメンテナンスをお勧めしています。月額サービスでは継続的な最適化とメンテナンスを提供しています。'
+  },
+
+  // その他の重要なFAQ
+  {
+    category: 'サービス全般',
+    question: '競合分析も含まれますか？',
+    answer: 'はい、診断サービスには競合分析が含まれています。競合サイトのLLMO対応度、AI検索での表示状況、強み・弱みを分析し、差別化戦略をご提案します。'
+  },
+  {
+    category: 'サービス全般',
+    question: '業界特有の対応は可能ですか？',
+    answer: 'はい、製造業、サービス業、小売業、士業、医療・介護など、各業界の特性に応じた最適化が可能です。業界特有のキーワードや規制にも配慮したコンテンツ制作を行います。'
+  },
+  {
+    category: 'サービス全般',
+    question: '既存のWebサイトがなくても依頼できますか？',
+    answer: 'はい、Webサイトをお持ちでない場合でもご依頼いただけます。ゼロからのWebサイト構築とLLMO最適化を一括して行い、AI時代に最適化されたサイトをご提供します。'
+  },
+  {
+    category: '実装・技術',
+    question: 'コンテンツの著作権は誰に帰属しますか？',
+    answer: '制作したコンテンツの著作権は、納品・ご入金完了後にお客様に帰属します。自由に編集・二次利用が可能です。ただし、当社が独自開発したシステム部分については当社に帰属します。'
+  },
+  {
+    category: '料金・契約',
+    question: '月額費用には何が含まれますか？',
+    answer: 'ウェブ制作の月額5,000円には、サーバー・ドメイン費用、SSL証明書、基本的なメンテナンス、軽微な修正対応、セキュリティアップデート、月次レポートが含まれます。大規模な改修は別途お見積りとなります。※価格は変更される可能性があります。'
+  },
+  {
+    category: '診断について',
+    question: '無料診断では何がわかりますか？',
+    answer: '無料簡易診断では、現在のWebサイトのLLMO対応度スコア、主要な改善ポイント3-5項目、AI検索での現状評価、優先的に取り組むべき施策をお伝えします。詳細な分析が必要な場合は有料診断をご検討ください。'
+  },
+  {
+    category: '会社・サポート',
+    question: '導入実績はどのくらいありますか？',
+    answer: '2024年12月時点で、中小企業を中心に多数の導入実績があります。具体的な社名や数値は守秘義務の関係で公開しておりませんが、無料相談時に類似業種の事例をご紹介することは可能です。'
   }
 ];
-
-// カテゴリごとにFAQをグループ化
-const faqsByCategory = faqData.reduce((acc, faq) => {
-  if (!acc[faq.category]) {
-    acc[faq.category] = [];
-  }
-  acc[faq.category].push(faq);
-  return acc;
-}, {} as Record<string, FAQ[]>);
 
 export default function FAQPage() {
   return (
     <Layout>
       <FAQStructuredData faqs={faqData} />
-      
+
       <main className="pt-24 pb-16 min-h-screen">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          {/* ヘッダーセクション */}
-          <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-5xl font-black text-primary mb-6">
-              よくある質問
-            </h1>
-            <p className="text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed">
-              GYAKUTENのLLMO（大規模言語モデル最適化）サービスに関するよくある質問をまとめました。<br />
-              こちらにない質問がございましたら、お気軽に<a href="/contact" className="text-primary hover:underline font-medium">お問い合わせ</a>ください。
-            </p>
-          </div>
-
-          {/* FAQ セクション */}
-          {Object.entries(faqsByCategory).map(([category, faqs]) => (
-            <section key={category} className="mb-16">
-              <h2 className="text-2xl font-black text-primary mb-8 border-b-2 border-primary pb-2">
-                {category}
-              </h2>
-              
-              <div className="space-y-4">
-                {faqs.map((faq, index) => (
-                  <FAQItem key={`${category}-${index}`} faq={faq} />
-                ))}
-              </div>
-            </section>
-          ))}
-
-          {/* CTAセクション */}
-          <div className="mt-20 text-center">
-            <div className="bg-white rounded-xl shadow-lg p-8 md:p-12">
-              <h2 className="text-2xl md:text-3xl font-black text-primary mb-6">
-                まずは無料診断から始めませんか？
-              </h2>
-              <p className="text-gray-700 mb-8 leading-relaxed">
-                現在のWebサイトがAI時代にどれだけ対応できているかを無料で診断いたします。<br />
-                改善点と具体的な対策をレポートでお届けします。
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a
-                  href="/diagnosis"
-                  className="bg-primary text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-primary/90 transition-colors"
-                >
-                  無料診断を申し込む
-                </a>
-                <a
-                  href="/contact"
-                  className="border-2 border-primary text-primary px-8 py-4 rounded-lg font-bold text-lg hover:bg-primary hover:text-white transition-colors"
-                >
-                  詳しく相談する
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
+        <FAQContent faqData={faqData} />
       </main>
     </Layout>
-  );
-}
-
-// FAQ個別アイテムコンポーネント
-function FAQItem({ faq }: { faq: FAQ }) {
-  return (
-    <div className="bg-white border-l-4 border-primary shadow-sm hover:shadow-md transition-shadow duration-200">
-      <details className="group/details">
-        <summary className="cursor-pointer p-8 hover:bg-gray-50 transition-colors duration-200 list-none">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-6">
-              <span className="text-primary font-black text-lg">Q</span>
-              <h3 className="text-lg font-bold text-gray-900 leading-relaxed">
-                {faq.question}
-              </h3>
-            </div>
-            <div className="flex-shrink-0">
-              <svg
-                className="w-6 h-6 text-gray-400 group-open/details:rotate-180 transition-transform duration-200"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </div>
-          </div>
-        </summary>
-        
-        <div className="px-8 pb-8 bg-gray-50 border-t border-gray-200">
-          <div className="pt-6 flex items-start space-x-6">
-            <span className="text-primary font-black text-lg">A</span>
-            <p className="text-gray-700 leading-relaxed whitespace-pre-line">
-              {faq.answer}
-            </p>
-          </div>
-        </div>
-      </details>
-    </div>
   );
 }
