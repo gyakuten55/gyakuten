@@ -177,7 +177,7 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
         'article:modified_time': article.updatedAt,
         'article:author': '合同会社GYAKUTEN',
         'article:section': article.category?.name || 'コラム',
-        'article:tag': article.tags?.map(tag => tag.name).join(','),
+        'article:tag': article.tags?.map(tag => tag.name).join(',') || '',
       },
     };
   } catch (error) {
