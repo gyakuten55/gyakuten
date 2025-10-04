@@ -14,11 +14,13 @@ export const metadata: Metadata = {
   title: 'GYAKUTEN LLMO診断 | AI検索時代のWebサイト最適化診断',
   description: 'AI検索エンジンに対応したWebサイト診断サービス。LLMO最適化で貴社サイトをAIフレンドリーに。無料診断から伴走改善まで。',
   keywords: 'LLMO, AI検索最適化, SEO, Web診断, 中小企業, デジタル戦略',
+  authors: [{ name: '合同会社GYAKUTEN' }],
   openGraph: {
     title: 'GYAKUTEN LLMO診断',
     description: 'AI検索時代に対応したWebサイト最適化診断サービス',
     type: 'website',
     locale: 'ja_JP',
+    url: 'https://gyaku-ten.jp/services/llmo-diagnosis',
   },
   twitter: {
     card: 'summary_large_image',
@@ -26,7 +28,12 @@ export const metadata: Metadata = {
     description: 'AI検索時代に対応したWebサイト最適化診断サービス',
   },
   alternates: {
-    canonical: '/services/llmo-diagnosis',
+    canonical: 'https://gyaku-ten.jp/services/llmo-diagnosis',
+  },
+  other: {
+    'article:published_time': '2024-03-03T00:00:00Z',
+    'article:modified_time': new Date().toISOString(),
+    'article:author': '合同会社GYAKUTEN',
   },
 };
 

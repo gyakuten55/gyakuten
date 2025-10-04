@@ -1,8 +1,9 @@
 import { MetadataRoute } from 'next'
+import { getArticles } from '@/lib/microcms'
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://gyaku-ten.jp'
-  
+
   const staticPages = [
     {
       url: baseUrl,
@@ -50,14 +51,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${baseUrl}/diagnosis`,
       lastModified: new Date(),
       changeFrequency: 'weekly' as const,
-      priority: 0.9,
+      priority: 0.95,
     },
     // Services pages
     {
       url: `${baseUrl}/services/llmo-diagnosis`,
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
-      priority: 0.9,
+      priority: 0.95,
     },
     {
       url: `${baseUrl}/services/web-llmo`,
@@ -109,5 +110,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ]
 
-  return staticPages
+  // 動的にコラム記事を追加
+  try {
+    const articlesData = await getArticles({ limit: 100, orders: '-publishedAt' })
+    const articlePages = articlesData.contents.map((article) => ({
+      url: `${baseUrl}/column/${article.slug}`,
+      lastModified: new Date(article.updatedAt || article.publishedAt || article.createdAt),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    }))
+
+    return [...staticPages, ...articlePages]
+  } catch (error) {
+    console.error('記事の取得に失敗しました:', error)
+    return staticPages
+  }
 }

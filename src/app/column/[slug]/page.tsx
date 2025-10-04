@@ -140,13 +140,17 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
       title: article.seo?.title || `${article.title} | GYAKUTEN コラム`,
       description: article.seo?.description || article.excerpt,
       keywords: article.tags?.map(tag => tag.name).join(', '),
+      authors: [{ name: '合同会社GYAKUTEN' }],
       openGraph: {
         title: article.title,
         description: article.excerpt,
         type: 'article',
         locale: 'ja_JP',
-        publishedTime: article.publishedAt,
+        publishedTime: article.publishedAt || article.createdAt,
         modifiedTime: article.updatedAt,
+        authors: ['合同会社GYAKUTEN'],
+        section: article.category?.name,
+        tags: article.tags?.map(tag => tag.name),
         images: article.featuredImage ? [{
           url: article.featuredImage.url,
           width: article.featuredImage.width,
@@ -164,6 +168,16 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
         title: article.title,
         description: article.excerpt,
         images: article.featuredImage ? [article.featuredImage.url] : ['/ogp.jpg'],
+      },
+      alternates: {
+        canonical: `https://gyaku-ten.jp/column/${article.slug}`,
+      },
+      other: {
+        'article:published_time': article.publishedAt || article.createdAt,
+        'article:modified_time': article.updatedAt,
+        'article:author': '合同会社GYAKUTEN',
+        'article:section': article.category?.name || 'コラム',
+        'article:tag': article.tags?.map(tag => tag.name).join(','),
       },
     };
   } catch (error) {

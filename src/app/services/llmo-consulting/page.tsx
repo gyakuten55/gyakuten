@@ -11,11 +11,13 @@ export const metadata: Metadata = {
   title: 'LLMOコンサルティング15万円～ | 中小企業DX支援・AI最適化コンサル | GYAKUTEN',
   description: '中小企業向けLLMOコンサルティング・DX支援なら15万円から。AI検索最適化・売上拡大・業務効率化を月25万円～で継続サポート。専門用語ゼロで現場で使える改善策を実装まで一貫支援。東京都の実績豊富なコンサル会社です。',
   keywords: 'LLMOコンサルティング, LLMOコンサル, LLMO対策, 中小企業DX, AI最適化, DX支援費用, 売上拡大DX, 中小企業向けコンサルティング',
+  authors: [{ name: '合同会社GYAKUTEN' }],
   openGraph: {
     title: 'LLMOコンサルティング15万円～ | 中小企業DX支援・AI最適化コンサル',
     description: '中小企業向けLLMOコンサルティング・DX支援なら15万円から。AI検索最適化・売上拡大・業務効率化を継続サポート。',
     type: 'website',
     locale: 'ja_JP',
+    url: 'https://gyaku-ten.jp/services/llmo-consulting',
   },
   twitter: {
     card: 'summary_large_image',
@@ -23,7 +25,12 @@ export const metadata: Metadata = {
     description: '中小企業向けLLMOコンサルティング・DX支援なら15万円から。AI検索最適化・売上拡大・業務効率化を継続サポート。',
   },
   alternates: {
-    canonical: '/services/llmo-consulting',
+    canonical: 'https://gyaku-ten.jp/services/llmo-consulting',
+  },
+  other: {
+    'article:published_time': '2024-03-03T00:00:00Z',
+    'article:modified_time': new Date().toISOString(),
+    'article:author': '合同会社GYAKUTEN',
   },
 };
 

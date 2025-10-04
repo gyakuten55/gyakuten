@@ -1,0 +1,40 @@
+# セキュリティポリシー / Security Policy
+# RFC 9116 準拠 / RFC 9116 Compliant
+
+Contact: mailto:security@gyaku-ten.jp
+Contact: mailto:info@gyaku-ten.jp
+Contact: tel:+81-70-6664-4597
+
+Expires: 2026-12-31T23:59:59Z
+Preferred-Languages: ja, en
+
+# セキュリティ脆弱性の報告先
+# Please report security vulnerabilities to the contacts above
+
+# 謝辞
+# Acknowledgments
+Acknowledgments: https://gyaku-ten.jp/security
+
+# ポリシー
+# Policy
+Policy: https://gyaku-ten.jp/privacy
+
+# 暗号化
+# Encryption
+# セキュリティ関連の連絡にはPGP暗号化を推奨します
+# We recommend using PGP encryption for security-related communications
+
+# 当社について / About Us
+# 合同会社GYAKUTEN
+# LLMO（大規模言語モデル最適化）専門企業
+# Specializing in LLMO (Large Language Model Optimization)
+
+# 当サイトのセキュリティに関する問題を発見した場合は、
+# 上記の連絡先まで速やかにご報告ください。
+# If you discover a security issue on this site,
+# please report it promptly to the contacts above.
+
+# 報告いただいた情報は機密として扱い、
+# 適切な対応を行います。
+# All reported information will be treated confidentially
+# and appropriate action will be taken.

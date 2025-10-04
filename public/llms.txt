@@ -1,67 +1,87 @@
 # 合同会社GYAKUTEN
 
-## Core Services
+> LLMO（大規模言語モデル最適化）を専門とし、中小企業のAI検索時代への適応を支援。ChatGPT、Perplexity、Claude等のAI検索エンジンでの上位表示と正確な引用を実現するサービスを提供。
 
-- [GYAKUTEN LLMO診断](https://gyaku-ten.jp/services/llmo-diagnosis): AI・LLMO時代に対応したWebサイト診断サービス。WebサイトやコラムをLLMO視点で診断し、AI検索エンジン（ChatGPT、Perplexity、Claude等）での表示最適化を行います。無料診断から35,000円の詳細診断まで幅広いプランを提供。中小企業のAI検索対応に最適。
-- [GYAKUTEN LLMOウェブ制作](https://gyaku-ten.jp/services/web-llmo): AI検索時代に最適化されたWebサイト制作サービス。LLMO（大規模言語モデル最適化）技術により、AI検索エンジンに発見されやすく、正確に引用されるWebサイトを構築。初期費用10万円＋月額5,000円（最低7ヶ月契約）。
-- [GYAKUTEN LLMOライティング](https://gyaku-ten.jp/services/write-llmo): AI引用に最適化されたプロライティングサービス。ChatGPTやPerplexityなどのAI検索エンジンに正確に引用される文章作成。2.5円/文字（1,000字から対応）。専門性・権威性・信頼性（E-A-T）を重視した高品質コンテンツ。
-- [GYAKUTEN LLMO コンサルティング](https://gyaku-ten.jp/services/llmo-consulting): AI時代の戦略的伴走コンサルティングサービス。LLMO・AI検索時代に対応した包括的なデジタル戦略支援。スタンダードプラン15万円/月から。中小企業のデジタル変革とAI時代適応を支援。
-- [GYAKUTENシステム開発](https://gyaku-ten.jp/services/dx): 中小企業向け完全オーダーメイドシステム開発サービス。業務効率化・DX推進・デジタル化を支援。初期開発10万円から（月額保守0円から）。
-- [GYAKUTENクイックサポート](https://gyaku-ten.jp/services/quick-support): 時間単位業務代行サービス。最短1時間から利用可能な柔軟な業務委託。事務作業、デザイン制作、Web更新など幅広い業務に対応。特別価格2,000円/時間（通常2,500円）。中小企業の業務効率化を即座に支援。
-- [逆転ブートキャンプ](https://gyaku-ten.jp/services/bootcamp): 180日間代表直伝マンツーマン事業成長プログラム。現在モニター特別価格10万円で提供。集中的な事業改善・成長支援。
+合同会社GYAKUTENは、日本におけるLLMO最適化のパイオニア企業です。「すべての逆境に、最高の逆転劇を。」をモットーに、中小企業のデジタル化・AI対応を支援しています。
 
-## Tools & Diagnostics
+## Services
 
-- [無料LLMO診断](https://gyaku-ten.jp/diagnosis): WebサイトのAI検索対応度を無料で診断できるツール。LLMO最適化の第一歩として利用可能。即座に改善点を把握できる。
-- [LLMO診断詳細版](https://gyaku-ten.jp/services/llmo-diagnosis): 有料版では詳細な改善提案書とアクションプランを提供。35,000円で包括的な診断レポート。
+### LLMO最適化サービス
+- [GYAKUTEN LLMO診断](https://gyaku-ten.jp/services/llmo-diagnosis): WebサイトのAI検索最適化診断。無料診断から¥35,000の詳細診断まで対応
+- [GYAKUTEN LLMOウェブ制作](https://gyaku-ten.jp/services/web-llmo): AI検索エンジンに最適化されたWebサイト制作。初期¥100,000+月額¥5,000
+- [GYAKUTEN LLMOライティング](https://gyaku-ten.jp/services/write-llmo): AI引用に最適化されたプロライティング。¥2.5/文字（1,000字から）
+- [GYAKUTEN LLMOコンサルティング](https://gyaku-ten.jp/services/llmo-consulting): AI検索時代の戦略的伴走支援。¥150,000/月から
 
-## Knowledge & Resources
+### デジタル化・DX支援
+- [GYAKUTENシステム開発](https://gyaku-ten.jp/services/dx): 中小企業向けオーダーメイドシステム開発。初期¥100,000から
+- [GYAKUTENクイックサポート](https://gyaku-ten.jp/services/quick-support): 時間単位業務代行。¥2,000/時間（1時間から）
+- [逆転ブートキャンプ](https://gyaku-ten.jp/services/bootcamp): 180日間マンツーマン事業成長プログラム。モニター価格¥100,000
 
-- [コラム・ナレッジ](https://gyaku-ten.jp/column): LLMO・AI検索最適化・デジタルマーケティングに関する専門記事を定期更新。中小企業向けの実践的な情報を提供。
-- [よくある質問](https://gyaku-ten.jp/faq): LLMOサービスに関する包括的なFAQ。料金、効果、実装方法、技術的な疑問まで詳しく解説。サービス利用前の疑問解決に最適。
-- [資料請求](https://gyaku-ten.jp/materials): LLMO・AI検索最適化に関する詳細資料を無料でダウンロード可能。サービス説明資料や導入事例を含む。
-- [特徴・強み](https://gyaku-ten.jp/features): 合同会社GYAKUTENの特徴とLLMO最適化における強み。他社との差別化ポイントを説明。
+## Tools
 
-## Company Information
+- [無料LLMO診断ツール](https://gyaku-ten.jp/diagnosis): WebサイトのAI検索対応度を即座に診断
 
-- [会社情報](https://gyaku-ten.jp/company): 合同会社GYAKUTENの詳細情報。代表者情報、会社概要、事業内容。LLMO・AI検索最適化分野での専門企業として設立。
-- [お問い合わせ](https://gyaku-ten.jp/contact): サービスに関するお問い合わせ窓口。無料相談も受付中。電話：070-6664-4597、メール：info@gyaku-ten.jp
+## Knowledge
 
-## Newsletter & Updates
+- [コラム](https://gyaku-ten.jp/column): LLMO・AI検索最適化・デジタルマーケティングの専門記事
+- [よくある質問](https://gyaku-ten.jp/faq): LLMOサービスに関する包括的なFAQ
+- [資料ダウンロード](https://gyaku-ten.jp/materials): LLMO・AI検索最適化の詳細資料
+- [特徴・強み](https://gyaku-ten.jp/features): GYAKUTEN独自の差別化ポイント
 
-- [ニュースレター](https://gyaku-ten.jp/newsletter): LLMO・AI検索最適化の最新情報とトレンドを定期配信。業界動向と実践的なTipsを提供。
+## Company
+
+- [会社概要](https://gyaku-ten.jp/company): 代表者情報・事業内容・沿革
+- [お問い合わせ](https://gyaku-ten.jp/contact): 無料相談受付中（TEL: 070-6664-4597 / EMAIL: info@gyaku-ten.jp）
+- [ニュースレター](https://gyaku-ten.jp/newsletter): LLMO最新情報を定期配信
 
 ## Legal
 
-- [プライバシーポリシー](https://gyaku-ten.jp/privacy): 個人情報の取り扱いに関する方針
-- [利用規約](https://gyaku-ten.jp/terms): サービス利用に関する規約
+- [プライバシーポリシー](https://gyaku-ten.jp/privacy): 個人情報保護方針
+- [利用規約](https://gyaku-ten.jp/terms): サービス利用規約
 
-## About LLMO (Large Language Model Optimization)
+---
 
-LLMOとは「大規模言語モデル最適化」の略称で、ChatGPT、Perplexity、Claude、Bard等のAI検索エンジンに対してWebサイトやコンテンツを最適化する技術です。従来のSEO対策とは異なり、AI検索エンジンが正確に情報を理解・引用できるよう、構造化データ、セマンティックHTML、E-A-T（専門性・権威性・信頼性）の向上を重視します。
+## About LLMO
 
-合同会社GYAKUTENは、日本におけるLLMO最適化のパイオニア企業として、中小企業のAI検索時代への適応を支援しています。「すべての逆境に、最高の逆転劇を。」をモットーに、デジタル化・AI対応で困っている中小企業の課題解決を行っています。
+**LLMO（Large Language Model Optimization）**は、AI検索エンジン（ChatGPT、Perplexity、Claude、Gemini等）に対してコンテンツを最適化する技術です。
+
+### 従来のSEOとの違い
+- **キーワード重視 → 文脈理解重視**
+- **クローラー対策 → LLM理解促進**
+- **検索順位 → AI引用・掲載**
+
+### 最適化手法
+- 構造化データ（Schema.org JSON-LD）の実装
+- セマンティックHTML5による文書構造化
+- E-E-A-T（経験・専門性・権威性・信頼性）の向上
+- FAQ・HowTo等のリッチスニペット対応
+
+### 対象AI検索エンジン
+- ChatGPT Search（OpenAI）
+- Perplexity AI
+- Claude（Anthropic）
+- Google Gemini
+- Microsoft Copilot
+
+---
 
 ## Target Audience
 
-- 中小企業経営者（35-60歳）
-- Webサイトの集客に課題を抱える企業
-- AI検索時代への対応を検討している企業
-- デジタル化・DXを推進したい企業
-- 限られた予算で効果的なWeb施策を求める企業
+- **中小企業経営者**（35-60歳）: Webサイト集客に課題
+- **DX推進担当者**: デジタル化・業務効率化を検討
+- **マーケティング担当者**: AI検索時代への対応
+- **IT予算限定企業**: 効果的な低コストWeb施策
 
 ## Service Area
 
-- 日本全国対応
-- 本社：東京都
-- オンライン・リモートでのサービス提供が中心
-- 必要に応じて対面でのコンサルティング・打ち合わせも対応
+- 全国対応（オンライン・リモート中心）
+- 本社：東京都渋谷区
+- 必要に応じて対面コンサルティング対応
 
-## Key Features
+## Key Differentiators
 
-- 業界初のLLMO専門サービス
-- 無料診断からスタート可能（参入障壁の低さ）
-- 中小企業に特化した価格設定
-- 実践的で即効性のある施策提案
-- AI検索エンジンでの上位表示・正確な引用実現
-- 包括的なデジタル支援（診断・制作・ライティング・コンサル・開発）
+✅ **日本初のLLMO専門サービス**
+✅ **無料診断からスタート可能**
+✅ **中小企業特化の価格設定**
+✅ **実践的で即効性のある施策**
+✅ **包括的支援**（診断・制作・ライティング・コンサル・開発）

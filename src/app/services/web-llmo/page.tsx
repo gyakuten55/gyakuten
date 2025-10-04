@@ -11,11 +11,13 @@ export const metadata: Metadata = {
   title: 'ホームページ制作10万円～ | 補助金対応・格安Web制作 | GYAKUTEN',
   description: '中小企業向けホームページ制作なら10万円から。補助金・助成金対応可能。AI検索時代に最適化。月額5,000円で7ヶ月伴走サポート付き。東京都の実績豊富なWeb制作会社GYAKUTENが格安でサイト制作します。',
   keywords: 'ホームページ制作, Web制作補助金, ホームページ制作補助金, サイト制作助成金, 格安ホームページ制作, 運送会社ホームページ制作, 中小企業ホームページ, 東京ホームページ制作',
+  authors: [{ name: '合同会社GYAKUTEN' }],
   openGraph: {
     title: 'ホームページ制作10万円～ | 補助金対応・格安Web制作',
     description: '中小企業向けホームページ制作なら10万円から。補助金・助成金対応可能。AI検索時代に最適化。',
     type: 'website',
     locale: 'ja_JP',
+    url: 'https://gyaku-ten.jp/services/web-llmo',
   },
   twitter: {
     card: 'summary_large_image',
@@ -23,7 +25,12 @@ export const metadata: Metadata = {
     description: '中小企業向けホームページ制作なら10万円から。補助金・助成金対応可能。AI検索時代に最適化。',
   },
   alternates: {
-    canonical: '/services/web-llmo',
+    canonical: 'https://gyaku-ten.jp/services/web-llmo',
+  },
+  other: {
+    'article:published_time': '2024-03-03T00:00:00Z',
+    'article:modified_time': new Date().toISOString(),
+    'article:author': '合同会社GYAKUTEN',
   },
 };
 

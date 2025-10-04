@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import InfiniteCarousel from './InfiniteCarousel';
+import GovernmentDataSection from './GovernmentDataSection';
 
 const AnimatedSphere = dynamic(() => import('./AnimatedSphere'), { ssr: false });
 
@@ -58,88 +59,8 @@ export default function HomePage() {
       {/* 無限カルーセルセクション */}
       <InfiniteCarousel />
 
-      {/* キーワード最適化セクション */}
-      <section className="hidden md:block py-12 bg-gray-50" aria-labelledby="services-heading">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <header className="text-center mb-8">
-            <h2 id="services-heading" className="text-2xl md:text-3xl font-bold text-black mb-4">
-              中小企業向け格安システム開発・DX支援
-            </h2>
-            <p className="text-lg text-gray-700">
-              補助金対応可能な業務効率化・Web制作サービス
-            </p>
-          </header>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" role="list">
-            {/* 格安システム開発 */}
-            <article className="bg-white rounded-lg p-6 shadow-sm border hover:shadow-md transition-shadow" role="listitem">
-              <h3 className="text-lg font-bold text-black mb-3">
-                <Link href="/services/dx" className="hover:text-primary">
-                  格安システム開発
-                </Link>
-              </h3>
-              <p className="text-gray-600 text-sm mb-4">
-                中小企業向け10万円からの業務効率化システム開発。Excel・紙運用から脱却。
-              </p>
-              <div className="text-primary font-semibold text-sm">
-                10万円～ | 補助金対応
-              </div>
-            </article>
-
-            {/* ホームページ制作 */}
-            <article className="bg-white rounded-lg p-6 shadow-sm border hover:shadow-md transition-shadow" role="listitem">
-              <h3 className="text-lg font-bold text-black mb-3">
-                <Link href="/services/web-llmo" className="hover:text-primary">
-                  ホームページ制作
-                </Link>
-              </h3>
-              <p className="text-gray-600 text-sm mb-4">
-                補助金対応可能な格安Web制作。運送会社・中小企業向けサイト制作。
-              </p>
-              <div className="text-primary font-semibold text-sm">
-                10万円～ | 助成金対応
-              </div>
-            </article>
-
-            {/* LLMOコンサルティング */}
-            <article className="bg-white rounded-lg p-6 shadow-sm border hover:shadow-md transition-shadow" role="listitem">
-              <h3 className="text-lg font-bold text-black mb-3">
-                <Link href="/services/llmo-consulting" className="hover:text-primary">
-                  LLMO対策・DX支援
-                </Link>
-              </h3>
-              <p className="text-gray-600 text-sm mb-4">
-                AI検索最適化・売上拡大のためのLLMOコンサルティング。
-              </p>
-              <div className="text-primary font-semibold text-sm">
-                15万円～ | 継続支援
-              </div>
-            </article>
-
-            {/* LLMO診断 */}
-            <article className="bg-white rounded-lg p-6 shadow-sm border hover:shadow-md transition-shadow" role="listitem">
-              <h3 className="text-lg font-bold text-black mb-3">
-                <Link href="/services/llmo-diagnosis" className="hover:text-primary">
-                  AI診断・無料
-                </Link>
-              </h3>
-              <p className="text-gray-600 text-sm mb-4">
-                GoogleやChatGPT検索でのサイト評価を無料診断。改善点を明確化。
-              </p>
-              <div className="text-primary font-semibold text-sm">
-                無料～ | 即日対応
-              </div>
-            </article>
-          </div>
-
-          <footer className="text-center mt-8">
-            <p className="text-gray-600 text-sm">
-              東京都の実績豊富な開発会社が、小規模から大規模まで幅広くサポート。<br />
-              <strong>格安システム開発</strong>・<strong>業務効率化</strong>・<strong>ホームページ制作補助金</strong>対応可能。
-            </p>
-          </footer>
-        </div>
-      </section>
+      {/* 政府機関データセクション */}
+      <GovernmentDataSection />
     </>
   );
 }
