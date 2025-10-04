@@ -77,7 +77,7 @@ export default function GovernmentDataSection() {
             GOVERNMENT DATA
           </div>
           <h2 id="government-data-heading" className="text-2xl md:text-4xl lg:text-5xl font-light text-black mb-4 md:mb-6 tracking-tight">
-            なぜ今、中小企業に<br className="md:hidden" />DX・LLMOが必要なのか
+            官公庁データが証明する、<br className="md:hidden" />中小企業のDX・LLMO対策
           </h2>
           <p className="text-sm md:text-base lg:text-lg text-gray-600 max-w-3xl mx-auto font-light">
             政府機関の公式統計データが示す現実と、GYAKUTENによる解決策
