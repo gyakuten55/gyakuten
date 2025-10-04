@@ -58,35 +58,47 @@ export default function FAQContent({ faqData }: FAQContentProps) {
   }, [filteredFaqs]);
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* ヘッダーセクション */}
-      <div className="text-center mb-16">
-        <h1 className="text-4xl md:text-5xl font-black text-primary mb-6">
+      <div className="text-center mb-20">
+        <p className="text-sm font-medium tracking-wider text-gray-500 uppercase mb-4">
+          Frequently Asked Questions
+        </p>
+        <h1 className="text-5xl md:text-6xl font-light text-gray-900 mb-6 tracking-tight">
           よくある質問
         </h1>
-        <p className="text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed">
-          GYAKUTENのLLMO（大規模言語モデル最適化）サービスに関する50以上のよくある質問をまとめました。<br />
-          こちらにない質問がございましたら、お気軽に<a href="/contact" className="text-primary hover:underline font-medium">お問い合わせ</a>ください。
+        <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed font-light">
+          GYAKUTENの全サービスに関するご質問にお答えします。<br className="hidden sm:block" />
+          こちらにないご質問は、お気軽に
+          <a href="/contact" className="text-primary hover:text-primary/80 font-medium transition-colors border-b border-primary/30 hover:border-primary/60">
+            お問い合わせ
+          </a>
+          ください。
         </p>
       </div>
 
       {/* 検索バー */}
-      <div className="mb-12">
-        <div className="relative">
+      <div className="mb-16">
+        <div className="relative max-w-2xl mx-auto">
+          <div className="absolute inset-y-0 left-6 flex items-center pointer-events-none">
+            <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
           <input
             type="text"
-            placeholder="質問を検索... (例: 料金、AI検索、補助金、セキュリティ)"
+            placeholder="キーワードで検索..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full px-6 py-4 text-lg border-2 border-gray-300 rounded-lg focus:outline-none focus:border-primary transition-colors"
+            className="w-full pl-14 pr-14 py-5 text-base border border-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/40 transition-all bg-white shadow-sm hover:shadow-md font-light"
           />
           {searchTerm && (
             <button
               onClick={() => setSearchTerm('')}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              className="absolute right-6 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
               aria-label="検索をクリア"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
@@ -94,31 +106,30 @@ export default function FAQContent({ faqData }: FAQContentProps) {
         </div>
       </div>
 
-      {/* カテゴリー目次 */}
-      <div className="mb-12">
-        <h2 className="text-xl font-bold text-gray-900 mb-4">カテゴリーから探す</h2>
-        <div className="flex flex-wrap gap-3">
+      {/* カテゴリー選択 */}
+      <div className="mb-16">
+        <div className="flex flex-wrap gap-3 justify-center">
           <button
             onClick={() => setSelectedCategory(null)}
-            className={`px-6 py-3 rounded-lg font-medium transition-colors ${
+            className={`px-6 py-2.5 rounded-full text-sm font-light transition-all ${
               selectedCategory === null
-                ? 'bg-primary text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                ? 'bg-gray-900 text-white shadow-md'
+                : 'bg-white text-gray-700 border border-gray-200 hover:border-gray-300 hover:shadow-sm'
             }`}
           >
-            すべて ({faqData.length})
+            すべて
           </button>
           {categories.map((category) => (
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`px-6 py-3 rounded-lg font-medium transition-colors ${
+              className={`px-6 py-2.5 rounded-full text-sm font-light transition-all ${
                 selectedCategory === category
-                  ? 'bg-primary text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  ? 'bg-gray-900 text-white shadow-md'
+                  : 'bg-white text-gray-700 border border-gray-200 hover:border-gray-300 hover:shadow-sm'
               }`}
             >
-              {category} ({faqsByCategory[category].length})
+              {category}
             </button>
           ))}
         </div>
@@ -126,11 +137,11 @@ export default function FAQContent({ faqData }: FAQContentProps) {
 
       {/* 検索結果件数表示 */}
       {(searchTerm || selectedCategory) && (
-        <div className="mb-8 text-gray-600">
-          <p className="text-lg">
+        <div className="mb-12 text-center">
+          <p className="text-base text-gray-600 font-light">
             {filteredFaqs.length > 0 ? (
               <>
-                <span className="font-bold text-primary">{filteredFaqs.length}件</span>の質問が見つかりました
+                <span className="font-medium text-gray-900">{filteredFaqs.length}件</span>の質問が見つかりました
               </>
             ) : (
               '該当する質問が見つかりませんでした'
@@ -141,28 +152,30 @@ export default function FAQContent({ faqData }: FAQContentProps) {
 
       {/* FAQ セクション */}
       {filteredFaqs.length > 0 ? (
-        Object.entries(filteredByCategory).map(([category, faqs]) => (
-          <section key={category} id={category} className="mb-16 scroll-mt-24">
-            <h2 className="text-2xl font-black text-primary mb-8 border-b-2 border-primary pb-2">
-              {category}
-            </h2>
+        <div className="space-y-24">
+          {Object.entries(filteredByCategory).map(([category, faqs]) => (
+            <section key={category} id={category} className="scroll-mt-24">
+              <h2 className="text-sm font-medium tracking-wider text-gray-500 uppercase mb-8 text-center">
+                {category}
+              </h2>
 
-            <div className="space-y-4">
-              {faqs.map((faq, index) => (
-                <FAQItem key={`${category}-${index}`} faq={faq} />
-              ))}
-            </div>
-          </section>
-        ))
+              <div className="space-y-0 border-t border-gray-100">
+                {faqs.map((faq, index) => (
+                  <FAQItem key={`${category}-${index}`} faq={faq} />
+                ))}
+              </div>
+            </section>
+          ))}
+        </div>
       ) : (
-        <div className="text-center py-16">
-          <p className="text-gray-500 text-lg mb-6">検索条件に一致する質問が見つかりませんでした。</p>
+        <div className="text-center py-20">
+          <p className="text-gray-500 text-lg mb-8 font-light">検索条件に一致する質問が見つかりませんでした。</p>
           <button
             onClick={() => {
               setSearchTerm('');
               setSelectedCategory(null);
             }}
-            className="text-primary hover:underline font-medium"
+            className="text-primary hover:text-primary/80 font-medium transition-colors border-b border-primary/30 hover:border-primary/60"
           >
             すべての質問を表示
           </button>
@@ -170,25 +183,31 @@ export default function FAQContent({ faqData }: FAQContentProps) {
       )}
 
       {/* CTAセクション */}
-      <div className="mt-20 text-center">
-        <div className="bg-white rounded-xl shadow-lg p-8 md:p-12">
-          <h2 className="text-2xl md:text-3xl font-black text-primary mb-6">
-            まずは無料診断から始めませんか？
+      <div className="mt-32 mb-16">
+        <div className="max-w-3xl mx-auto text-center bg-gradient-to-br from-gray-50 to-white rounded-2xl p-12 md:p-16 border border-gray-100 shadow-sm">
+          <p className="text-sm font-medium tracking-wider text-gray-500 uppercase mb-4">
+            Get Started
+          </p>
+          <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-6 tracking-tight">
+            まずは無料診断から<br className="sm:hidden" />始めませんか？
           </h2>
-          <p className="text-gray-700 mb-8 leading-relaxed">
-            現在のWebサイトがAI時代にどれだけ対応できているかを無料で診断いたします。<br />
+          <p className="text-base text-gray-600 mb-10 leading-relaxed font-light max-w-xl mx-auto">
+            現在のWebサイトがAI時代にどれだけ対応できているかを無料で診断。<br className="hidden sm:block" />
             改善点と具体的な対策をレポートでお届けします。
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="/services/llmo-diagnosis"
-              className="bg-primary text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-primary/90 transition-colors"
+              className="inline-flex items-center justify-center bg-gray-900 text-white px-10 py-4 rounded-full font-medium text-base hover:bg-gray-800 transition-all shadow-md hover:shadow-lg"
             >
               無料診断を申し込む
+              <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
             </a>
             <a
               href="/contact"
-              className="border-2 border-primary text-primary px-8 py-4 rounded-lg font-bold text-lg hover:bg-primary hover:text-white transition-colors"
+              className="inline-flex items-center justify-center border border-gray-300 text-gray-900 px-10 py-4 rounded-full font-medium text-base hover:border-gray-400 hover:bg-gray-50 transition-all"
             >
               詳しく相談する
             </a>
@@ -202,33 +221,35 @@ export default function FAQContent({ faqData }: FAQContentProps) {
 // FAQ個別アイテムコンポーネント
 function FAQItem({ faq }: { faq: FAQ }) {
   return (
-    <div className="bg-white border-l-4 border-primary shadow-sm hover:shadow-md transition-shadow duration-200">
+    <div className="border-b border-gray-100 last:border-b-0">
       <details className="group/details">
-        <summary className="cursor-pointer p-6 md:p-8 hover:bg-gray-50 transition-colors duration-200 list-none">
-          <div className="flex items-start md:items-center justify-between gap-4">
-            <div className="flex items-start md:items-center space-x-4 md:space-x-6 flex-1">
-              <span className="text-primary font-black text-lg flex-shrink-0 mt-0.5 md:mt-0">Q</span>
-              <h3 className="text-base md:text-lg font-bold text-gray-900 leading-relaxed">
-                {faq.question}
-              </h3>
+        <summary className="cursor-pointer py-8 hover:bg-gray-50/50 transition-all duration-200 list-none px-6 md:px-8">
+          <div className="flex items-start justify-between gap-8">
+            <div className="flex-1">
+              <div className="flex items-start gap-4">
+                <span className="text-primary font-medium text-sm mt-1 flex-shrink-0">Q</span>
+                <h3 className="text-lg md:text-xl font-light text-gray-900 leading-relaxed">
+                  {faq.question}
+                </h3>
+              </div>
             </div>
             <div className="flex-shrink-0">
               <svg
-                className="w-5 h-5 md:w-6 md:h-6 text-gray-400 group-open/details:rotate-180 transition-transform duration-200"
+                className="w-5 h-5 text-gray-400 group-open/details:rotate-180 transition-transform duration-300 mt-1.5"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
               </svg>
             </div>
           </div>
         </summary>
 
-        <div className="px-6 md:px-8 pb-6 md:pb-8 bg-gray-50 border-t border-gray-200">
-          <div className="pt-6 flex items-start space-x-4 md:space-x-6">
-            <span className="text-primary font-black text-lg flex-shrink-0">A</span>
-            <div className="text-gray-700 leading-relaxed whitespace-pre-line flex-1">
+        <div className="px-6 md:px-8 pb-8 bg-gradient-to-b from-gray-50/30 to-transparent">
+          <div className="pt-4 flex items-start gap-4 max-w-4xl">
+            <span className="text-primary font-medium text-sm flex-shrink-0">A</span>
+            <div className="text-base text-gray-700 leading-relaxed whitespace-pre-line flex-1 font-light">
               {faq.answer}
             </div>
           </div>
