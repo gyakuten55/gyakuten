@@ -4,6 +4,7 @@ import HomePage from '@/components/HomePage';
 import KnowledgeSection from '@/components/KnowledgeSection';
 import NewsSection from '@/components/NewsSection';
 import CTASection from '@/components/CTASection';
+import DefinitionsSection from '@/components/DefinitionsSection';
 import { getKnowledgeArticles, getNewsArticles } from '@/lib/microcms';
 import StructuredData from '@/components/seo/StructuredData';
 
@@ -28,13 +29,15 @@ export default async function Home() {
           ]
         }}
       />
-      <StructuredData 
-        type="webpage" 
+      <StructuredData
+        type="webpage"
         data={{
           webpage: {
             title: '格安システム開発・DX支援 | 中小企業向けデジタル化なら合同会社GYAKUTEN',
             description: '中小企業向け格安システム開発・業務効率化・DX支援なら合同会社GYAKUTEN。補助金対応可能。LLMO最適化・Web制作・コンサルティングまで一括対応。初回診断無料。',
-            url: 'https://gyaku-ten.jp'
+            url: 'https://gyaku-ten.jp',
+            datePublished: '2024-01-15',
+            dateModified: new Date().toISOString().split('T')[0]
           }
         }}
       />
@@ -42,6 +45,7 @@ export default async function Home() {
       <ServicesSection />
       <KnowledgeSection articles={knowledgeArticles} />
       <NewsSection articles={newsArticles} />
+      <DefinitionsSection />
       <CTASection />
     </Layout>
   );

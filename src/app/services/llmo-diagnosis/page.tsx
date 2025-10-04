@@ -4,7 +4,6 @@ import Layout from '@/components/layout/Layout';
 import Link from 'next/link';
 import StepForm from '@/components/StepForm';
 import DiagnosisButton from '@/components/DiagnosisButton';
-import DiagnosisForm from '@/components/DiagnosisForm';
 import FAQSection from '@/components/FAQSection';
 import StructuredData from '@/components/seo/StructuredData';
 import InfiniteCarousel from '@/components/InfiniteCarousel';
@@ -502,58 +501,6 @@ export default function LLMODiagnosisPage() {
                     詳細な指導とフォローが欲しい方
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="py-16 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-black text-black mb-4">
-                まずは無料診断から始めよう
-              </h2>
-              <p className="text-lg text-gray-600">
-                あなたのサイトがAI検索時代に対応できているかを無料でチェック。<br />
-                今すぐ診断を開始して、改善のヒントを見つけましょう。
-              </p>
-            </div>
-            
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center max-w-6xl mx-auto">
-              <div>
-                <div className="space-y-4">
-                  <div className="flex items-start">
-                    <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center mr-4 mt-1">
-                      <span className="text-white text-sm font-bold">1</span>
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-bold text-black mb-2">簡単入力（2分）</h3>
-                      <p className="text-gray-600">基本情報とサイトURLを入力するだけ</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start">
-                    <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center mr-4 mt-1">
-                      <span className="text-white text-sm font-bold">2</span>
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-bold text-black mb-2">自動解析</h3>
-                      <p className="text-gray-600">AIがサイト全体を多角的に分析</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start">
-                    <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center mr-4 mt-1">
-                      <span className="text-white text-sm font-bold">3</span>
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-bold text-black mb-2">レポート送付</h3>
-                      <p className="text-gray-600">分かりやすい診断結果をメールでお送り</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div>
-                <DiagnosisForm />
               </div>
             </div>
           </div>

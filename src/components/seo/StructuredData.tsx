@@ -25,6 +25,8 @@ interface StructuredDataProps {
       title: string;
       description: string;
       url: string;
+      datePublished?: string;
+      dateModified?: string;
     };
     organization?: {
       name: string;
@@ -308,6 +310,12 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
           about: {
             '@id': `${baseUrl}/#organization`,
           },
+          ...(data.webpage.datePublished && {
+            datePublished: data.webpage.datePublished,
+          }),
+          ...(data.webpage.dateModified && {
+            dateModified: data.webpage.dateModified,
+          }),
         };
         return webPage;
 
