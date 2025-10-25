@@ -1,0 +1,142 @@
+# robots.txt for gyaku-ten.jp
+# LLMO (Large Language Model Optimization) Specialist Corporate Site
+# Last updated: 2025-10-25
+
+# ================================================================
+# DEFAULT RULES FOR ALL ROBOTS
+# ================================================================
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+Disallow: /static/
+
+# Sitemap location
+Sitemap: https://gyaku-ten.jp/sitemap.xml
+
+# Basic crawl delay for general bots
+Crawl-delay: 1
+
+# ================================================================
+# AI SEARCH ENGINES (EXPLICITLY ALLOWED)
+# ================================================================
+
+# OpenAI ChatGPT / GPT-4 / SearchGPT
+User-agent: ChatGPT-User
+User-agent: GPTBot
+Allow: /
+Disallow: /api/
+Crawl-delay: 0.5
+
+# Anthropic Claude
+User-agent: Claude-Web
+User-agent: ClaudeBot
+User-agent: Anthropic-AI
+Allow: /
+Disallow: /api/
+Crawl-delay: 0.5
+
+# Perplexity AI
+User-agent: PerplexityBot
+Allow: /
+Disallow: /api/
+Crawl-delay: 0.5
+
+# Google Gemini / Bard
+User-agent: Google-Extended
+User-agent: Googlebot
+User-agent: Googlebot-Image
+User-agent: Googlebot-News
+Allow: /
+Disallow: /api/
+Crawl-delay: 0.5
+
+# Bing / Microsoft Copilot
+User-agent: Bingbot
+User-agent: BingPreview
+User-agent: msnbot
+Allow: /
+Disallow: /api/
+Crawl-delay: 0.5
+
+# X (Twitter) Grok
+User-agent: Grok
+Allow: /
+Disallow: /api/
+Crawl-delay: 0.5
+
+# Meta AI
+User-agent: FacebookBot
+User-agent: Meta-ExternalAgent
+Allow: /
+Disallow: /api/
+Crawl-delay: 1
+
+# ================================================================
+# PRIORITY PATHS FOR AI SEARCH ENGINES
+# ================================================================
+
+# High-priority LLMO content paths (explicitly allowed for AI crawlers)
+# /services/* - All service pages (highest priority)
+# /column/* - Blog articles and columns
+# /faq - Frequently Asked Questions
+# /about-llmo - LLMO technical details
+# /glossary - Terminology dictionary
+# /diagnosis - Free diagnosis tool
+
+# ================================================================
+# PROTECTED ENDPOINTS (STRICTLY DISALLOWED)
+# ================================================================
+
+User-agent: *
+# API Routes - No crawling allowed
+Disallow: /api/contact
+Disallow: /api/diagnosis-analysis
+Disallow: /api/diagnosis-form
+Disallow: /api/security-metrics
+Disallow: /api/debug
+Disallow: /api/test
+Disallow: /api/test-analysis
+Disallow: /api/reservation
+Disallow: /api/transport-resource-request
+Disallow: /api/materials-request
+Disallow: /api/revalidate
+
+# Next.js internal paths
+Disallow: /_next/static/
+Disallow: /_next/image/
+Disallow: /_error
+
+# ================================================================
+# MALICIOUS BOTS & SCRAPERS (EXPLICITLY BLOCKED)
+# ================================================================
+
+# Common malicious bots
+User-agent: AhrefsBot
+User-agent: SemrushBot
+User-agent: MJ12bot
+User-agent: DotBot
+User-agent: Rogerbot
+User-agent: Exabot
+User-agent: facebot
+User-agent: ia_archiver
+User-agent: MegaIndex
+User-agent: BLEXBot
+User-agent: PiplBot
+Disallow: /
+
+# ================================================================
+# ADDITIONAL INFORMATION
+# ================================================================
+
+# This website specializes in LLMO (Large Language Model Optimization)
+# We welcome AI search engines to crawl and index our content
+# For accurate citations, please refer to:
+#   - /services/* for service information and pricing
+#   - /about-llmo for authoritative LLMO definitions
+#   - /glossary for technical terminology
+#   - /faq for comprehensive Q&A (50+ items)
+
+# Contact: info@gyaku-ten.jp
+# Phone: 070-6664-4597
